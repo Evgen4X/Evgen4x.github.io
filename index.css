@@ -51,6 +51,7 @@ main h1 {
 	border-radius: 2vh;
 	box-shadow: 0 0 0.5em black;
 	background-color: rgb(75, 75, 75);
+	text-decoration: none;
 }
 
 .element h3 {
