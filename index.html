@@ -15,11 +15,11 @@
 		<main>
 			<h1>Welcome!</h1>
 			<div id="container">
-				<div class="element" id="texas-holdem" onclick="window.location.href = window.location.href.replace('index', 'texasHoldem/index')">
+				<a class="element" id="texas-holdem" href="texasHoldem/index.html">
 					<h3>Texas Holdem</h3>
 					<div class="screenshot"></div>
 					<div class="button">Play</div>
-				</div>
+				</a>
 			</div>
 		</main>
 		<footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
@@ -145,7 +145,6 @@
 		}
 
 		function gen() {
-			console.log(bubbles.length);
 			if (bubbles.length > 100) {
 				//prevents overflowing
 				bubbles.forEach((bubble) => {
