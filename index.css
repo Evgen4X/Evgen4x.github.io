@@ -1,0 +1,110 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+* {
+	user-select: none;
+}
+
+canvas {
+	width: 100vw;
+	height: 100vh;
+}
+
+main {
+	position: absolute;
+	background-color: rgba(127, 127, 127, 0.75);
+	top: 10vh;
+	left: 35vw;
+	height: 70vh;
+	width: 30vw;
+	border-radius: 5vh;
+	display: flex;
+	justify-content: baseline;
+	align-items: center;
+	flex-direction: column;
+}
+
+main h1 {
+	color: #d0a3bf;
+	text-shadow: 0 0 1em black;
+}
+
+#container {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+
+.element {
+	width: 10vw;
+	height: 30vh;
+	display: flex;
+	justify-content: baseline;
+	align-items: center;
+	flex-direction: column;
+	border-radius: 2vh;
+	box-shadow: 0 0 0.5em black;
+	background-color: rgb(75, 75, 75);
+}
+
+.element h3 {
+	height: 5%;
+	color: #d0a3bf;
+}
+
+.element .screenshot {
+	height: 60%;
+	width: 60%;
+}
+
+.element .button {
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: large;
+	color: #d6bbc0;
+	width: 40%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+	main {
+		width: 70vw;
+		left: 15vw;
+	}
+
+	.element {
+		width: 25vw;
+	}
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	height: 7.5vh;
+	background-color: transparent;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	font-size: xx-large;
+	font-weight: bolder;
+	text-shadow: 0 0 1.25em white;
+}
+
+footer a {
+	color: blue;
+	margin: 0.5em;
+	text-decoration: none;
+	text-shadow: 0 0 0.75em white;
+}

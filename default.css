@@ -1,0 +1,13 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+div#back {
+	display: block;
+	height: 4em;
+	width: 4em;
+	background-image: url(main-icon.jpg);
+	background-size: contain;
+}
