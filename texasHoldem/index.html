@@ -2,19 +2,35 @@
 <html lang="en">
 	<head>
 		<link rel="stylesheet" href="../default.css" />
+		<link rel="stylesheet" href="texas-holdem.css" />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="author" content="Evgen4X" />
 		<meta name="description" content="My own page!" />
 		<meta name="keywords" content="Evgen4X" />
-		<title>Texas Holdem</title>
+		<title>Texas Hold'em</title>
 	</head>
 	<body>
 		<header>
-			<div id="back" onclick="history.back();">a</div>
-			Texas Holdem
+			<div id="back" onclick="history.back();"></div>
+			<div id="title">Texas Hold'em</div>
+			<div style="display: flex; justify-content: center; align-items: center; width: 14vh">
+				<!-- TODO: better icon-->
+				<div id="question-mark" onclick="openLink(`en.wikipedia.org/wiki/Texas_hold_'em#Rules`);"></div>
+				<div id="settings-button" onclick="toggleSettings();"></div>
+			</div>
 		</header>
-		<main>Still working on it! Calm down and wait, patience it crucial!</main>
-		<footer></footer>
+		<main onclick="document.getElementById('settings').style.display = 'none';">
+			<h1>Still working on it! Calm down and wait, patience it crucial!</h1>
+			<div id="table"></div>
+		</main>
+		<footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
+
+		<div id="settings">
+			<h1>Settings</h1>
+			<button id="settings-save" onclick="settingsSave();">Save</button>
+		</div>
 	</body>
+
+	<script src="functionality.js"></script>
 </html>

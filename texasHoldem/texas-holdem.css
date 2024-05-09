@@ -1,0 +1,21 @@
+#table {
+	width: 65vw;
+	height: 60vh;
+	background-image: radial-gradient(#6eac1b, #5aa412, #3b8005, #145404);
+	border-radius: 30vh;
+	border: 2vh solid #666;
+}
+
+#table::before {
+	content: "";
+	position: relative;
+	display: block;
+	top: -3vh;
+	left: -3vh;
+	width: calc(65vw + 6vh);
+	height: 66vh;
+	border-radius: 31.5vh;
+	z-index: -1;
+	background-color: #444;
+	box-shadow: 0 0 1vh black;
+}

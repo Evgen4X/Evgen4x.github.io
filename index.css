@@ -97,14 +97,16 @@ footer {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	color: white;
+	color: rgba(255, 255, 255, 0.75);
 	font-size: xx-large;
 	font-weight: bolder;
+	letter-spacing: 0.1em;
 	text-shadow: 0 0 1.25em white;
 }
 
 footer a {
 	color: blue;
+	letter-spacing: 0.2em;
 	margin: 0.5em;
 	text-decoration: none;
 	text-shadow: 0 0 0.75em white;
