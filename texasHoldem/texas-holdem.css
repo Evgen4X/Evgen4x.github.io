@@ -3,7 +3,7 @@
 	height: 60vh;
 	background-image: radial-gradient(#6eac1b, #5aa412, #3b8005, #145404);
 	border-radius: 30vh;
-	border: 2vh solid #666;
+	border: 2vh solid #674420;
 }
 
 #table::before {
@@ -16,6 +16,6 @@
 	height: 66vh;
 	border-radius: 31.5vh;
 	z-index: -1;
-	background-color: #444;
+	background-color: #59341c;
 	box-shadow: 0 0 1vh black;
 }
