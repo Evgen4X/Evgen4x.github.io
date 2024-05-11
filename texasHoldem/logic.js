@@ -1,3 +1,8 @@
+/**
+ *
+ * @param {Array} cards - cards of hand
+ * @returns {Object} - {name: name of the hand, cards: 5 cards of the hand, rest: the 'kicker cards'}
+ */
 function getHand(cards) {
 	cards.sort((a, b) => values.indexOf(a[0]) - values.indexOf(b[0]));
 
@@ -58,17 +63,18 @@ function getHand(cards) {
 
 	//checking RF
 	if (royalFlush.filter((card) => card[1] == fiveSuites).length == 5) {
-		return {name: "royal flush", cards: royalFlush.filter((card) => card[1] == fiveSuites)}; //chance: 0.000154%
+		return {name: "royal flush", cards: royalFlush.filter((card) => card[1] == fiveSuites), rest: []}; //chance: 0.000154%
 	}
 
 	//checking SF
 	if (straightFlush.filter((card) => card[1] == fiveSuites).length >= 5) {
-		return {name: "straight flush", cards: straightFlush.filter((card) => card[1] == fiveSuites).slice(-5)}; //chance: 0.00139%
+		return {name: "straight flush", cards: straightFlush.filter((card) => card[1] == fiveSuites).slice(-5), rest: []}; //chance: 0.00139%
 	}
 
+	let remaining = cards.filter((card) => !fourOfAKind.includes(card)).slice(-1);
 	//checking FOAK
 	if (fourOfAKind.length == 4) {
-		return {name: "four of a kind", cards: fourOfAKind}; // chance: 0.0255%
+		return {name: "four of a kind", cards: fourOfAKind.concat(remaining), rest: remaining}; // chance: 0.0255%
 	}
 
 	//checking FH
@@ -93,24 +99,64 @@ function getHand(cards) {
 		}
 	}
 
+	remaining = cards.filter((card) => !threeOfAKind.includes(card)).slice(-2);
 	//checking TOAK
 	if (threeOfAKind.length >= 3) {
-		return {name: "three of a kind", cards: threeOfAKind.slice(-3)}; //chance: 2.1128%
+		return {name: "three of a kind", cards: threeOfAKind.slice(-3).concat(remaining), rest: remaining}; //chance: 2.1128%
 	}
 
+	remaining = cards.filter((card) => !pairs.includes(card)).slice(pairs.length - 5);
 	//checking TP
 	if (pairs.length > 3) {
-		return {name: "two pair", cards: pairs.slice(-4)}; //chance: 4.7539%
+		return {name: "two pair", cards: pairs.slice(-4).concat(remaining.slice(-1)), rest: remaining.slice(-1)}; //chance: 4.7539%
 	}
 
 	//checking P
 	if (pairs.length == 2) {
-		return {name: "pair", cards: pairs}; //chance: 42.2569%
+		return {name: "pair", cards: pairs.concat(remaining), rest: remaining}; //chance: 42.2569%
 	}
 
-	return {name: "high card", cards: cards.slice(-5)}; //chance: 50.1177%
+	return {name: "high card", cards: cards.slice(-1).concat(cards.slice(-5, -1)), rest: cards.slice(-5, -1)}; //chance: 50.1177%
+}
+/**
+ *
+ * @param {Object} hand1 - first hand
+ * @param {Object} hand2 - second hand
+ * @returns {number} - 1 if hand1 wins, -1 if hand2 does, 0 if it's draw
+ */
+function compareHands(hand1, hand2) {
+	if (hands.indexOf(hand1.name) != hands.indexOf(hand2.name)) {
+		return hands.indexOf(hand1.name) > hands.indexOf(hand2.name) ? 1 : -1;
+	}
+
+	let name = hand1.name;
+
+	//checking the cards in the hand
+	for (let i = 0; i < handSizes[hands.indexOf(name)]; ++i) {
+		if (values.indexOf(hand1.cards[i][0]) > values.indexOf(hand2.cards[i][0])) {
+			return 1;
+		}
+		if (values.indexOf(hand1.cards[i][0]) < values.indexOf(hand2.cards[i][0])) {
+			return -1;
+		}
+	}
+
+	for (let i = 4; i >= handSizes[hands.indexOf(name)]; --i) {
+		if (values.indexOf(hand1.cards[i][0]) > values.indexOf(hand2.cards[i][0])) {
+			return 1;
+		}
+		if (values.indexOf(hand1.cards[i][0]) < values.indexOf(hand2.cards[i][0])) {
+			return -1;
+		}
+	}
+
+	return 0;
 }
 
 //               0    1    2    3    4    5    6    7    8    9   10   11   12
 const values = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]; //T is for 10
 const suites = ["C", "D", "H", "S"]; //clubs, diamonds, hearts, spades
+const Vnames = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king", "ace"]; //V is for value
+const Snames = ["clubs", "diamonds", "hearts", "spades"]; //S is for suit
+const hands = ["high card", "pair", "two pair", "three of a kind", "straight", "flush", "full house", "four of a kind", "straight flush", "royal flush"];
+const handSizes = [1, 2, 4, 3, 5, 5, 5, 4, 5, 5]; //# of cards that are not in the 'rest'
