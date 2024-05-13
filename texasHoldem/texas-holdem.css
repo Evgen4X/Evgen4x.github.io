@@ -19,3 +19,27 @@
 	background-color: #59341c;
 	box-shadow: 0 0 1vh black;
 }
+
+.card {
+	width: 7vw;
+	height: 18vh;
+	background-size: 7vw 18vh;
+	margin: 0 0.25vw;
+}
+
+.player-cards,
+#community-cards {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#players-container {
+	position: absolute;
+	top: 12vh;
+	left: 15vw;
+}
+
+#community-cards {
+	transform: translateY(-46.5vh);
+}

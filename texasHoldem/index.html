@@ -14,24 +14,29 @@
 		<header>
 			<div id="back" onclick="history.back();"></div>
 			<div id="title">Texas Hold'em</div>
-			<div style="display: flex; justify-content: center; align-items: center; width: 14vh">
-				<!-- TODO: better icon-->
-				<div id="question-mark" onclick="openLink(`en.wikipedia.org/wiki/Texas_hold_'em#Rules`);"></div>
+			<div style="display: flex; justify-content: center; align-items: center; width: 14vh; height: 6vh; transform: translateY(-2vh)">
+				<div id="question-mark" onclick="openLink(`en.wikipedia.org/wiki/Texas_hold_'em#Rules`);">?</div>
 				<div id="settings-button" onclick="toggleSettings();"></div>
 			</div>
 		</header>
 		<main onclick="document.getElementById('settings').style.display = 'none';">
 			<h1>Still working on it! Calm down and wait, patience it crucial!</h1>
-			<div id="table"></div>
+			<div id="table">
+				<div id="community-cards"></div>
+			</div>
 		</main>
 		<footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
 
+		<div id="players-container"></div>
+
 		<div id="settings">
 			<h1>Settings</h1>
-			<button id="settings-save" onclick="settingsSave();">Save</button>
+			<input id="number-of-players" type="number" placeholder="Number of players" />
+			<button id="settings-save" onclick="window.location.reload();">Save</button>
 		</div>
 	</body>
 
 	<script src="functionality.js"></script>
 	<script src="logic.js"></script>
+	<script src="game.js"></script>
 </html>

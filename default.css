@@ -45,7 +45,8 @@ header div#title {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex-direction: row;
+	transform: translateY(-2vh);
+	height: 6vh;
 }
 
 #settings-button {
@@ -96,7 +97,7 @@ footer a {
 	justify-content: baseline;
 	align-items: center;
 	flex-direction: column;
-	background-color: rgba(127, 127, 127, 0.5);
+	background-color: rgba(127, 127, 127, 0.9);
 	border: 2vh solid rgba(0, 0, 0, 0.75);
 	border-radius: 5vh;
 }
@@ -104,7 +105,15 @@ footer a {
 #question-mark {
 	width: 6vh;
 	height: 6vh;
-	background-image: url(icons/question-icon.png);
-	background-size: 6vh 6vh;
+	/* background-image: url(icons/question-icon.png); */
+	/* background-size: 6vh 6vh; */
+	background-image: linear-gradient(#0091ff, #0069ff, #0047ff);
+	border-radius: 3vh;
+	font-size: 4.5vh;
+	font-weight: bolder;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	cursor: pointer;
+	margin: 0;
 }

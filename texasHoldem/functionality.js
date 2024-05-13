@@ -1,14 +1,12 @@
 function toggleSettings() {
 	settings.style.display = settings.style.display == "none" ? "flex" : "none";
+	if (settings.style.display == "flex") {
+		localStorage.setItem("number-of-players", document.getElementById("number-of-players").value);
+	}
 }
 
 function openLink(link) {
 	open("https://" + link, "_blank"); //not working in HTML for some reason
-}
-
-function settingsSave() {
-	//TODO: create settings
-	settings.style.display = "none";
 }
 
 const settings = document.getElementById("settings");

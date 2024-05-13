@@ -43,7 +43,7 @@ function getHand(cards) {
 			straight.push(card);
 		}
 
-		//                      <3
+		//                                                  <3
 		if (threeOfAKind.length != 0 && threeOfAKind.length < 3 && values.indexOf(value) != values.indexOf(threeOfAKind[0][0])) {
 			threeOfAKind = [];
 		}
@@ -154,9 +154,9 @@ function compareHands(hand1, hand2) {
 }
 
 //               0    1    2    3    4    5    6    7    8    9   10   11   12
-const values = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]; //T is for 10
+const values = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"];
 const suites = ["C", "D", "H", "S"]; //clubs, diamonds, hearts, spades
-const Vnames = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king", "ace"]; //V is for value
-const Snames = ["clubs", "diamonds", "hearts", "spades"]; //S is for suit
+const Vnames = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king", "ace"];
+const Snames = ["clubs", "diamonds", "hearts", "spades"];
 const hands = ["high card", "pair", "two pair", "three of a kind", "straight", "flush", "full house", "four of a kind", "straight flush", "royal flush"];
 const handSizes = [1, 2, 4, 3, 5, 5, 5, 4, 5, 5]; //# of cards that are not in the 'rest'
