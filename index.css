@@ -28,6 +28,14 @@ main {
 	flex-direction: column;
 }
 
+main > div {
+	width: 30vw;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
 main h1 {
 	color: #d0a3bf;
 	text-shadow: 0 0 1em black;
@@ -57,6 +65,7 @@ main h1 {
 .element h3 {
 	height: 5%;
 	color: #d0a3bf;
+	text-align: center;
 }
 
 .element .screenshot {

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="../default.css" />
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Polynomials</title>
+	</head>
+	<body>
+		<header>
+			<div id="back" onclick="history.back();"></div>
+			<div id="title">Polynomial multiplication</div>
+			<div id="just-centers-the-title-element-and-nothing-else"></div>
+		</header>
+
+		<main>
+			<input placeholder="polynomial" id="polynomial" />
+			<button onclick="console.log(isValid(get()))">valid</button>
+			<button onclick="console.log(getParts(get()))">parts</button>
+			<button onclick="console.log(getElements(getParts(get())[0]))">els</button>
+		</main>
+
+		<footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
+
+		<script>
+			class Element {
+				constructor(names, number, powers) {
+					this.names = names;
+					this.number = number;
+					this.powers = powers;
+				}
+
+				multiply(other) {
+					let new_names = [];
+					let new_powers = [];
+					let remaining_names = other.names;
+					let remaining_powers = other.powers;
+					this.names.forEach((name, i) => {
+						let index = remaining_names.indexOf(name);
+						if (index != -1) {
+							new_names.push(name);
+							new_powers.push(this.powers[i] + other.powers[other.names.indexOf(name)]);
+							remaining_names.splice(index);
+						} else {
+							new_names.push(name);
+							new_powers.push(this.powers[i]);
+						}
+					});
+
+					return {names: new_names, number: this.number * other.number, powers: new_powers};
+				}
+			}
+			function get() {
+				return document.getElementById("polynomial").value.replace(/ /g, "");
+			}
+			/**
+			 * @param {string} expression - expression to be checked
+			 * @returns {number} - (-2) means wrong parenthesis number, (-1) means valid, [>=0] is position of a wrong symbol
+			 */
+			function isValid(expression) {
+				let parenthesis = 0;
+				for (let i = 0; i < expression.length; ++i) {
+					if (expression[i] == "(") ++parenthesis;
+					else if (expression[i] == ")") --parenthesis;
+					else if (!expression[i].match(/[A-Za-z0-9\-\+\^]/)) {
+						return i;
+					}
+				}
+
+				return parenthesis == 0 ? -1 : -2;
+			}
+			function getParts(expression) {
+				return expression.split(/\)\(/g);
+			}
+			function getElements(polynomial) {
+				let elements = [];
+				polynomial
+					.replace(/(\(\))/g, "")
+					.replace(/\^\-/g, "^&")
+					.replace(/\-/g, "-~")
+					.split(/[\+\-]/g)
+					.forEach((el) => {
+						let names = [];
+						let powers = [];
+						let atNames = false;
+						let atPower = false;
+						let index = -1;
+						let number = "";
+						el = el
+							.replace(/\^&/g, "^-")
+							.replace(/~/, "-")
+							.replace(/[\(\)]/g, "");
+						debugger;
+						for (let i = 0; i < el.length; ++i) {
+							let char = el[i];
+							if (atPower || !"-+1234567890".includes(char)) {
+								atNames = true;
+								if (char.match(/[A-Za-z]/)) {
+									if (atPower || names.length == 0) {
+										++index;
+										powers.push("");
+										names.push(char);
+									}
+									atPower = false;
+								}
+								if (atPower) {
+									powers[index] += char;
+								}
+							}
+							if (char == "^") {
+								atPower = true;
+							} else if (!atNames) {
+								number += char;
+							}
+						}
+
+						elements.push({names: names, number: number, powers: powers});
+					});
+
+				return elements;
+			}
+			function multiply(el1, el2) {
+				if (el1.name == el2.name) {
+					return {name: el1.name, number: el1.number * el2.number, power: el1.power + el2.power};
+				} else {
+					return {name: el1.name + el2.name, number: el1.number * el2.number};
+				}
+			}
+		</script>
+	</body>
+</html>
