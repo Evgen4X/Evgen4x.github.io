@@ -656,8 +656,7 @@ const HomeScreenBG = new Element(
 	"div",
 	{display: "flex", "justify-content": "center", "aligh-items": "center", width: "100vw", height: "100vh", "background-image": "url('files/images/cameraGlitch.jpg')"},
 	ScreenParent,
-	`
-<div class='transparent flexColumnContainer'>
+	`<div class='transparent flexColumnContainer'>
 	<p class='homeScreenText'>Fife<br>Nights<br>at<br>Szuj</p>
 	<button class='homeScreenButton' onclick='play()'>Play</button>
 	<button class='homeScreenButton' onclick='newGame()'>New game</button>
