@@ -30,10 +30,12 @@ main {
 
 main > div {
 	width: 30vw;
+	max-height: 80%;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
 	flex-wrap: wrap;
+	overflow-y: auto;
 }
 
 main h1 {
@@ -41,7 +43,8 @@ main h1 {
 	text-shadow: 0 0 1em black;
 }
 
-#container {
+.container {
+	margin: 2em 1px;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
