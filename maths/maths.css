@@ -1,3 +1,41 @@
+* {
+	font-family: monospace;
+}
+
+main {
+	justify-content: space-evenly;
+}
+
+input {
+	width: 80%;
+	height: 5rem;
+	font-size: 3rem;
+	border-radius: 2rem;
+	background-color: var(--ibg);
+	color: var(--itxt);
+}
+
+button {
+	width: 20%;
+	height: 5rem;
+	font-size: 3rem;
+	border-radius: 2.5rem;
+	background-color: var(--ibg);
+	color: var(--itxt);
+}
+
 #output {
+	--deg: 0deg;
+	height: auto;
+	min-height: 5rem;
+	max-width: 90%;
+	word-wrap: break-word;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	user-select: text;
+	font-size: 3rem;
+	background-color: var(--ibg);
+	border-radius: 2.5rem;
 }

@@ -1,3 +1,25 @@
+html.light {
+	--bg: #ffffff;
+	--txt: #000000;
+	--header: #555555;
+	--footer: #000000;
+	--hftxt: #dddddd;
+	--img: url(dark.png);
+	--ibg: #f5f5f5;
+	--itxt: #000000;
+}
+
+html.dark {
+	--bg: #333333;
+	--txt: #ffffff;
+	--header: #777777;
+	--footer: #000000;
+	--hftxt: #ffffff;
+	--img: url(light.png);
+	--ibg: #555555;
+	--itxt: #cccccc;
+}
+
 html,
 body {
 	margin: 0;
@@ -9,9 +31,12 @@ body {
 
 * {
 	user-select: none;
+	transition: background-color 500ms ease-in-out;
 }
 
 body {
+	background-color: var(--bg);
+	color: var(--txt);
 	display: flex;
 	justify-content: baseline;
 	align-items: center;
@@ -31,8 +56,8 @@ div#back {
 header {
 	width: 100vw;
 	height: 8vh;
-	background-color: #555;
-	color: white;
+	background-color: var(--header);
+	color: var(--hftxt);
 	font-size: x-large;
 	font-weight: bolder;
 	text-transform: uppercase;
@@ -47,6 +72,14 @@ header div#title {
 	align-items: center;
 	transform: translateY(-2vh);
 	height: 6vh;
+}
+
+#theme-switch {
+	margin-right: 1vh;
+	width: 6vh;
+	height: 6vh;
+	background-image: var(--img);
+	background-size: 6vh 6vh;
 }
 
 #settings-button {
@@ -70,11 +103,11 @@ main {
 footer {
 	width: 100vw;
 	height: 5vh;
-	background-color: #000;
+	background-color: var(--footer);
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	color: white;
+	color: var(--hftxt);
 	font-size: x-large;
 	letter-spacing: 0.15em;
 	text-shadow: 0 0 1.25em white;

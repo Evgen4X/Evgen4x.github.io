@@ -14,9 +14,10 @@
 		<header>
 			<div id="back" onclick="history.back();"></div>
 			<div id="title">Texas Hold'em</div>
-			<div style="display: flex; justify-content: center; align-items: center; width: 14vh; height: 6vh; transform: translateY(-2vh)">
+			<div style="display: flex; justify-content: center; align-items: center; width: 20vh; height: 6vh; transform: translateY(-2vh)">
 				<div id="question-mark" onclick="openLink(`en.wikipedia.org/wiki/Texas_hold_'em#Rules`);">?</div>
 				<div id="settings-button" onclick="toggleSettings();"></div>
+				<div id="theme-switch"></div>
 			</div>
 		</header>
 		<main onclick="document.getElementById('settings').style.display = 'none';">
@@ -36,6 +37,7 @@
 		</div>
 	</body>
 
+	<script src="../themeSwitch.js"></script>
 	<script src="functionality.js"></script>
 	<script src="logic.js"></script>
 	<script src="game.js"></script>

@@ -11,17 +11,18 @@
 		<header>
 			<div id="back" onclick="history.back();"></div>
 			<div id="title">Polynomial multiplication</div>
-			<div id="just-centers-the-title-element-and-nothing-else"></div>
+			<div id="theme-switch"></div>
 		</header>
 
 		<main>
 			<input placeholder="polynomial" id="polynomial" />
-			<button onclick="multiply();">Mul</button>
+			<button onclick="multiply();">Multiply</button>
 			<div id="output"></div>
 		</main>
 
 		<footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
 
+		<script src="../themeSwitch.js"></script>
 		<script>
 			class Element {
 				constructor(names, number, powers) {
@@ -68,13 +69,11 @@
 					return new Element(new_names, this.number * other.number, new_powers);
 				}
 			}
+
 			function get() {
 				return document.getElementById("polynomial").value.replace(/ /g, "");
 			}
-			/**
-			 * @param {string} expression - expression to be checked
-			 * @returns {number} - (-2) means wrong parenthesis number, (-1) means valid, [>=0] is position of a wrong symbol
-			 */
+
 			function isValid(expression) {
 				let parenthesis = 0;
 				for (let i = 0; i < expression.length; ++i) {
@@ -87,9 +86,11 @@
 
 				return parenthesis == 0 ? -1 : -2;
 			}
+
 			function getParts(expression) {
 				return expression.slice(1, -1).split(/\)\(/g);
 			}
+
 			function getElements(polynomial) {
 				let elements = [];
 				polynomial
@@ -135,43 +136,106 @@
 						});
 						if (number == "") {
 							number = "1";
+						} else if (number == "-") {
+							number = "-1";
 						}
 						elements.push(new Element(names, number, powers));
 					});
 
 				return elements;
 			}
+
 			function multiplyPolynomials(a, b) {
 				let res = [];
 				for (let i = 0; i < a.length; ++i) {
 					for (let j = 0; j < b.length; ++j) {
-						console.log(a[i], b[j]);
 						res.push(a[i].multiply(b[j]));
 					}
 				}
 
 				return res;
 			}
+
+			function addTerms(polynomial) {
+				let res = [];
+				polynomial.forEach((el) => {
+					el.order();
+					let found = false;
+					res.forEach((rel) => {
+						if (!found) {
+							if (el.names.length == rel.names.length) {
+								let flag = true;
+								for (let i = 0; i < el.names.length; ++i) {
+									if (rel.names[i] != el.names[i] || rel.powers[i] != el.powers[i]) {
+										flag = false;
+										break;
+									}
+								}
+								if (flag) {
+									res.push(new Element(el.names, el.number + rel.number, el.powers));
+									found = true;
+									res.splice(res.indexOf(rel), 1);
+								}
+							}
+						}
+					});
+					if (!found) {
+						res.push(el);
+					}
+				});
+
+				return res;
+			}
+
 			function multiply() {
+				if (isValid(get()) != -1) {
+					alert(":(");
+				}
 				let input = getParts(get());
-				let answer = multiplyPolynomials(getElements(input[0]), getElements(input[1]));
+				let answer = getElements(input[0]);
+				for (let i = 1; i < input.length; ++i) {
+					answer = multiplyPolynomials(answer, getElements(input[i]));
+					console.log(answer);
+				}
+
+				answer = addTerms(answer);
+				console.log(answer);
 
 				let res = "";
 				for (let i = 0; i < answer.length; ++i) {
 					let el = answer[i];
+					if (el.number == 0) continue;
 					el.order();
-					res += (el.number > 0 && i != 0 ? "+" : "") + (Math.abs(el.number) != 1 ? el.number : "");
+					if (el.names.length == 0) {
+						res += (el.number > 0 ? "+" : "") + el.number;
+						continue;
+					}
+					res += (el.number > 0 ? "+" : "") + (el.number == 1 ? "" : el.number == "-1" ? "-" : el.number);
 					for (let j = 0; j < el.names.length; ++j) {
 						if (el.powers[j] == 1) {
 							res += el.names[j];
 						} else if (el.powers[j] != 0) {
 							res += el.names[j] + "^" + (el.powers[j] < 0 ? "(" + el.powers[j] + ")" : +el.powers[j]);
+						} else {
+							res += Math.abs(el.number) == 1 ? "1" : "";
 						}
 					}
 				}
 
-				document.getElementById("output").innerHTML = res;
+				if (res[0] == "+") {
+					res = res.slice(1);
+				}
+
+				output.innerHTML = res;
+				output.style.width = res.length + "em";
+				if (res.length != 0) {
+					output.style.borderWidth = "1rem";
+				} else {
+					output.style.borderWidth = "0";
+				}
 			}
+
+			const output = document.getElementById("output");
 		</script>
 	</body>
 </html>
