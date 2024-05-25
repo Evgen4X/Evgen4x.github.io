@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<link rel="stylesheet" href="../default.css" />
+		<link rel="stylesheet" href="maths.css" />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Polynomials</title>
@@ -15,9 +16,8 @@
 
 		<main>
 			<input placeholder="polynomial" id="polynomial" />
-			<button onclick="console.log(isValid(get()))">valid</button>
-			<button onclick="console.log(getParts(get()))">parts</button>
-			<button onclick="console.log(getElements(getParts(get())[0]))">els</button>
+			<button onclick="multiply();">Mul</button>
+			<div id="output"></div>
 		</main>
 
 		<footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
@@ -26,28 +26,46 @@
 			class Element {
 				constructor(names, number, powers) {
 					this.names = names;
-					this.number = number;
-					this.powers = powers;
+					this.number = parseInt(number);
+					this.powers = [];
+					powers.forEach((power) => {
+						this.powers.push(parseInt(power));
+					});
+				}
+
+				order() {
+					let c = [];
+					for (let i = 0; i < this.names.length; c.push(i++));
+					c.sort((x, y) => this.powers[x] - this.powers[y]);
+					this.powers.sort((x, y) => x - y);
+					this.names.sort((x, y) => c[this.names.indexOf(x)] - c[this.names.indexOf(y)]);
+					c.sort((x, y) => this.powers[x] - this.powers[y] || this.names[x].localeCompare(this.names[y]));
+					this.names.sort((x, y) => c[this.names.indexOf(x)] - c[this.names.indexOf(y)]);
 				}
 
 				multiply(other) {
 					let new_names = [];
 					let new_powers = [];
-					let remaining_names = other.names;
-					let remaining_powers = other.powers;
+					let remaining_names = other.names.filter(() => true);
+					let remaining_powers = other.powers.filter(() => true);
 					this.names.forEach((name, i) => {
 						let index = remaining_names.indexOf(name);
 						if (index != -1) {
 							new_names.push(name);
 							new_powers.push(this.powers[i] + other.powers[other.names.indexOf(name)]);
-							remaining_names.splice(index);
+							remaining_names.splice(index, 1);
+							remaining_powers.splice(index, 1);
 						} else {
 							new_names.push(name);
 							new_powers.push(this.powers[i]);
 						}
 					});
+					remaining_names.forEach((name, i) => {
+						new_names.push(name);
+						new_powers.push(remaining_powers[i]);
+					});
 
-					return {names: new_names, number: this.number * other.number, powers: new_powers};
+					return new Element(new_names, this.number * other.number, new_powers);
 				}
 			}
 			function get() {
@@ -70,7 +88,7 @@
 				return parenthesis == 0 ? -1 : -2;
 			}
 			function getParts(expression) {
-				return expression.split(/\)\(/g);
+				return expression.slice(1, -1).split(/\)\(/g);
 			}
 			function getElements(polynomial) {
 				let elements = [];
@@ -90,18 +108,15 @@
 							.replace(/\^&/g, "^-")
 							.replace(/~/, "-")
 							.replace(/[\(\)]/g, "");
-						debugger;
 						for (let i = 0; i < el.length; ++i) {
 							let char = el[i];
 							if (atPower || !"-+1234567890".includes(char)) {
 								atNames = true;
 								if (char.match(/[A-Za-z]/)) {
-									if (atPower || names.length == 0) {
-										++index;
-										powers.push("");
-										names.push(char);
-									}
 									atPower = false;
+									++index;
+									powers.push("");
+									names.push(char);
 								}
 								if (atPower) {
 									powers[index] += char;
@@ -113,18 +128,49 @@
 								number += char;
 							}
 						}
-
-						elements.push({names: names, number: number, powers: powers});
+						powers.forEach((p, i) => {
+							if (p == "") {
+								powers[i] = "1";
+							}
+						});
+						if (number == "") {
+							number = "1";
+						}
+						elements.push(new Element(names, number, powers));
 					});
 
 				return elements;
 			}
-			function multiply(el1, el2) {
-				if (el1.name == el2.name) {
-					return {name: el1.name, number: el1.number * el2.number, power: el1.power + el2.power};
-				} else {
-					return {name: el1.name + el2.name, number: el1.number * el2.number};
+			function multiplyPolynomials(a, b) {
+				let res = [];
+				for (let i = 0; i < a.length; ++i) {
+					for (let j = 0; j < b.length; ++j) {
+						console.log(a[i], b[j]);
+						res.push(a[i].multiply(b[j]));
+					}
 				}
+
+				return res;
+			}
+			function multiply() {
+				let input = getParts(get());
+				let answer = multiplyPolynomials(getElements(input[0]), getElements(input[1]));
+
+				let res = "";
+				for (let i = 0; i < answer.length; ++i) {
+					let el = answer[i];
+					el.order();
+					res += (el.number > 0 && i != 0 ? "+" : "") + (Math.abs(el.number) != 1 ? el.number : "");
+					for (let j = 0; j < el.names.length; ++j) {
+						if (el.powers[j] == 1) {
+							res += el.names[j];
+						} else if (el.powers[j] != 0) {
+							res += el.names[j] + "^" + (el.powers[j] < 0 ? "(" + el.powers[j] + ")" : +el.powers[j]);
+						}
+					}
+				}
+
+				document.getElementById("output").innerHTML = res;
 			}
 		</script>
 	</body>
