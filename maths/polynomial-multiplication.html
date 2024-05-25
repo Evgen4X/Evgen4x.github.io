@@ -32,6 +32,12 @@
 					powers.forEach((power) => {
 						this.powers.push(parseInt(power));
 					});
+					for (let i = 0; i < this.names.length; ++i) {
+						if (this.powers[i] == 0) {
+							this.names.splice(i, 1);
+							this.powers.splice(i, 1);
+						}
+					}
 				}
 
 				order() {
@@ -195,11 +201,9 @@
 				let answer = getElements(input[0]);
 				for (let i = 1; i < input.length; ++i) {
 					answer = multiplyPolynomials(answer, getElements(input[i]));
-					console.log(answer);
 				}
 
 				answer = addTerms(answer);
-				console.log(answer);
 
 				let res = "";
 				for (let i = 0; i < answer.length; ++i) {
@@ -215,7 +219,7 @@
 						if (el.powers[j] == 1) {
 							res += el.names[j];
 						} else if (el.powers[j] != 0) {
-							res += el.names[j] + "^" + (el.powers[j] < 0 ? "(" + el.powers[j] + ")" : +el.powers[j]);
+							res += el.names[j] + "^" + (el.powers[j] < 0 || el.powers[j] > 9 ? "(" + el.powers[j] + ")" : +el.powers[j]);
 						} else {
 							res += Math.abs(el.number) == 1 ? "1" : "";
 						}

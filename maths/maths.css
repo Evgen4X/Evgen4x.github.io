@@ -29,11 +29,12 @@ button {
 	height: auto;
 	min-height: 5rem;
 	max-width: 90%;
-	word-wrap: break-word;
 	text-align: center;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex-wrap: wrap;
+	word-break: break-all;
 	user-select: text;
 	font-size: 3rem;
 	background-color: var(--ibg);
