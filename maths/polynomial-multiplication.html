@@ -103,6 +103,7 @@
 					.replace(/(\(\))/g, "")
 					.replace(/\^\-/g, "^&")
 					.replace(/\-/g, "-~")
+					.replace(/^-/, "~")
 					.split(/[\+\-]/g)
 					.forEach((el) => {
 						let names = [];
@@ -115,6 +116,7 @@
 							.replace(/\^&/g, "^-")
 							.replace(/~/, "-")
 							.replace(/[\(\)]/g, "");
+						debugger;
 						for (let i = 0; i < el.length; ++i) {
 							let char = el[i];
 							if (atPower || !"-+1234567890".includes(char)) {
@@ -199,8 +201,11 @@
 				}
 				let input = getParts(get());
 				let answer = getElements(input[0]);
+				console.log(answer);
+
 				for (let i = 1; i < input.length; ++i) {
 					answer = multiplyPolynomials(answer, getElements(input[i]));
+					console.log(answer, getElements(input[i]));
 				}
 
 				answer = addTerms(answer);
