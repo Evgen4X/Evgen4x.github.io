@@ -29,8 +29,9 @@ main {
 }
 
 main > div {
+	transform: translateY(-15%);
 	width: 30vw;
-	max-height: 80%;
+	height: 70vh;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
@@ -38,13 +39,41 @@ main > div {
 	overflow-y: auto;
 }
 
+main > div::-webkit-scrollbar {
+	display: none;
+	width: 0.5vw;
+	background: transparent;
+}
+
+main > div:hover::-webkit-scrollbar {
+	display: block;
+}
+
+main > div::-webkit-scrollbar-thumb {
+	background: #2a2a2a;
+	border-radius: 0.25vw;
+}
+
+main > div::-webkit-scrollbar-thumb:hover {
+	cursor: ns-resize;
+	background: #222;
+}
+
 main h1 {
+	margin: 2vh 0 0 0;
+	border-radius: 5vh;
+	width: 95%;
+	text-align: center;
+	height: 20%;
 	color: #d0a3bf;
 	text-shadow: 0 0 1em black;
+	box-shadow: 0 0 2vh rgb(95, 95, 95);
+	background-color: rgb(95, 95, 95);
+	z-index: 999;
 }
 
 .container {
-	margin: 2em 1px;
+	margin: 1.5vh 1px;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
