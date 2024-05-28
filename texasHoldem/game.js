@@ -24,16 +24,16 @@ for (let i = 0; i < parseInt(InumberOfPlayers.value); ++i) {
 	addCard(players[i], 2);
 	let div = document.createElement("div");
 	div.classList.add("player-cards");
+	if (i != 0) {
+		div.classList = "hidden-cards";
+	}
 	div.id = "player-cards-" + i;
 	div.setAttribute("player", i);
 	document.getElementById("players-container").appendChild(div);
 	playerDivs.push(div);
 
-	updateCards(div, players[i]);
+	updateCards(div, players[i], true);
 }
-
-console.log(players[2]);
-console.log(playerDivs);
 
 var community = ["?", "?", "?", "?", "?"];
 var communityDivs = [];
@@ -48,7 +48,7 @@ function updateCards(html, js) {
 	updateAll();
 }
 
-function updateAll() {
+function updateAll(hideAll) {
 	document.querySelectorAll(".card").forEach((el) => {
 		let card = el.getAttribute("card");
 		if (card == "?") {
@@ -56,5 +56,14 @@ function updateAll() {
 		} else {
 			el.style.backgroundImage = `url(images/${Vnames[values.indexOf(card[0])]}_of_${Snames[suites.indexOf(card[1])]}.png)`;
 		}
+	});
+}
+
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
+
+function drawCard(cards) {
+	cards.forEach((card) => {
+		ctx.drawImage(card[2], card[0], card[1]);
 	});
 }
