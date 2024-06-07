@@ -1,0 +1,44 @@
+aside {
+	position: absolute;
+	top: 8vh;
+	left: 0;
+	height: 87vh;
+	border: 1px solid black;
+	transition: all 500ms ease-in-out;
+}
+
+@media screen and (min-width: 600px) {
+	aside {
+		width: 15vw;
+	}
+
+	aside:hover,
+	aside:focus,
+	aside:active {
+		width: 25vw;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	aside {
+		width: 10vw;
+	}
+
+	aside:hover,
+	aside:focus,
+	aside:active {
+		width: 30vw;
+	}
+}
+
+@media screen and (max-width: 300px) {
+	aside {
+		width: 15vw;
+	}
+
+	aside:hover,
+	aside:focus,
+	aside:active {
+		width: 60vw;
+	}
+}
