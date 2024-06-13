@@ -1347,7 +1347,7 @@ let turnedOffAll = false;
 let timeBeforeNoEnergyJumpscare = Math.random() * 15000 + 5000;
 function GameLoop() {
 	//Time control
-	Data.time += 1;
+	Data.time += 1.33;
 	let time = Data.time / 3600;
 	time = time < 1 ? 12 : Math.floor(time);
 	Time.el.innerHTML = time + "AM";
@@ -1392,7 +1392,7 @@ function GameLoop() {
 		usageBars[usageBars.length - 1].remove();
 	}
 
-	Data.energy -= (usage == 1 ? 0.5 : usage) * 0.2;
+	Data.energy -= (usage == 1 ? 0.5 : usage) * 0.15;
 	EnergyLevel.el.innerHTML = "Power left: " + Math.floor(Data.energy / 50) + "%";
 	if (Data.energy <= 0) {
 		EnergyLevel.el.innerHTML = "No power left";

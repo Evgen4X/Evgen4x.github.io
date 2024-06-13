@@ -3,6 +3,7 @@ html {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
+	user-select: none;
 }
 
 :root {
@@ -135,8 +136,7 @@ html {
 	border-bottom: 3vw solid transparent;
 }
 
-#holdToChargeButton
-{
+#holdToChargeButton {
 	user-select: none;
-	cursor: pointer; 
+	cursor: pointer;
 }
