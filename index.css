@@ -59,7 +59,7 @@ main > div::-webkit-scrollbar-thumb:hover {
 }
 
 main h1 {
-	margin: 0;
+	margin: 1em 0 0 0;
 	border-radius: 5vh;
 	width: 95%;
 	text-align: center;
