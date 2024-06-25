@@ -1,0 +1,131 @@
+* {
+	transition: background-color 200ms ease-in-out;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+html.light {
+	--lbg: #fff;
+	--dbg: #666;
+	--lrbg: #999;
+	--ltxt: #000;
+	--dtxt: #fff;
+}
+
+html.dark {
+	--lbg: #444;
+	--dbg: #999;
+	--lrbg: #666;
+	--ltxt: #fff;
+	--dtxt: #000;
+}
+
+main {
+	width: 100vw;
+	height: 88vh;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+	background-color: var(--lbg);
+	color: var(--ltxt);
+}
+
+#inputarea {
+	width: 80%;
+	height: 5em;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+#inputarea div {
+	padding: 2px;
+	border: 3px outset var(--dbg);
+	width: auto;
+	height: 1.5em;
+	background-color: var(--lrbg);
+	color: var(--ltxt);
+	font-size: large;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	user-select: none;
+}
+
+#inputarea input {
+	margin-left: 1em;
+	background-color: var(--lrbg);
+	color: var(--ltxt);
+	font-size: large;
+}
+
+#textarea {
+	padding: 1em;
+	width: 80%;
+	height: 20vh;
+	background-color: var(--dbg);
+	color: var(--dtxt);
+	font-size: larger;
+	border-radius: 1em;
+	word-break: break-all;
+}
+
+#keyboard,
+#lights {
+	width: 80%;
+	height: 25vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+#keyboard .keyboard-row,
+#lights .lights-row {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+}
+
+.lights-row .light {
+	width: 2em;
+	height: 2em;
+	background-color: var(--lrbg);
+	color: var(--ltxt);
+	font-size: x-large;
+	border: 3px solid var(--ltxt);
+	border-radius: 1.75em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 2px;
+}
+
+.keyboard-row .keyboard-key {
+	width: 1.75em;
+	height: 1.5em;
+	background-color: var(--dbg);
+	color: var(--dtxt);
+	font-size: x-large;
+	border: 5px inset var(--ltxt);
+	border-radius: 1.25em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 1px;
+}
+/* 
+TODO: test
+@media screen and (max-width: 768px) {
+	.keyboard-row .keyboard-key {
+		font-size: small;
+	}
+} */

@@ -33,13 +33,12 @@ function getData(val) {
 	for (let i = 0; i < desc.length; ++i) {
 		if (desc[i] == "*" && desc[i + 1] == "*") {
 			if (desc[i - 1] != "\\") {
+				++i;
 				if (opened[0] == "**") {
 					description += "</b>";
 					opened.shift();
-					++i;
 				} else {
 					description += "<b>";
-					++i;
 					opened.unshift("**");
 				}
 			} else {
@@ -47,13 +46,12 @@ function getData(val) {
 			}
 		} else if (desc[i] == "~" && desc[i + 1] == "~") {
 			if (desc[i - 1] != "\\") {
+				++i;
 				if (opened[0] == "~~") {
 					description += "</i>";
 					opened.shift();
-					++i;
 				} else {
 					description += "<i>";
-					++i;
 					opened.unshift("~~");
 				}
 			} else {
