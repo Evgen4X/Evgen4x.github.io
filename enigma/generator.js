@@ -28,6 +28,8 @@ buttons.forEach((button) => {
 		div.style.marginLeft = "0.5em";
 	}
 
+	div.setAttribute("key", button);
+
 	krow.appendChild(div);
 
 	if (breaks.includes(button)) {
@@ -55,15 +57,17 @@ buttons.forEach((button) => {
 var controlled = false;
 
 document.addEventListener("keydown", (event) => {
-	let key = event.key.toUpperCase();
+	if (!document.querySelector("dialog").open) {
+		let key = event.key.toUpperCase();
 
-	if (key == "CONTROL") controlled = true;
+		if (key == "CONTROL") controlled = true;
 
-	if (buttons.includes(key)) {
-		if (key == "BACKSPACE" && controlled) {
-			textarea.innerHTML = "";
-		} else {
-			type(key);
+		if (buttons.includes(key)) {
+			if (key == "BACKSPACE" && controlled) {
+				textarea.innerHTML = "";
+			} else {
+				type(key);
+			}
 		}
 	}
 });

@@ -33,12 +33,6 @@ class Rotor {
 	}
 
 	rotate(n = 1) {
-		// let shifts = this.shifts.slice(this.shifts.length - n);
-		// this.shifts = shifts.concat(this.shifts.slice(0, this.shifts.length - n));
-		//
-		// let shifts = this.shifts.slice(0, n);
-		// this.shifts = this.shifts.slice(n).concat(shifts);
-
 		this.i += n;
 
 		if (this.i == ALPHABET.length) {
@@ -53,15 +47,9 @@ function encode(rotor1, rotor2, rotor3, reflector) {
 	function process(char) {
 		rotor1.rotate() && rotor2.rotate() && rotor3.rotate();
 
-		console.log(rotor1.i, rotor2.i, rotor3.i);
-
-		console.log(rotor1.pass(char), rotor2.pass(rotor1.pass(char)), rotor3.pass(rotor2.pass(rotor1.pass(char))));
-
 		char = rotor3.pass(rotor2.pass(rotor1.pass(char)));
 
 		char = reflector.pass(char);
-
-		console.log(char, rotor3.backwardPass(char), rotor2.backwardPass(rotor3.backwardPass(char)), rotor1.backwardPass(rotor2.backwardPass(rotor3.backwardPass(char))));
 
 		char = rotor1.backwardPass(rotor2.backwardPass(rotor3.backwardPass(char)));
 
@@ -73,6 +61,7 @@ function encode(rotor1, rotor2, rotor3, reflector) {
 
 function type(key) {
 	if (key != "BACKSPACE") {
+		if (!ALPHABET.includes(key)) return;
 		key = passer(key);
 		textarea.innerHTML += key;
 		document.querySelector(`.light[key="${key}"]`).animate([{backgroundColor: "var(--lrbg)"}, {backgroundColor: "rgb(230, 250, 0)"}, {backgroundColor: "var(--lrbg)"}], {duration: 1000});
@@ -94,24 +83,76 @@ function copy() {
 	});
 }
 
+function typeText(text, i) {
+	while (!ALPHABET.includes(text[i++]) && i < text.length);
+	type(text[i - 1]);
+	document.querySelector(`.keyboard-key[key="${text[i - 1]}"]`).animate(
+		[
+			{backgroundColor: "var(--dbg)", borderColor: "var(--ltxt)"},
+			{backgroundColor: "rgb(100, 100, 100)", borderColor: "var(--dtxt)"},
+			{backgroundColor: "var(--brbg)", borderColor: "var(--ltxt)"},
+		],
+		{duration: 1000}
+	);
+	if (i == text.length) {
+		document.getElementById("paste").disabled = false;
+	} else {
+		setTimeout(() => {
+			typeText(text, i);
+		}, 60000 / parseInt(document.getElementById("type-speed").value));
+	}
+}
+
 function paste() {
+	document.getElementById("paste").disabled = true;
 	navigator.permissions.query({name: "clipboard-write"}).then((result) => {
 		if (result.state === "granted" || result.state === "prompt") {
 			navigator.clipboard.readText().then((text) => {
-				let i = 0;
 				text = text.toUpperCase();
-				let interval = window.setInterval(() => {
-					while (!ALPHABET.includes(text[i++]) && i < text.length);
-					type(text[i - 1]);
-					if (i == text.length) window.clearInterval(interval);
-				}, 60000 / parseInt(document.getElementById("type-speed").value));
+				typeText(text, 0);
 			});
 		}
 	});
 }
-let r1 = createRotor(ROTORS["III"], []);
-let r2 = createRotor(ROTORS["II"], []);
-let r3 = createRotor(ROTORS["I"], []);
-let rf = createRotor(REFLECTORS["B"], []);
 
-const passer = encode(r1, r2, r3, rf);
+function saveSettings() {
+	let rotors = [];
+	for (let i = 1; i < 4; ++i) {
+		let rotor = document.getElementById(`rotor${i}`).value;
+		let rotations = Array.from(document.getElementById(`rotor${i}-rotations`).value).filter((n) => ALPHABET.includes(n));
+		if (rotor == "CUSTOM") {
+			rotors.push(createRotor(document.getElementById("rotor1-outputs").value.slice(0, ALPHABET.length), rotations));
+		} else {
+			rotors.push(createRotor(ROTORS[rotor], rotations));
+		}
+	}
+
+	console.log(rotors);
+
+	let rotor = document.getElementById("reflector").value;
+	if (rotor == "CUSTOM") {
+		rf = createRotor(document.getElementById("reflector-outputs").value.slice(0, ALPHABET.length), []);
+	} else {
+		rf = createRotor(REFLECTORS[rotor], []);
+	}
+
+	passer = encode(rotors[0], rotors[1], rotors[2], rf);
+}
+
+document.querySelectorAll('input[list$="-list"]').forEach((input) => {
+	document.getElementById(input.id + "-outputs").value = input.id == "reflector" ? REFLECTORS[input.value] : ROTORS[input.value];
+	input.onchange = () => {
+		if (input.value == "CUSTOM") {
+			document.getElementById(input.id + "-outputs").value = "";
+		} else {
+			document.getElementById(input.id + "-outputs").value = input.id == "reflector" ? REFLECTORS[input.value] : ROTORS[input.value];
+		}
+	};
+});
+
+let r1 = createRotor(ROTORS["I"], []);
+let r2 = createRotor(ROTORS["II"], []);
+let r3 = createRotor(ROTORS["III"], []);
+let rf = createRotor(REFLECTORS["A"], []);
+
+var passer = encode(r1, r2, r3, rf);

@@ -58,7 +58,7 @@ header {
 	height: 8vh;
 	background-color: var(--header);
 	color: var(--hftxt);
-	font-size: 5vh;
+	font-size: xx-large;
 	font-weight: bolder;
 	text-transform: uppercase;
 	display: flex;
@@ -75,6 +75,7 @@ header div#title {
 }
 
 #theme-switch {
+	cursor: pointer;
 	margin-right: 1vh;
 	width: 6vh;
 	height: 6vh;
@@ -121,25 +122,9 @@ footer a {
 	text-shadow: 0 0 0.75em white;
 }
 
-#settings {
-	position: absolute;
-	top: 10vh;
-	left: 15vw;
-	height: 80vh;
-	width: 70vw;
-	justify-content: baseline;
-	align-items: center;
-	flex-direction: column;
-	background-color: rgba(127, 127, 127, 0.9);
-	border: 2vh solid rgba(0, 0, 0, 0.75);
-	border-radius: 5vh;
-}
-
 #question-mark {
 	width: 6vh;
 	height: 6vh;
-	/* background-image: url(icons/question-icon.png); */
-	/* background-size: 6vh 6vh; */
 	background-image: linear-gradient(#0091ff, #0069ff, #0047ff);
 	border-radius: 3vh;
 	font-size: 4.5vh;

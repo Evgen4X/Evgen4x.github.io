@@ -2,24 +2,130 @@
 <html lang="en">
 	<head>
 		<link rel="stylesheet" href="../default.css" />
-		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="enigma.css" />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Enigma</title>
 	</head>
 	<body>
+		<dialog id="settings">
+			<div>
+				<h1>Settings</h1>
+				<form method="dialog">
+					<table>
+						<tr>
+							<td>Rotor</td>
+							<td>Rotor type</td>
+							<td>Outputs</td>
+							<td>Positions of rotations</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="rotor1">First (right) rotor: </label>
+							</td>
+							<td>
+								<input type="text" list="rotors-list" id="rotor1" value="I" />
+							</td>
+							<td>
+								<input type="text" id="rotor1-outputs" class="rotor-outputs-input" placeholder="ABCDEFGHIJKLMNOPQRSTUVWXYZ" />
+							</td>
+							<td>
+								<input type="text" id="rotor1-rotations" value="ABCDEFGHIJKLMNOPQRSTUVWXYZ" class="rotor-outputs-input" disabled />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="rotor2">Second (middle) rotor: </label>
+							</td>
+							<td>
+								<input type="text" list="rotors-list" id="rotor2" value="II" />
+							</td>
+							<td>
+								<input type="text" id="rotor2-outputs" class="rotor-outputs-input" placeholder="ABCDEFGHIJKLMNOPQRSTUVWXYZ" />
+							</td>
+							<td>
+								<input type="text" id="rotor2-rotations" value="" class="rotor-outputs-input" placeholder="B" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="rotor3">Third (left) rotor: </label>
+							</td>
+							<td>
+								<input type="text" list="rotors-list" id="rotor3" value="III" />
+							</td>
+							<td>
+								<input type="text" id="rotor3-outputs" class="rotor-outputs-input" placeholder="ABCDEFGHIJKLMNOPQRSTUVWXYZ" />
+							</td>
+							<td>
+								<input type="text" id="rotor3-rotations" value="" class="rotor-outputs-input" placeholder="C" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="reflector">Reflector: </label>
+							</td>
+							<td>
+								<input type="text" list="reflectors-list" id="reflector" value="A" />
+							</td>
+							<td>
+								<input type="text" id="reflector-outputs" class="rotor-outputs-input" placeholder="ABCDEFGHIJKLMNOPQRSTUVWXYZ" />
+							</td>
+							<td>
+								<input type="text" id="reflector-rotations" class="rotor-outputs-input" value="" disabled />
+							</td>
+						</tr>
+					</table>
+					<div style="width: 75%; display: flex; justify-content: space-evenly; align-items: center">
+						<input type="reset" value="Reset settings" />
+						<button onclick="saveSettings();">Save settings</button>
+					</div>
+					<datalist id="rotors-list">
+						<option value="IC">IC</option>
+						<option value="IIC">IIC</option>
+						<option value="IIIC">IIIC</option>
+						<option value="I">I</option>
+						<option value="II">II</option>
+						<option value="III">III</option>
+						<option value="IV">IV</option>
+						<option value="V">V</option>
+						<option value="VI">VI</option>
+						<option value="VII">VII</option>
+						<option value="VIII">VIII</option>
+						<option value="I-K">I-K</option>
+						<option value="II-K">II-K</option>
+						<option value="III-K">III-K</option>
+						<option value="UKW-K">UKW-K</option>
+						<option value="ETW-K">ETW-K</option>
+						<option value="EMPTY">EMPTY</option>
+						<option value="CUSTOM">CUSTOM</option>
+					</datalist>
+					<datalist id="reflectors-list">
+						<option value="A">A</option>
+						<option value="B">B</option>
+						<option value="C">C</option>
+						<option value="EMPTY">EMPTY</option>
+						<option value="CUSTOM">CUSTOM</option>
+					</datalist>
+				</form>
+			</div>
+		</dialog>
+
 		<header>
 			<div id="back" onclick="window.location.assign('../index.html');"></div>
 			<div id="title">Enigma Machine</div>
-			<div id="theme-switch"></div>
+			<div style="display: flex; justify-content: center; align-items: center; flex-direction: row">
+				<div id="settings-button" onclick="settings.showModal();"></div>
+				<div id="theme-switch"></div>
+			</div>
 		</header>
 
-		<main>
+		<main onclick="settings.close();">
 			<div id="textarea"></div>
 
 			<div id="inputarea">
-				<div id="copy" onclick="copy();">Copy encoded text</div>
-				<div id="paste" onclick="paste();">Encode from clipboard</div>
+				<button id="copy" onclick="copy();">Copy encoded text</button>
+				<button id="paste" onclick="paste();">Encode from clipboard</button>
 				<div>
 					<label for="type-speed">Typing speed (char/min)</label>
 					<input type="number" id="type-speed" value="200" min="0" />
