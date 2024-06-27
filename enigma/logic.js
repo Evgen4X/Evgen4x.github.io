@@ -43,9 +43,15 @@ class Rotor {
 	}
 }
 
-function encode(rotor1, rotor2, rotor3, reflector) {
+function encode(rotor1, rotor2, rotor3, reflector, plugboard) {
 	function process(char) {
 		rotor1.rotate() && rotor2.rotate() && rotor3.rotate();
+
+		console.log(char);
+
+		char = plugboard[char] ? plugboard[char] : char;
+
+		console.log(char);
 
 		char = rotor3.pass(rotor2.pass(rotor1.pass(char)));
 
@@ -53,7 +59,9 @@ function encode(rotor1, rotor2, rotor3, reflector) {
 
 		char = rotor1.backwardPass(rotor2.backwardPass(rotor3.backwardPass(char)));
 
-		return char;
+		console.log(char, ".");
+
+		return plugboard[char] ? plugboard[char] : char;
 	}
 
 	return process;
@@ -64,7 +72,7 @@ function type(key) {
 		if (!ALPHABET.includes(key)) return;
 		key = passer(key);
 		textarea.innerHTML += key;
-		document.querySelector(`.light[key="${key}"]`).animate([{backgroundColor: "var(--lrbg)"}, {backgroundColor: "rgb(230, 250, 0)"}, {backgroundColor: "var(--lrbg)"}], {duration: 1000});
+		document.querySelector(`.light[key="${key}"]`).animate([{backgroundColor: "var(--lrbg)"}, {backgroundColor: "rgb(230, 250, 0)"}, {backgroundColor: "var(--lrbg)"}], {duration: 750});
 	} else {
 		textarea.innerHTML = textarea.innerHTML.slice(0, textarea.innerHTML.length - 1);
 		r1.rotate(-1) && r2.rotate(-1) && r3.rotate(-1);
@@ -86,14 +94,7 @@ function copy() {
 function typeText(text, i) {
 	while (!ALPHABET.includes(text[i++]) && i < text.length);
 	type(text[i - 1]);
-	document.querySelector(`.keyboard-key[key="${text[i - 1]}"]`).animate(
-		[
-			{backgroundColor: "var(--dbg)", borderColor: "var(--ltxt)"},
-			{backgroundColor: "rgb(100, 100, 100)", borderColor: "var(--dtxt)"},
-			{backgroundColor: "var(--brbg)", borderColor: "var(--ltxt)"},
-		],
-		{duration: 1000}
-	);
+	document.querySelector(`.keyboard-key[key="${text[i - 1]}"]`).animate([{backgroundColor: "var(--dbg)"}, {backgroundColor: "rgb(100, 100, 100)"}, {backgroundColor: "var(--dbg)"}], {duration: 750});
 	if (i == text.length) {
 		document.getElementById("paste").disabled = false;
 	} else {
@@ -136,7 +137,19 @@ function saveSettings() {
 		rf = createRotor(REFLECTORS[rotor], []);
 	}
 
-	passer = encode(rotors[0], rotors[1], rotors[2], rf);
+	passer = encode(rotors[0], rotors[1], rotors[2], rf, pb);
+}
+
+function savePlugboard() {
+	pb = {};
+	document.querySelectorAll(".plug-key").forEach((key) => {
+		let connection = key.getAttribute("connection");
+		if (connection) {
+			pb[key.getAttribute("key")] = connection;
+		}
+	});
+
+	console.log(pb);
 }
 
 document.querySelectorAll('input[list$="-list"]').forEach((input) => {
@@ -154,5 +167,6 @@ let r1 = createRotor(ROTORS["I"], []);
 let r2 = createRotor(ROTORS["II"], []);
 let r3 = createRotor(ROTORS["III"], []);
 let rf = createRotor(REFLECTORS["A"], []);
+let pb = {};
 
-var passer = encode(r1, r2, r3, rf);
+var passer = encode(r1, r2, r3, rf, pb);

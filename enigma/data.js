@@ -29,3 +29,6 @@ const REFLECTORS = {
 	C: "FVPJIAOYEDRZXWGCTKUQSBNMHL",
 	EMPTY: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 };
+
+// 13 unique colors for plugboard pairs
+const COLORS = ["rgb(255, 87, 51)", "rgb(51, 255, 87)", "rgb(51, 87, 255)", "rgb(255, 51, 161)", "rgb(51, 255, 161)", "rgb(161, 51, 255)", "rgb(255, 140, 51)", "rgb(51, 255, 140)", "rgb(140, 51, 255)", "rgb(255, 215, 0)", "rgb(0, 191, 255)", "rgb(255, 105, 180)", "rgb(139, 69, 19)"];
