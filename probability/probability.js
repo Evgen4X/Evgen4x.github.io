@@ -99,10 +99,9 @@ function calculate() {
 
 	let goal = Math.ceil((parseInt(document.querySelector('input[type="range"]').value) / 100) * points);
 
-	html += goal + "</td></tr><tr><td>Probability of getting 100%</td><td>";
-
-	let prob100 = 0,
-		prob = 0;
+	let prob100 = 1,
+		prob0 = 1,
+		prob = 1;
 
 	document.querySelectorAll("tr.question").forEach((tr) => {
 		let info = tr.getAttribute("info");
@@ -111,12 +110,12 @@ function calculate() {
 		points = parseInt(points);
 		times = parseInt(times);
 
-		prob100 += Math.pow(1 / options, times);
+		prob100 *= Math.pow(1 / options, times);
+		prob0 *= Math.pow((options - 1) / options, times);
 	});
 
-	html += Math.round(prob100 * 100_00000000) / 1_00000000;
-
-	html += "%</td></tr>";
+	html += goal + `</td></tr><tr><td>Probability of getting 100%</td><td>${Math.round(prob100 * 100_00000000) / 1_00000000}%</td></tr>`;
+	html += goal + `</td></tr><tr><td>Probability of getting 0%</td><td>${Math.round(prob0 * 100_00000000) / 1_00000000}%</td></tr>`;
 
 	html += "</table>";
 
