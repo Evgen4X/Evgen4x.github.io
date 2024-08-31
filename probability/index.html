@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="icon" href="../icons/main-icon.jpg" />
+		<link rel="stylesheet" href="../default.css" />
+		<link rel="stylesheet" href="probability.css" />
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Passing probability</title>
+	</head>
+	<body>
+		<header>
+			<div id="back" onclick="window.location.assign('../index.html');"></div>
+			<div id="title">Probaility of passing a test</div>
+			<div id="theme-switch"></div>
+		</header>
+
+		<main>
+			<table id="main-table">
+				<tr>
+					<td></td>
+					<td>
+						<label for="min-score">Minimal score</label>
+					</td>
+					<td><input type="range" min="0" max="100" step="1" value="50" /></td>
+					<td><input type="number" min="0" max="100" step="0.1" id="min-score" name="min-score" value="50" />%</td>
+				</tr>
+				<tr>
+					<td></td>
+					<th>Answers</th>
+					<th>Points</th>
+					<th>Questions</th>
+				</tr>
+				<tr class="ending-tr">
+					<td></td>
+					<td>All rows: <span id="all-rows">0</span></td>
+					<td>All points: <span id="all-points">0</span></td>
+					<td>All questions: <span id="all-questions">0</span></td>
+				</tr>
+			</table>
+
+			<div>
+				<button id="add-row" onclick="addRow();">Add row</button>
+				<button id="calculate" onclick="calculate();">Calculate</button>
+			</div>
+
+			<table id="answer-table"></table>
+		</main>
+
+		<footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
+
+		<script src="../themeSwitch.js"></script>
+		<script src="probability.js"></script>
+	</body>
+</html>

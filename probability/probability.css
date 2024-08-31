@@ -1,0 +1,89 @@
+table {
+	width: 95%;
+	border-collapse: collapse;
+}
+
+tr {
+	height: 2em;
+	font-size: x-large;
+}
+
+table#main-table tr:first-child {
+	height: 5em;
+}
+
+td,
+th {
+	text-align: center;
+	border: 0.075em solid black;
+}
+
+th {
+	border-bottom-width: 0.175em;
+}
+
+table#main-table td:first-child,
+table#main-table th:first-child {
+	width: 1.5em;
+}
+
+table#answer-table {
+	user-select: all !important;
+}
+
+.remove-row-button {
+	margin: auto;
+	display: block;
+	font-size: x-large;
+	width: 1.33em;
+	height: 1.33em;
+	background-image: url(bin.png);
+	background-size: 1.33em 1.33em;
+	background-color: transparent;
+	outline: none !important;
+	border: none !important;
+	cursor: pointer;
+}
+
+input[type="range"] {
+	width: 95%;
+}
+
+input[type="number"] {
+	border: none;
+	background-color: transparent;
+	color: var(--txt);
+	font-size: x-large;
+	width: 2.5em;
+}
+
+button {
+	margin: 1em;
+	padding: 0.5em;
+	font-size: x-large;
+	background-color: var(--header);
+	color: var(--txt);
+	border: 0.2em outset var(--bg);
+}
+
+button:hover {
+	border-style: inset;
+}
+
+button:active {
+	background-color: var(--bg);
+}
+
+@media screen and (max-width: 900px) {
+	tr {
+		font-size: large;
+	}
+
+	.remove-row-button {
+		font-size: large;
+	}
+
+	button {
+		font-size: large;
+	}
+}
