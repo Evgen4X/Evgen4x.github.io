@@ -38,6 +38,12 @@ main > div {
 	overflow-y: auto;
 }
 
+@media screen and (max-width: 1000px){
+	main > div {
+		width: 75%;
+	}
+}
+
 main > div::-webkit-scrollbar {
 	display: none;
 	width: 0.5vw;
