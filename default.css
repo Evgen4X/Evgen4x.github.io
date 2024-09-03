@@ -48,7 +48,7 @@ div#back {
 	margin: 1vh;
 	height: 6vh;
 	width: 6vh;
-	background-image: url(icons/main-icon.jpg);
+	background-image: url(icons/main-icon.png);
 	background-size: contain;
 	cursor: pointer;
 }
