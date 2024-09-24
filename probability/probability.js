@@ -90,7 +90,22 @@ function removeRow(id) {
 	updateTable();
 }
 
+function getLocalProbabilityOfExactly(n, options, times) {
+	let p = 1;
+	for (let i = n; i < times; p *= ++i);
+
+	for (let i = 1; i < times - n; p /= ++i);
+
+	p *= Math.pow(1 / options, n);
+	p *= Math.pow(1 - 1 / options, times - n);
+
+	return p;
+}
+
+function getProbabilityOfExactly(n) {}
+
 function calculate() {
+	getLocalProbabilityOfExactly(5, 2, 19);
 	updateTable();
 
 	const tbl = document.getElementById("answer-table");
@@ -103,6 +118,8 @@ function calculate() {
 		prob0 = 1,
 		prob = 1;
 
+	let data = [];
+
 	document.querySelectorAll("tr.question").forEach((tr) => {
 		let info = tr.getAttribute("info");
 		let [options, points, times] = info.split("-");
@@ -110,12 +127,20 @@ function calculate() {
 		points = parseInt(points);
 		times = parseInt(times);
 
+		data.push([options, points, times]);
+
 		prob100 *= Math.pow(1 / options, times);
-		prob0 *= Math.pow((options - 1) / options, times);
+		prob0 *= Math.pow(1 - 1 / options, times);
 	});
 
 	html += goal + `</td></tr><tr><td>Probability of getting 100%</td><td>${Math.round(prob100 * 100_00000000) / 1_00000000}%</td></tr>`;
-	html += goal + `</td></tr><tr><td>Probability of getting 0%</td><td>${Math.round(prob0 * 100_00000000) / 1_00000000}%</td></tr>`;
+	html += `<tr><td>Probability of getting 0%</td><td>${Math.round(prob0 * 100_00000000) / 1_00000000}%</td></tr>`;
+
+	for (let i = goal; i < points; ++i) {
+		prob += getProbabilityOfExactly(i);
+	}
+
+	html += `<tr><td>Probability of getting ${goal} pts</td><td>${Math.round(prob * 100_00000000) / 1_00000000}%</td></tr>`;
 
 	html += "</table>";
 
