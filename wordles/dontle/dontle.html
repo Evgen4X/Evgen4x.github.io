@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="dontle.css" />
+		<link rel="icon" href="dontle_icon.png" />
+		<meta charset="UTF-8" />
+		<title>Don'tle!</title>
+	</head>
+
+	<body>
+		<header>
+			<button onclick="show('how_to');" style="background-color: #000; border: none; color: white">?</button>
+			<div class="button_container" style="width: 10%">
+				<button onclick="show_game_over();">GIVE UP</button>
+			</div>
+			<a href="../main/index.html" class="title">DON'TLE</a>
+			<button onclick="show('settings');" style="background-color: #000; border: none"><img src="../settings.png" style="width: 1.5em; height: 1.5em" /></button>
+		</header>
+		<div class="flex"><span style="color: white" id="undos_counter">Undos used: 0 / 5</span></div>
+		<div class="board mainboard"></div>
+		<div id="keyboard">
+			<div class="kb_row">
+				<button class="kb_key NAL" id="undo_btn" onclick="undo();" style="aspect-ratio: 2 / 1">Undo</button>
+				<button class="kb_key NAL" onclick="show('undos');" style="aspect-ratio: 2 / 1">Show undos</button>
+			</div>
+			<div class="kb_row"></div>
+
+		<div class="absolute undos">
+			<!-- Undos-->
+			<span class="title">Previous undos</span>
+			<div id="undos_table"></div>
+			<div class="button_container">
+				<button onclick="close_all();">Back</button>
+			</div>
+		</div>
+
+		<div class="absolute go">
+			<!-- Game over -->
+			<span class="title"></span>
+			<span class="go_answer"></span>
+			<div class="button_container">
+				<button onclick="new_game();">Play again</button>
+				<button onclick="window.location.href = '../main/index.html';">Other games</button>
+				<button onclick="close_all();">Close</button>
+			</div>
+		</div>
+
+		<div class="absolute settings">
+			<!-- Settings-->
+			<span class="title">Settings</span>
+			<div class="letter_amount">
+				<label>Letters: </label>
+				<button class="amount_of_letters">3</button>
+				<button class="amount_of_letters">4</button>
+				<button class="amount_of_letters">5</button>
+				<button class="amount_of_letters">6</button>
+				<button class="amount_of_letters">7</button>
+				<button class="amount_of_letters">8</button>
+				<button class="amount_of_letters">9</button>
+				<button class="amount_of_letters">10</button>
+				<button class="amount_of_letters">11</button>
+				<button class="amount_of_letters">12</button>
+				<button class="amount_of_letters">13</button>
+				<button class="amount_of_letters">14</button>
+				<button class="amount_of_letters">15</button>
+			</div>
+			<div class="button_container">
+				<button onclick="show('custom');">Custom don'tle</button>
+				<button onclick="close_all();">Back</button>
+			</div>
+			<div class="button_container">
+				<button id="hide_all" onclick="hide_all();">Hide all letters</button>
+			</div>
+		</div>
+
+		<div class="absolute custom">
+			<!-- Custom word-->
+			<span class="title">Create custom dont'le!</span>
+			<span class="cw_subtitle">The word must be from 3 to 15 letters long</span>
+			<input id="link_input" type="text" name="answer" placeholder="Word" />
+			<a id="link"></a>
+			<div class="button_container">
+				<button onclick="get_link();">Generate link</button>
+				<button onclick="close_all();">Cancel</button>
+			</div>
+		</div>
+
+		<div class="absolute how_to">
+			<span class="title">How to play?</span>
+			<p>Enter a word</p>
+			<div class="board">
+				<div class="brd_row">
+					<div class="letter" style="background-color: #545454">W</div>
+					<div class="letter" style="background-color: #545454">O</div>
+					<div class="letter" style="background-color: #545454">R</div>
+					<div class="letter" style="background-color: #545454">D</div>
+					<div class="letter" style="background-color: #545454">S</div>
+				</div>
+				<p><span style="color: #545454">Gray</span> color means that the letter is not in the word</p>
+				<div class="brd_row">
+					<div class="letter" style="background-color: #545454">P</div>
+					<div class="letter" style="background-color: #545454">L</div>
+					<div class="letter" style="background-color: #545454">A</div>
+					<div class="letter" style="background-color: #f3c237">Y</div>
+					<div class="letter" style="background-color: #545454">S</div>
+				</div>
+				<p><span style="color: #f3c237">Yellow</span> color means that the letter is in the word, but in incorrect position</p>
+				<div class="brd_row">
+					<div class="letter" style="background-color: #545454">F</div>
+					<div class="letter" style="background-color: #79b851">U</div>
+					<div class="letter" style="background-color: #79b851">N</div>
+					<div class="letter" style="background-color: #79b851">N</div>
+					<div class="letter" style="background-color: #79b851">Y</div>
+				</div>
+			</div>
+			<p><span style="color: #79b851">Green</span> color means that the letter is in the word and in the correct place</p>
+			<p>Try to guess the answer as fast as possible!</p>
+			<p>You can also click on a letter to hide/show it</p>
+			<div class="button_container">
+				<button onclick="close_all();">Close</button>
+			</div>
+		</div>
+
+		<div id="alert">
+			<p>WARNING!</p>
+			<span id="alert-span"></span>
+		</div>
+
+		<script src="../word_list.js"></script>
+		<script src="setup.js"></script>
+		<script src="check.js"></script>
+		<script src="typing.js"></script>
+	</body>
+</html>
