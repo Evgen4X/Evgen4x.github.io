@@ -101,7 +101,6 @@ nav {
 	transition: transform 0.4s;
 	animation-duration: 0.8s;
 	animation-fill-mode: forwards;
-	animation: to_red 2s linear 0ms 1 alternate forwards;
 }
 
 #keyboard {
@@ -167,7 +166,7 @@ nav {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	width: 80%;
-	height: 90%;
+	height: 75%;
 	color: white;
 }
 

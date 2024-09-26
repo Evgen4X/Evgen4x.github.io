@@ -3,86 +3,95 @@
 	<head>
 		<link rel="icon" href="../../icons/main-icon.jpg" />
 		<link rel="stylesheet" href="../../index.css" />
+		<link rel="stylesheet" href="index.css" />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Maths</title>
+		<title>Wordles</title>
 	</head>
 	<body>
 		<canvas id="canvas"></canvas>
 		<main>
-			<h1>Maths</h1>
+			<h1>Wordles</h1>
 			<div>
-				<div id="container">
+				<div id="waste-of-space" style="height: 20%; width: 100%"></div>
+				<div class="container">
+					<a class="element" id="back" href="../../index.html">
+						<h3>Back</h3>
+						<div class="screenshot"></div>
+						<div class="button">Play</div>
+					</a>
+				</div>
+				<div class="container">
 					<a class="element" id="wordle" href="../wordle/wordle.html">
 						<h3>Wordle</h3>
 						<div class="screenshot"></div>
-						<div class="button">play</div>
+						<div class="button">Play</div>
 					</a>
 				</div>
-			    <div id="container">
+				<div class="container">
 					<a class="element" id="colorle" href="../colorle/colorle.html">
 						<h3>Colorle</h3>
 						<div class="screenshot"></div>
 						<div class="button">play</div>
 					</a>
 				</div>
-				<div id="container">
+				<div class="container">
 					<a class="element" id="blindle" href="../blindle/blindle.html">
 						<h3>Blindle</h3>
 						<div class="screenshot"></div>
 						<div class="button">play</div>
 					</a>
 				</div>
-				<div id="container">
+				<div class="container">
 					<a class="element" id="word500" href="../word500/word500.html">
 						<h3>Word500</h3>
 						<div class="screenshot"></div>
 						<div class="button">play</div>
 					</a>
 				</div>
-				<div id="container">
+				<div class="container">
 					<a class="element" id="randle" href="../randle/randle.html">
 						<h3>Randle</h3>
 						<div class="screenshot"></div>
 						<div class="button">play</div>
 					</a>
 				</div>
-				<div id="container">
+				<div class="container">
 					<a class="element" id="randle2" href="../randle2/randle2.html">
 						<h3>Randle 2</h3>
 						<div class="screenshot"></div>
 						<div class="button">play</div>
 					</a>
 				</div>
-				<div id="container">
+				<div class="container">
 					<a class="element" id="alphabetle" href="../alphabetle/alphabetle.html">
 						<h3>Alphabetle</h3>
 						<div class="screenshot"></div>
 						<div class="button">play</div>
 					</a>
 				</div>
-				<div id="container">
+				<div class="container">
 					<a class="element" id="absurdle" href="../absurdle/absurdle.html">
 						<h3>Absurdle</h3>
 						<div class="screenshot"></div>
 						<div class="button">play</div>
 					</a>
 				</div>
-				<div id="container">
+				<div class="container">
 					<a class="element" id="verticalle" href="../verticalle/verticalle.html">
 						<h3>Verticalle</h3>
 						<div class="screenshot"></div>
 						<div class="button">play</div>
 					</a>
 				</div>
-				<div id="container">
+				<div class="container">
 					<a class="element" id="dontle" href="../dontle/dontle.html">
 						<h3>Don'tle</h3>
 						<div class="screenshot"></div>
 						<div class="button">play</div>
 					</a>
 				</div>
-				<div id="container">
+				<div class="container">
 					<a class="element" id="numberle" href="../numberle/numberle.html">
 						<h3>Numberle</h3>
 						<div class="screenshot"></div>
@@ -94,6 +103,10 @@
 		<footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
 
 		<script src="../../animation.js"></script>
+		<script>
+			document.querySelectorAll(".element").forEach((el) => {
+				document.querySelector(`#${el.id} .screenshot`).innerHTML = `<img class="screenshot-img" src="${el.id}_screen.png">`;
+			});
+		</script>
 	</body>
 </html>
-

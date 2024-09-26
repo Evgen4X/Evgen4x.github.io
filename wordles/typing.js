@@ -7,18 +7,15 @@ function buttonType(event) {
 }
 
 function keyType(event) {
-	const key = event.key;
-	if (key == "Backspace") {
+	const key = event.key.toUpperCase();
+	if (key == "BACKSPACE") {
 		typeLetter("⌫");
-	} else if (key == "Enter") {
-		typeLetter("ENTER");
 	} else if (alphabet.includes(key)) {
 		typeLetter(key.toUpperCase());
 	}
 }
 
 function typeLetter(text) {
-	console.log(1);
 	const row = document.querySelector('.brd_row[status="active"]');
 	const letter = document.querySelector('.letter[status="active"]');
 

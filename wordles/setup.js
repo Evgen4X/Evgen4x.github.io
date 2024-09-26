@@ -9,7 +9,7 @@ function hide_letter(event) {
 	}
 }
 
-function generate(cols, rows, alphabet) {
+function generate(cols, rows, alphabet_, breakpoints) {
 	let html = "";
 	for (let i = 1; i <= rows; i++) {
 		html += `<div class="brd_row" index="${i}">`;
@@ -21,8 +21,8 @@ function generate(cols, rows, alphabet) {
 	document.querySelector(".mainboard").innerHTML = html;
 	letters_number = cols;
 
-	if (alphabet == null || alphabet.length == 0) {
-		alphabet = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "ENTER", "Z", "X", "C", "V", "B", "N", "M", "⌫"];
+	if (alphabet_ == null || alphabet_.length == 0) {
+		alphabet_ = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "ENTER", "Z", "X", "C", "V", "B", "N", "M", "⌫"];
 		answers = answers.filter((answer) => answer.length == cols);
 		if (params.get("word") == null) {
 			answer = answers[Math.floor(Math.random() * answers.length)];
@@ -36,10 +36,14 @@ function generate(cols, rows, alphabet) {
 		check_dict = false;
 	}
 
+	if (breakpoints == null) {
+		breakpoints = "PL⌫";
+	}
+
 	var kbd = document.getElementById("keyboard");
 	var row = document.createElement("div");
 	row.classList.add("kb_row");
-	for (let i of alphabet) {
+	for (let i of alphabet_) {
 		let letter = document.createElement("button");
 		letter.classList.add("kb_key");
 		letter.innerHTML = i;
@@ -47,7 +51,7 @@ function generate(cols, rows, alphabet) {
 			letter.setAttribute("style", "aspect-ratio: 2 / 1");
 		}
 		row.appendChild(letter);
-		if ("PL⌫".includes(i)) {
+		if (breakpoints.includes(i)) {
 			kbd.appendChild(row);
 			row = document.createElement("div");
 			row.classList.add("kb_row");
@@ -64,6 +68,8 @@ function generate(cols, rows, alphabet) {
 	brd_letters.forEach((letter) => {
 		letter.addEventListener("click", hide_letter);
 	});
+
+	return alphabet_;
 }
 
 function encode(text) {
@@ -150,5 +156,7 @@ function close_all() {
 function show_how_to() {
 	document.querySelector(".how_to").style.display = "flex";
 }
+
+var alphabet;
 
 show_how_to();

@@ -129201,8 +129201,6 @@ var answers = [
 	"JEHADISTS",
 	"JEHADS",
 	"JEHOVAH",
-	"JEHU",
-	"JEHUS",
 	"JEISTIECOR",
 	"JEISTIECORS",
 	"JEJUNA",
