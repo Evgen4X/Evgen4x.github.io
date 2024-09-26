@@ -18,3 +18,8 @@
 .board .vertical .letter {
 	width: 2.5em;
 }
+
+.how_to .brd_row .letter {
+	height: 1.75em;
+	width: 1.75em;
+}

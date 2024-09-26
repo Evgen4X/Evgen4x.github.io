@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<link rel="stylesheet" href="../default.css" />
+		<link rel="stylesheet" href="../generalFiles/default.css" />
 		<link rel="stylesheet" href="dontle.css" />
 		<link rel="icon" href="dontle_icon.png" />
 		<meta charset="UTF-8" />
@@ -15,7 +15,7 @@
 				<button onclick="show_game_over();">GIVE UP</button>
 			</div>
 			<a href="../main/index.html" class="title">DON'TLE</a>
-			<button onclick="show('settings');" style="background-color: #000; border: none"><img src="../settings.png" style="width: 1.5em; height: 1.5em" /></button>
+			<button class="settings-button" onclick="show_settings();"></button>
 		</header>
 		<div class="flex"><span style="color: white" id="undos_counter">Undos used: 0 / 5</span></div>
 		<div class="board mainboard"></div>
@@ -127,7 +127,7 @@
 			<span id="alert-span"></span>
 		</div>
 
-		<script src="../word_list.js"></script>
+		<script src="../generalFiles/word_list.js"></script>
 		<script src="setup.js"></script>
 		<script src="check.js"></script>
 		<script src="typing.js"></script>

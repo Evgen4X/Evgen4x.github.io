@@ -84,13 +84,14 @@
 						<div class="button">play</div>
 					</a>
 				</div>
-				<div class="container">
+				<!-- REMOVED TEMPORARILY -->
+				<!-- <div class="container">
 					<a class="element" id="dontle" href="../dontle/dontle.html">
 						<h3>Don'tle</h3>
 						<div class="screenshot"></div>
 						<div class="button">play</div>
 					</a>
-				</div>
+				</div> -->
 				<div class="container">
 					<a class="element" id="numberle" href="../numberle/numberle.html">
 						<h3>Numberle</h3>
@@ -105,7 +106,9 @@
 		<script src="../../animation.js"></script>
 		<script>
 			document.querySelectorAll(".element").forEach((el) => {
-				document.querySelector(`#${el.id} .screenshot`).innerHTML = `<img class="screenshot-img" src="${el.id}_screen.png">`;
+				if (el.id != "back") {
+					document.querySelector(`#${el.id} .screenshot`).innerHTML = `<img class="screenshot-img" src="${el.id}_screen.png">`;
+				}
 			});
 		</script>
 	</body>

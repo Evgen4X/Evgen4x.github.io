@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<link rel="stylesheet" href="../default.css" />
+		<link rel="stylesheet" href="../generalFiles/default.css" />
 		<link rel="stylesheet" href="word500.css" />
 		<link rel="icon" href="word500_icon.png" />
 		<meta charset="UTF-8" />
@@ -15,7 +15,7 @@
 				<button onclick="show_game_over();">GIVE UP</button>
 			</div>
 			<a href="../main/index.html" class="title">WORD 500</a>
-			<button onclick="show_settings();" style="background-color: #000; border: none"><img src="../settings.png" style="width: 1.5em; height: 1.5em" /></button>
+			<button class="settings-button" onclick="show_settings();"></button>
 		</header>
 		<div class="board mainboard"></div>
 		<div id="keyboard"></div>
@@ -119,9 +119,9 @@
 			<span id="alert-span"></span>
 		</div>
 
-		<script src="../word_list.js"></script>
+		<script src="../generalFiles/word_list.js"></script>
 		<script src="word500_setup.js"></script>
-		<script src="../check.js"></script>
+		<script src="../generalFiles/check.js"></script>
 		<script src="typing.js"></script>
 	</body>
 </html>

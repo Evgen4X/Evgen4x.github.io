@@ -174,6 +174,17 @@ nav {
 	font-size: larger;
 }
 
+.settings-button {
+	width: 15%;
+	height: 1.5em;
+	background-image: url(../generalFiles/settings.png);
+	background-color: transparent;
+	border: none;
+	background-size: 1.5em 1.5em;
+	background-repeat: no-repeat;
+	background-position: right;
+}
+
 input {
 	margin: 1em;
 	height: 2em;
