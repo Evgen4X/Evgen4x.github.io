@@ -33,10 +33,13 @@ function typeLetter(text) {
 
 	if (text == "ENTER") {
 		let word = "";
-		for (let i = 1; i < 6; i++) {
-			word += document.querySelectorAll(`.brd_row[status="active"] .letter[index="${i}"]`)[0].textContent;
+		for (let i = 1; i < letters_number + 1; i++) {
+			word += document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`).textContent;
 		}
-		if (word.length != 5) {
+
+		console.log(word, letters_number);
+
+		if (word.length != letters_number) {
 			msg_alert("Enter full word!", 3000);
 			return;
 		}
@@ -44,15 +47,16 @@ function typeLetter(text) {
 			msg_alert("Evter a valid word!", 3000);
 			return;
 		}
-		let check = check_word_vertical(word, answer, row.getAttribute("index")),
-			i = 1;
-		if (row.getAttribute("index") == 6) {
+		let check = check_word_vertical(word, answer, row.getAttribute("index"));
+		let i = 1;
+		if (row.getAttribute("index") == letters_number + 1) {
 			check = check_word(word, answer);
 		}
 		for (let status of check) {
-			let letter = document.querySelectorAll(`.brd_row[status="active"] .letter[index="${i}"]`)[0];
-			let button = document.querySelectorAll(`#keyboard button[letter="${letter.textContent}"`)[0];
+			let letter = document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`);
+			let button = document.querySelector(`#keyboard button[letter="${letter.textContent}"`);
 			let prev_color = button.style.getPropertyValue("--color");
+			console.log(letter, status);
 			if (status == 0) {
 				letter.style.setProperty("--color", "#545454");
 				if (prev_color != "#79b851" && prev_color != "#f3c237") {
@@ -78,7 +82,7 @@ function typeLetter(text) {
 			return;
 		}
 		let index = parseInt(row.getAttribute("index"));
-		if (index == 6) {
+		if (index == letters_number + 1) {
 			setTimeout(() => {
 				show_game_over(false);
 			}, 2000);
@@ -90,7 +94,7 @@ function typeLetter(text) {
 		set_first();
 	} else if (text == "⌫") {
 		if (letter == null) {
-			let target = document.querySelectorAll('.brd_row[status="active"] .letter[index="5"]');
+			let target = document.querySelectorAll(`.brd_row[status="active"] .letter[index="${letters_number}"]`);
 			target[0].textContent = "";
 			target[0].setAttribute("status", "active");
 			return;
@@ -103,10 +107,10 @@ function typeLetter(text) {
 	} else {
 		letter.textContent = text;
 		letter.setAttribute("status", "filled");
-		if (letter.getAttribute("index") != 5) {
+		if (letter.getAttribute("index") != letters_number) {
 			let index = parseInt(letter.getAttribute("index"));
-			let next = document.querySelectorAll(`.brd_row[status="active"] .letter[index="${index + 1}"]`);
-			next[0].setAttribute("status", "active");
+			let next = document.querySelector(`.brd_row[status="active"] .letter[index="${index + 1}"]`);
+			next.setAttribute("status", "active");
 		}
 	}
 }
@@ -129,14 +133,11 @@ kb_buttons.forEach((button) => {
 });
 document.addEventListener("keyup", keyType);
 
-const params = new URL(window.location.href).searchParams;
 var answer;
 if (params.get("word") == null) {
-	answers = answers.filter((word) => word.length == 5);
+	answers = answers.filter((word) => word.length == letters_number);
 	answer = answers[Math.floor(Math.random() * answers.length)];
 } else {
 	answer = decode(params.get("word"));
 	msg_alert("That wordle may not use standart dictionary!", 7500);
 }
-
-const check_dict = is_word(answer);
