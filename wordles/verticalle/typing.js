@@ -23,7 +23,7 @@ function keyType(event) {
 		typeLetter(key.toUpperCase());
 		return;
 	} else if (key == "Enter") {
-		typeLetter("Enter");
+		typeLetter("ENTER");
 	}
 }
 
@@ -31,7 +31,7 @@ function typeLetter(text) {
 	const row = document.querySelector('.brd_row[status="active"]');
 	const letter = document.querySelector('.letter[status="active"]');
 
-	if (text == "Enter") {
+	if (text == "ENTER") {
 		let word = "";
 		for (let i = 1; i < 6; i++) {
 			word += document.querySelectorAll(`.brd_row[status="active"] .letter[index="${i}"]`)[0].textContent;
@@ -63,7 +63,7 @@ function typeLetter(text) {
 				if (prev_color != "#79b851") {
 					button.style.setProperty("--color", "#f3c237");
 				}
-			} else {
+			} else if(status == 2) {
 				letter.style.setProperty("--color", "#79b851");
 				button.style.setProperty("--color", "#79b851");
 			}
