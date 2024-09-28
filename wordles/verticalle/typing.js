@@ -37,8 +37,6 @@ function typeLetter(text) {
 			word += document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`).textContent;
 		}
 
-		console.log(word, letters_number);
-
 		if (word.length != letters_number) {
 			msg_alert("Enter full word!", 3000);
 			return;
@@ -67,7 +65,7 @@ function typeLetter(text) {
 				if (prev_color != "#79b851") {
 					button.style.setProperty("--color", "#f3c237");
 				}
-			} else if(status == 2) {
+			} else if (status == 2) {
 				letter.style.setProperty("--color", "#79b851");
 				button.style.setProperty("--color", "#79b851");
 			}

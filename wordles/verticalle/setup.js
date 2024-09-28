@@ -13,12 +13,12 @@ function generate(cols, rows) {
 
 	html = `<div class="brd_row" index="${cols + 1}">`;
 
-	for(let i = 1; i <= cols; ++i){
+	for (let i = 1; i <= cols; ++i) {
 		html += `<button class="letter" index="${i}"></button>`;
 	}
-	html += '</div>';
+	html += "</div>";
 
-	document.querySelector('.subboard').innerHTML = html;
+	document.querySelector(".subboard").innerHTML = html;
 
 	let alphabet = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "ENTER", "Z", "X", "C", "V", "B", "N", "M", "⌫"];
 	var kbd = document.getElementById("keyboard");
@@ -39,9 +39,11 @@ function generate(cols, rows) {
 			console.log(kbd);
 		}
 	}
+
+	document.querySelectorAll(".letter-change .letter").forEach((letter) => {
+		letter.style.fontSize = Math.max(0.72, Math.round(72.857 / cols + 0.7) / 10) + "rem";
+	});
 }
-
-
 
 function msg_alert(msg, time) {
 	let msgbox = document.querySelector("#alert"),
@@ -150,7 +152,6 @@ letters_slider.forEach((button) => {
 	});
 });
 
-
 show_how_to();
 
 const params = new URL(window.location.href).searchParams;
@@ -158,9 +159,11 @@ var answer, check_dict, letters_number;
 
 if (params.get("length") == null) {
 	generate(5, 6);
+	check_dict = true;
 } else if (params.get("word") != null) {
 	generate(params.get("word").length / 2, 6);
 	msg_alert("That wordle may not use standart dictionary!", 7500);
 } else {
 	generate(parseInt(params.get("length")), 6);
+	check_dict = true;
 }
