@@ -97,9 +97,14 @@ function typeLetter(text) {
 		for (let status of check) {
 			let letter = document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`);
 			let button = document.querySelector(`#keyboard button[letter="${letter.innerHTML}"`);
-			debugger;
+
+			if (letter.getAttribute("event") == "blind") {
+				letter.style.animation = `rotate 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
+				continue;
+			}
+
 			if (status == 0) {
-				if (event != "greens" && letter.getAttribute("event") != "blind") {
+				if (event != "greens") {
 					letter.style.setProperty("--color", "#545454");
 					button.style.setProperty("--color", "#545454");
 					if (event == "random") {
@@ -118,7 +123,7 @@ function typeLetter(text) {
 					continue;
 				}
 			} else if (status == 1) {
-				if (event != "greens" && letter.getAttribute("event") != "blind") {
+				if (event != "greens") {
 					letter.style.setProperty("--color", "#f3c237");
 					button.style.setProperty("--color", "#f3c237");
 					if (event == "random") {
@@ -146,29 +151,25 @@ function typeLetter(text) {
 					continue;
 				}
 			} else if (status == 2) {
-				if (letter.getAttribute("event") != "blind") {
-					letter.style.setProperty("--color", "#79b851");
-					button.style.setProperty("--color", "#79b851");
-					if (event == "random") {
-						letter.style.setProperty("--color", rgray);
-						button.style.setProperty("--color", rgray);
-					}
-					if (event == "5050") {
-						letter.style.animation = `rotate 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
-						setTimeout(() => {
-							letter.style.backgroundImage = "linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
-							button.style.backgroundImage = "linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
-						}, (i - 1) * 200 + 400);
-						i++;
-						continue;
-					}
-					if (event == "lier" && event_done == 0) {
-						letter.style.setProperty("--color", "#f3c237");
-						button.style.setProperty("--color", "#f3c237");
-						event_done = 1;
-					}
-				} else {
-					letter.style.setProperty("--color", letter.style.backgroundColor);
+				letter.style.setProperty("--color", "#79b851");
+				button.style.setProperty("--color", "#79b851");
+				if (event == "random") {
+					letter.style.setProperty("--color", rgray);
+					button.style.setProperty("--color", rgray);
+				}
+				if (event == "5050") {
+					letter.style.animation = `rotate 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
+					setTimeout(() => {
+						letter.style.backgroundImage = "linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
+						button.style.backgroundImage = "linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
+					}, (i - 1) * 200 + 400);
+					i++;
+					continue;
+				}
+				if (event == "lier" && event_done == 0) {
+					letter.style.setProperty("--color", "#f3c237");
+					button.style.setProperty("--color", "#f3c237");
+					event_done = 1;
 				}
 			} else if (status == 3) {
 				letter.style.setProperty("--color", "#2c2cdf");
