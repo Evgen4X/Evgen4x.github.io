@@ -32,6 +32,7 @@ body {
 * {
 	user-select: none;
 	transition: background-color 500ms ease-in-out;
+	-webkit-text-size-adjust: none !important;
 }
 
 body {
@@ -58,7 +59,7 @@ header {
 	height: 8vh;
 	background-color: var(--header);
 	color: var(--hftxt);
-	font-size: xx-large;
+	font-size: 5vh;
 	font-weight: bolder;
 	text-transform: uppercase;
 	display: flex;
@@ -85,12 +86,63 @@ header div#title {
 }
 
 #settings-button {
-	background-image: url(icons/settingsicon.png);
-	background-size: contain;
 	width: 6vh;
 	height: 6vh;
-	margin: 1vh;
+	background-image: url(icons/settings-icon.png);
+	background-color: transparent;
+	border: none;
+	background-size: 6vh 6vh;
+	background-repeat: no-repeat;
+	background-position: right;
 	cursor: pointer;
+}
+
+#settings {
+	padding: 1em;
+	background-color: #101010;
+	border: 0.4em solid #000;
+	border-radius: 2em;
+	box-shadow: 0 0 2em #000;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 6vh;
+	height: 6vh;
+	color: white;
+}
+
+#settings button,
+#settings input {
+	margin: 0.5em;
+	height: 2em;
+	width: 10em;
+	background-color: #878787;
+	opacity: 1;
+	border-radius: 1em;
+	box-shadow: 0 0 0.5em #ddd;
+	font-weight: bold;
+	transition: background-color 0.5s linear, box-shadow 0.5s ease-in-out;
+}
+
+#settings input {
+	font-size: larger;
+	height: 1.25em;
+}
+
+#settings button:hover {
+	background-color: #555;
+	box-shadow: 0 0 0.8em #fff;
+}
+
+#settings button:active {
+	background-color: #333;
+	box-shadow: 0 0 0.5em #fff;
+	color: #aaa;
 }
 
 main {

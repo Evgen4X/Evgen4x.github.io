@@ -1,0 +1,29 @@
+canvas {
+	width: 100vw;
+	height: 87vh;
+	margin: 0;
+}
+
+main {
+	padding: 0;
+}
+
+#help {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 50%;
+	background-color: #0099ff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+#holder {
+	margin: 1vh;
+	width: 21vh;
+	height: 6vh;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}

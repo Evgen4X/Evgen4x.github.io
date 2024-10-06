@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="../../default.css" />
+		<link rel="stylesheet" href="colliision.css" />
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Collision</title>
+	</head>
+	<body>
+		<div id="settings">
+			<h3>Settings</h3>
+			<div>
+				<label for="number-of-blocks">Number of blocks</label>
+				<input id="number-of-blocks" type="number" value="2" min="2" max="10" />
+			</div>
+			<div>
+				<button onclick="window.location.reload();">Save</button>
+				<button onclick="settings.style.display = 'none';">Close</button>
+			</div>
+		</div>
+
+		<header>
+			<div id="back" onclick="window.location.assign('index.html');"></div>
+			<div id="title">Collision simulator</div>
+			<div id="holder">
+				<div id="help">?</div>
+				<div id="settings-button"></div>
+				<div id="theme-switch"></div>
+			</div>
+		</header>
+
+		<main>
+			<canvas></canvas>
+		</main>
+
+		<footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
+
+		<script src="../../themeSwitch.js"></script>
+		<script src="settings.js"></script>
+		<script src="drawing.js"></script>
+	</body>
+</html>
