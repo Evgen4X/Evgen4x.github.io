@@ -1,9 +1,11 @@
 class Player {
+	static id = 0;
 	constructor(x) {
 		this.x = x;
 		this.y = (3 * height) / 8;
 		this.speed = 8;
 		this.events = {};
+		this.id = ++id;
 	}
 
 	resize() {
@@ -26,6 +28,7 @@ class Ball {
 		this.speed = speed;
 		this.speedMultiplier = 4;
 		this.events = {lastTimeHitY: true, lastTimeHitX: true, teleport: true};
+		this.owner = null;
 	}
 
 	update(ctx) {
@@ -48,12 +51,13 @@ class Ball {
 }
 
 class PowerUp {
-	constructor(x, y, img, color) {
+	constructor(x, y, img, color, onCollect) {
 		this.x = x;
 		this.y = y;
 		this.img = new Image(height / 50, height / 50);
 		this.img.src = img;
 		this.color = color;
+		this.onCollect = onCollect;
 	}
 
 	update(ctx) {
@@ -62,6 +66,18 @@ class PowerUp {
 		ctx.arc(this.x, this.y, this.r);
 		ctx.fill();
 		ctx.drawImage(this.img, this.x - this.r, this.y - this.r, this.r * 1.5, this.r * 1.5);
+	}
+
+	pointCollides(x, y){
+		return this.x - r <= x && x <= this.x + r && this.y - r <= y && y <= this.y + r;
+	}
+
+	ballCollides(ball){
+		return this.pointCollides(ball.x - ball.r, ball.y - ball.r) || this.pointCollides(ball.x + ball.r, ball.y + ball.r) || this.pointCollides(ball.x - ball.r, ball.y + ball.r) || this.pointCollides(ball.x + ball.r, ball.y - ball.r);
+	}
+
+	collect(ownerId){
+		this.onCollect(ownerId == p1.id ? p1 : p2);
 	}
 }
 
@@ -112,6 +128,7 @@ function update() {
 						ball.events["lastTimeHitX"] = true;
 					}, 500);
 					ball.speedMultiplier += 1;
+					ball.owner = player.id;
 				}
 			});
 		}
@@ -123,9 +140,17 @@ function update() {
 				ball.events["teleport"] = true;
 			}, 200);
 		}
+
+		//updating of powerups
+		powerups.forEach(powerup => {
+			if(powerup.ballCollides(ball)){
+				powerup.collect(ball.owner);
+			}
+		})
+
 	});
 
-	//update of power-ups
+	//spawnnig power-ups
 	if (Math.random() < 0.2) {
 		// let powerup = new PowerUp(width / 2 + (Math.random() * width) / 10, (Math.random() * height) / 1.25, powerups[index][0], powerups[index][1]);
 	}
