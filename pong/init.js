@@ -4,8 +4,6 @@ if (localStorage.getItem("powerups")) {
 	availablePowerUps = ["smaller_platform", "smaller_ball", "slower_movement_sped", "faster_movement_speed", "extra_ball", "bigger_platform", "ball_redirection", "speed_refresh"];
 }
 
-localStorage.setItem("powerups", "extra_ball;smaller_ball;speed_refresh");
-
 const EVENT_LASTTIME = 5000;
 
 const powerupsFunctions = {

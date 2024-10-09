@@ -82,7 +82,7 @@ class Ball {
 						if (this.speed[1] == 0) {
 							this.speed[1] = (Math.random() - 0.5) / 5;
 						}
-						if (Math.random() < 0.5) {
+						if (Math.random() < 0.4) {
 							++Ball.speedMultiplier;
 						}
 						this.owner = player.id;
