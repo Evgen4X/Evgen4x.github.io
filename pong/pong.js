@@ -3,9 +3,9 @@ class Player {
 	constructor(x) {
 		this.x = x;
 		this.y = (3 * height) / 8;
-		this.speed = 8;
+		this.speed = 4;
 		this.events = {};
-		this.id = ++id;
+		this.id = ++Player.id;
 	}
 
 	resize() {
@@ -15,30 +15,126 @@ class Player {
 	}
 
 	update(ctx) {
-		ctx.fillStyle = "#ffffff";
+		let r = 255;
+		let g = 255;
+		let b = 255;
+		if (this.events["faster_movement_speed"]) {
+			let percentage = 1 - this.events["faster_movement_speed"] / EVENT_LASTTIME;
+			g *= 0.75;
+			b *= percentage;
+		}
+		if (this.events["slower_movement_speed"]) {
+			let percentage = 1 - this.events["slower_movement_speed"] / EVENT_LASTTIME;
+			r *= percentage;
+			g *= percentage;
+		}
+		if (this.events["smaller_platform"]) {
+			let percentage = 1 - this.events["smaller_platform"] / EVENT_LASTTIME;
+			percentage = Math.max(0.3, percentage);
+			r *= percentage;
+			g *= percentage;
+			b *= percentage;
+		}
+		ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
 		ctx.fillRect(this.x, this.y, this.width, this.height);
+		for (let i in this.events) {
+			this.events[i] -= 10;
+			if (this.events[i] <= 0) {
+				delete this.events[i];
+				powerupsOnExpire[i](this);
+				console.log(powerupsOnExpire[i]);
+			}
+		}
 	}
 }
 
 class Ball {
+	static speedMultiplier = 2;
 	constructor(x, y, r, speed) {
 		this.r = r;
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
-		this.speedMultiplier = 4;
-		this.events = {lastTimeHitY: true, lastTimeHitX: true, teleport: true};
+		this.events = {lastTimeHitPlayer: 0};
 		this.owner = null;
 	}
 
+	getTrajectory(ticks, players) {
+		let answer = [];
+		let x = this.x;
+		let y = this.y;
+		let framesTillPowerupChecks = 0; //check powerups every 10th frame to prevent potential lags
+		for (let i = 0; i < ticks; ++i, --framesTillPowerupChecks) {
+			x += this.speed[0];
+			y += this.speed[1];
+			if (y <= 0 || y >= height - this.r) {
+				this.speed[1] = -this.speed[1];
+				y = Math.max(0, Math.min(y, height - this.r));
+			}
+
+			//player collision check
+			if (this.events["lastTimeHitPlayer"] < 1) {
+				players.forEach((player) => {
+					if (player.x <= x + this.r && x - this.r <= player.x + player.width + 1 && player.y <= y - this.r && y <= player.y + player.height) {
+						this.speed[0] = -this.speed[0];
+						this.speed[1] = 1.4 * Math.sin((Math.PI * (y - player.y - player.height / 2)) / player.height);
+						//prevent dy from being 0
+						if (this.speed[1] == 0) {
+							this.speed[1] = (Math.random() - 0.5) / 5;
+						}
+						if (Math.random() < 0.5) {
+							++Ball.speedMultiplier;
+						}
+						this.owner = player.id;
+						this.events["lastTimeHitPlayer"] = 20;
+					}
+				});
+			}
+			--this.events["lastTimeHitPlayer"];
+
+			//powerups check
+			if (framesTillPowerupChecks == 0) {
+				powerups.forEach((powerup) => {
+					if (powerup.ballCollides(this)) {
+						let target = balls;
+						if (powerup.target == "self") {
+							target = p1.id == this.owner ? p1 : p2;
+						} else if (powerup.target == "enemy") {
+							target = p1.id == this.owner ? p2 : p1;
+						} else if (powerup.target == "ballClass") {
+							target = Ball;
+						}
+						powerup.collect(target);
+					}
+				});
+
+				framesTillPowerupChecks = 10;
+			}
+
+			answer.push([x, y]);
+		}
+
+		return answer;
+	}
+
 	update(ctx) {
-		ctx.fillStyle = "#ffffff";
+		let r = 255;
+		let g = 255;
+		let b = 255;
+		if (this.events["smaller_ball"]) {
+			let percentage = 1 - this.events["smaller_ball"] / EVENT_LASTTIME;
+			g *= percentage;
+			b *= percentage;
+		}
+		ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
 		ctx.beginPath();
 		ctx.arc(this.x, this.y, this.r, 0, 360);
 		ctx.fill();
 
-		this.x += this.speed[0] * this.speedMultiplier;
-		this.y += this.speed[1] * this.speedMultiplier;
+		let trajectory = this.getTrajectory(Ball.speedMultiplier, [p1, p2]);
+		let position = trajectory[trajectory.length - 1];
+		this.x = position[0];
+		this.y = position[1];
 
 		if (this.events["lastTimeHitY"] && (this.y <= 0 || this.y >= height - this.r)) {
 			this.speed[1] = -this.speed[1];
@@ -47,37 +143,62 @@ class Ball {
 				this.events["lastTimeHitY"] = true;
 			}, 500);
 		}
+
+		for (let i in this.events) {
+			if (availablePowerUps.includes(i)) {
+				this.events[i] -= 10;
+				if (this.events[i] <= 0) {
+					delete this.events[i];
+					powerupsOnExpire[i]([this]);
+					console.log(powerupsOnExpire[i]);
+				}
+			}
+		}
 	}
 }
 
 class PowerUp {
-	constructor(x, y, img, color, onCollect) {
+	static id = 0;
+	constructor(x, y, img, target, onCollect) {
 		this.x = x;
 		this.y = y;
-		this.img = new Image(height / 50, height / 50);
+		this.r = height / 25;
+		this.img = new Image(height / 25, height / 25);
 		this.img.src = img;
-		this.color = color;
+		this.target = target;
+		this.isBad;
+		this.color = "#DF4516";
+		this.color = "#16DF2A";
 		this.onCollect = onCollect;
+		this.lifetime = Math.random() * 1400 + 600; //6-20 sec
+		this.id = ++PowerUp.id;
 	}
 
 	update(ctx) {
-		ctx.fillStyle = color;
+		ctx.fillStyle = this.color;
 		ctx.beginPath();
-		ctx.arc(this.x, this.y, this.r);
+		ctx.arc(this.x, this.y, this.r, 0, 360);
 		ctx.fill();
 		ctx.drawImage(this.img, this.x - this.r, this.y - this.r, this.r * 1.5, this.r * 1.5);
+		this.lifetime -= 1;
+		if (this.lifetime <= 0) {
+			this.collect(null);
+		}
 	}
 
-	pointCollides(x, y){
-		return this.x - r <= x && x <= this.x + r && this.y - r <= y && y <= this.y + r;
+	pointCollides(x, y) {
+		return this.x - this.r <= x && x <= this.x + this.r && this.y - this.r <= y && y <= this.y + this.r;
 	}
 
-	ballCollides(ball){
+	ballCollides(ball) {
 		return this.pointCollides(ball.x - ball.r, ball.y - ball.r) || this.pointCollides(ball.x + ball.r, ball.y + ball.r) || this.pointCollides(ball.x - ball.r, ball.y + ball.r) || this.pointCollides(ball.x + ball.r, ball.y - ball.r);
 	}
 
-	collect(ownerId){
-		this.onCollect(ownerId == p1.id ? p1 : p2);
+	collect(target) {
+		if (target != null) {
+			this.onCollect(target);
+		}
+		powerups = powerups.filter((powerup) => powerup.id != this.id);
 	}
 }
 
@@ -101,7 +222,7 @@ function update() {
 		p1.y += p1.speed;
 	}
 
-	p1.y = Math.max(-1, Math.min(p1.y, height - p1.height));
+	p1.y = Math.max(-5, Math.min(p1.y, height - p1.height));
 	p1.update(ctx);
 
 	//update of p2
@@ -112,47 +233,38 @@ function update() {
 		p2.y += p2.speed;
 	}
 
-	p2.y = Math.max(-1, Math.min(p2.y, height - p2.height));
+	p2.y = Math.max(-5, Math.min(p2.y, height - p2.height));
 	p2.update(ctx);
 
 	//update of balls
 	balls.forEach((ball) => {
 		ball.update(ctx);
-		if (ball.events["lastTimeHitX"]) {
-			[p1, p2].forEach((player) => {
-				if (player.x <= ball.x + ball.r && ball.x - ball.r <= player.x + player.width + 1 && player.y <= ball.y - ball.r && ball.y <= player.y + player.height) {
-					ball.speed[0] = -ball.speed[0];
-					ball.speed[1] = Math.sin((Math.PI * (ball.y - player.y - player.height / 2)) / player.height);
-					ball.events["lastTimeHitX"] = false;
-					setTimeout(() => {
-						ball.events["lastTimeHitX"] = true;
-					}, 500);
-					ball.speedMultiplier += 1;
-					ball.owner = player.id;
-				}
-			});
-		}
 
 		if ((ball.y <= 0 || ball.y >= height - 2 * ball.r) && ball.events["teleport"]) {
 			ball.y = Math.max(0, Math.min(ball.y, height - 2 * ball.r));
 			ball.events["teleport"] = false;
 			setTimeout(() => {
 				ball.events["teleport"] = true;
-			}, 200);
+			}, 500);
 		}
+	});
 
-		//updating of powerups
-		powerups.forEach(powerup => {
-			if(powerup.ballCollides(ball)){
-				powerup.collect(ball.owner);
-			}
-		})
-
+	//updating of powerups
+	powerups.forEach((powerup) => {
+		powerup.update(ctx);
 	});
 
 	//spawnnig power-ups
-	if (Math.random() < 0.2) {
-		// let powerup = new PowerUp(width / 2 + (Math.random() * width) / 10, (Math.random() * height) / 1.25, powerups[index][0], powerups[index][1]);
+	if (Math.random() < 0.005 && powerups.length < 2) {
+		let name = availablePowerUps[Math.floor(Math.random() * availablePowerUps.length)];
+		let target = Math.random() < 0.5 ? "self" : "enemy";
+		if (name.includes("ball")) {
+			target = "ball";
+		} else if (name == "speed_refresh") {
+			target = "ballClass";
+		}
+		let powerup = new PowerUp(width / 2 + (Math.random() * width) / 10, (Math.random() * height) / 1.25 + 10, name + ".png", target, powerupsFunctions[name]);
+		powerups.push(powerup);
 	}
 }
 
@@ -164,14 +276,14 @@ function restart() {
 	let speedX = Math.random() > 0.5 ? 1 : -1;
 	let speedY = Math.random() > 0.5 ? 1 : -1;
 	balls = [new Ball(width / 2 - height / 60, height / 2 - height / 60, height / 60, [speedX, speedY])];
-	interval = setInterval(update, 20);
+	interval = setInterval(update, 10);
 }
 
 const p1 = new Player(width / 10);
 const p2 = new Player((9 * width) / 10);
 var balls = [];
 var powerups = [];
-const availablePowerUps = [];
+var availablePowerUps = [];
 
 var keys = {};
 
