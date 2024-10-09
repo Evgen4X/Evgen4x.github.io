@@ -18,7 +18,7 @@ List:
 - Math: some maths helpers:
   - Polynomial multiplication: enter a product of polynomials and compite it! [!IMPORTANT] Always put parenthesis () around each term
 - Enigma machine: type text using lower keyboard (or computers keyboard) and the encoded key will lighten up on the upper keyboard (it is also registered in the field on top). You can choose rotors and reflectors and edit the plugboard in settings
-- Pong: the old good Pong game. Play PvP or (sooner) PvE. There are powerups which you are (will) be able to disable in settings. Ball speed has a chance (33%) to increase after player hits the ball. List of powerups:
+- Pong: the old good Pong game. Play PvP or (sooner) PvE. There are powerups which you are (will) be able to disable in settings. Ball speed has a chance (40%) to increase after player hits the ball. List of powerups:
   - ball redirection: changed vertical speed of the ball randomly
   - bigger platform: increases size of the platform by 75% for 5 sec
   - smaller platform: decreases size of the platform by 75% for 5 sec
