@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<link rel="stylesheet" href="../default.css" />
+		<link rel="stylesheet" href="little_css.css" />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="author" content="Evgen4X" />
@@ -12,7 +13,7 @@
 	<body>
 		<div id="settings">
 			<h3>Settings</h3>
-			<div style="width: 90%; display: flex; justify-content: space-around; align-items: center;">
+			<div style="width: 90%; display: flex; justify-content: space-around; align-items: center">
 				<div class="powerup-toggle" powerup="ball_redirection" state="on"></div>
 				<div class="powerup-toggle" powerup="bigger_platform" state="on"></div>
 				<div class="powerup-toggle" powerup="extra_ball" state="on"></div>
@@ -24,15 +25,23 @@
 			</div>
 			<div>
 				<label for="playerSpeed">Player movement speed</label>
-				<input type="number" id="playerSpeed" val="4">
+				<input type="number" id="playerSpeed" val="4" />
 			</div>
 			<div>
 				<label for="ballAcceleration">Ball acceleration <b>rate</b></label>
-				<input type="number" id="ballAcceleration" val="1">
+				<input type="number" id="ballAcceleration" val="1" />
 			</div>
 			<div>
 				<label for="ballChance">Ball acceleration <b>chance</b></label>
-				<input type="number" id="ballChance" val="33">
+				<input type="number" id="ballChance" val="33" />
+			</div>
+			<div>
+				<label for="maxPowerups">Maximum powerups at a time</label>
+				<input type="number" id="maxPowerups" val="2" />
+			</div>
+			<div>
+				<button onclick="location.reload()">Save</button>
+				<button onclick="setToDefault()">Set to default</button>
 			</div>
 		</div>
 		<header>

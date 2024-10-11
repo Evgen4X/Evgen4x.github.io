@@ -99,7 +99,7 @@ header div#title {
 
 #settings {
 	padding: 1em;
-	background-color: #101010;
+	background-color: rgba(100, 100, 100, 0.8);
 	border: 0.4em solid #000;
 	border-radius: 2em;
 	box-shadow: 0 0 2em #000;
@@ -111,9 +111,13 @@ header div#title {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	width: 6vh;
-	height: 6vh;
+	width: 60%;
+	height: 80%;
 	color: white;
+}
+
+label {
+	font-size: large;
 }
 
 #settings button,
@@ -132,6 +136,10 @@ header div#title {
 #settings input {
 	font-size: larger;
 	height: 1.25em;
+}
+
+#settings input[type="checkbox"] {
+	width: 1.25em !important;
 }
 
 #settings button:hover {

@@ -4,42 +4,50 @@ if (localStorage.getItem("powerups")) {
 	availablePowerUps = ["smaller_platform", "smaller_ball", "slower_movement_speed", "faster_movement_speed", "extra_ball", "bigger_platform", "ball_redirection", "speed_refresh"];
 }
 
-console.log(availablePowerUps);
-
-const EVENT_LASTTIME = 5000;
+const EVENT_LASTTIME = 7500;
 
 const powerupsFunctions = {
 	smaller_platform: (target) => {
 		if (!target.events["smaller_platform"]) {
 			target.height /= 1.75;
+			target.events["smaller_platform"] = EVENT_LASTTIME;
+		} else {
+			target.events["smaller_platform"] += EVENT_LASTTIME;
 		}
-		target.events["smaller_platform"] = EVENT_LASTTIME;
 	},
 	bigger_platform: (target) => {
 		if (!target.events["bigger_platform"]) {
 			target.height *= 1.75;
+			target.events["bigger_platform"] = EVENT_LASTTIME;
+		} else {
+			target.events["bigger_platform"] += EVENT_LASTTIME;
 		}
-		target.events["bigger_platform"] = EVENT_LASTTIME;
 	},
 	smaller_ball: (targets) => {
 		targets.forEach((ball) => {
 			if (!ball.events["smaller_ball"]) {
-				ball.r /= 1.5;
+				ball.r /= 1.75;
+				ball.events["smaller_ball"] = EVENT_LASTTIME;
+			} else {
+				ball.events["smaller_ball"] += EVENT_LASTTIME;
 			}
-			ball.events["smaller_ball"] = EVENT_LASTTIME;
 		});
 	},
 	slower_movement_speed: (target) => {
 		if (!target.events["slower_movement_speed"]) {
 			target.speed /= 1.5;
+			target.events["slower_movement_speed"] = EVENT_LASTTIME;
+		} else {
+			target.events["slower_movement_Speed"] += EVENT_LASTTIME;
 		}
-		target.events["slower_movement_speed"] = EVENT_LASTTIME;
 	},
 	faster_movement_speed: (target) => {
 		if (!target.events["faster_movement_speed"]) {
 			target.speed *= 1.5;
+			target.events["faster_movement_speed"] = EVENT_LASTTIME;
+		} else {
+			target.events["faster_movement_speed"] += EVENT_LASTTIME;
 		}
-		target.events["faster_movement_speed"] = EVENT_LASTTIME;
 	},
 	ball_redirection: (targets) => {
 		targets.forEach((ball) => {
@@ -64,7 +72,7 @@ const powerupsOnExpire = {
 	},
 	smaller_ball: (target) => {
 		target.forEach((ball) => {
-			ball.r *= 1.5;
+			ball.r *= 1.75;
 		});
 	},
 	slower_movement_speed: (target) => {
@@ -75,78 +83,88 @@ const powerupsOnExpire = {
 	},
 };
 
-const settings = document.getElementById('settings');
-const powerupTogglers = document.querySelectorAll('.powerup-toggle');
-powerupTogglers.forEach(powerupToggler => {
-    const pup = powerupToggler.getAttribute('powerup');
-    powerupToggler.style.backgroundImage = `url(${pup}.png)`;
-    powerupToggler.style.backgroundSize = '10vh 10vh';
-    powerupToggler.style.backgroundColor = '#999999';
-    powerupToggler.style.width = '10vh';
-    powerupToggler.style.height = '10vh';
-    powerupToggler.style.borderRadius = '33%';
-	if(!availablePowerUps.includes(pup)){
-		powerupToggler.setAttribute('state', 'off');
-		powerupToggler.style.opacity = '40%';
+function setToDefault() {
+	localStorage.clear();
+	location.reload();
+}
+
+const settings = document.getElementById("settings");
+const powerupTogglers = document.querySelectorAll(".powerup-toggle");
+powerupTogglers.forEach((powerupToggler) => {
+	const pup = powerupToggler.getAttribute("powerup");
+	powerupToggler.style.backgroundImage = `url(${pup}.png)`;
+	powerupToggler.style.backgroundSize = "10vh 10vh";
+	powerupToggler.style.backgroundColor = "#999999";
+	powerupToggler.style.width = "10vh";
+	powerupToggler.style.height = "10vh";
+	powerupToggler.style.borderRadius = "33%";
+	if (!availablePowerUps.includes(pup)) {
+		powerupToggler.setAttribute("state", "off");
+		powerupToggler.style.opacity = "40%";
 	}
-    powerupToggler.onclick = () => {
+	powerupToggler.onclick = () => {
 		let powerups = ["smaller_platform", "smaller_ball", "slower_movement_speed", "faster_movement_speed", "extra_ball", "bigger_platform", "ball_redirection", "speed_refresh"];
-		if(localStorage.getItem('powerups')){
-			powerups = localStorage.getItem('powerups').split(';');
+		if (localStorage.getItem("powerups")) {
+			powerups = localStorage.getItem("powerups").split(";");
 		}
-        if(powerupToggler.getAttribute('state') == 'on'){
-            powerupToggler.setAttribute('state', 'off');
-			powerupToggler.style.opacity = '40%';
-			powerups = powerups.filter(powerup => powerup != pup);
-        } else {
-			powerupToggler.setAttribute('state', 'on');
-			powerupToggler.style.opacity = '100%';
+		if (powerupToggler.getAttribute("state") == "on") {
+			powerupToggler.setAttribute("state", "off");
+			powerupToggler.style.opacity = "40%";
+			powerups = powerups.filter((powerup) => powerup != pup);
+		} else {
+			powerupToggler.setAttribute("state", "on");
+			powerupToggler.style.opacity = "100%";
 			powerups.push(pup);
 		}
 
-		console.log(powerups);
-
-		localStorage.setItem('powerups', powerups.join(';'));
-    };
+		localStorage.setItem("powerups", powerups.join(";"));
+	};
 });
 
-document.getElementById('settings-button').onclick = () => {
-	settings.style.display = 'flex';
-}
+document.getElementById("settings-button").onclick = () => {
+	settings.style.display = "flex";
+};
 
-
-const playerSpeedInput = document.getElementById('playerSpeed');
+const playerSpeedInput = document.getElementById("playerSpeed");
 playerSpeedInput.oninput = () => {
 	let val = Math.max(-100, Math.min(100, parseInt(playerSpeedInput.value)));
 	playerSpeedInput.value = val;
-	localStorage.setItem('playerSpeed', val);
+	localStorage.setItem("playerSpeed", val);
+};
+if (!localStorage.getItem("playerSpeed")) {
+	localStorage.setItem("playerSpeed", 4);
 }
-if(localStorage.getItem('playerSpeed')){
-	playerSpeedInput.value = parseInt(localStorage.getItem('playerSpeed'))
-} else {
-	localStorage.setItem('playerSpeed', 4);
-}
+playerSpeedInput.value = parseInt(localStorage.getItem("playerSpeed"));
 
-const ballAccelerationInput = document.getElementById('ballAcceleration');
+const ballAccelerationInput = document.getElementById("ballAcceleration");
 ballAccelerationInput.oninput = () => {
 	let val = Math.max(0, Math.min(100, parseInt(ballAccelerationInput.value)));
 	ballAccelerationInput.value = val;
-	localStorage.setItem('ballAcceleration', val);
+	localStorage.setItem("ballAcceleration", val);
+};
+if (!localStorage.getItem("ballAcceleration")) {
+	localStorage.setItem("ballAcceleration", 1);
 }
-if(localStorage.getItem('ballAcceleration')){
-	ballAccelerationInput.value = parseInt(localStorage.getItem('ballAcceleration'))
-} else {
-	localStorage.setItem('ballAcceleration', 1);
-}
+ballAccelerationInput.value = parseInt(localStorage.getItem("ballAcceleration"));
 
-const ballChanceInput = document.getElementById('ballChance');
-ballAccelerationInput.oninput = () => {
-	let val = Math.max(0, Math.min(100, parseInt(ballAccelerationInput.value)));
+const ballChanceInput = document.getElementById("ballChance");
+ballChanceInput.oninput = () => {
+	let val = Math.max(0, Math.min(100, parseInt(ballChanceInput.value)));
 	ballChanceInput.value = val;
-	localStorage.setItem('ballChance', val);
+	localStorage.setItem("ballChance", val);
+};
+if (!localStorage.getItem("ballChance")) {
+	localStorage.setItem("ballChance", 40);
 }
-if(localStorage.getItem('ballChance')){
-	ballChanceInput.value = parseInt(localStorage.getItem('ballChance'))
-} else {
-	localStorage.setItem('ballChance', 1);
+ballChanceInput.value = parseInt(localStorage.getItem("ballChance"));
+
+const maxPowerupsInput = document.getElementById("maxPowerups");
+maxPowerupsInput.oninput = () => {
+	let val = Math.max(1, Math.min(10, parseInt(maxPowerupsInput.value)));
+	maxPowerupsInput.value = val;
+	localStorage.setItem("maxPowerups", val);
+};
+if (!localStorage.getItem("maxPowerups")) {
+	localStorage.setItem("maxPowerups", 2);
 }
+maxPowerupsInput.value = parseInt(localStorage.getItem("maxPowerups"));

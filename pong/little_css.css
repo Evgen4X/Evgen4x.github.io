@@ -1,0 +1,6 @@
+#settings div {
+	width: 50%;
+	display: flex;
+	justify-content: space-between;
+	align-items: start;
+}

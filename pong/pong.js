@@ -3,7 +3,7 @@ class Player {
 	constructor(x) {
 		this.x = x;
 		this.y = (3 * height) / 8;
-		this.speed = parseInt(localStorage.getItem('playerSpeed'));
+		this.speed = parseInt(localStorage.getItem("playerSpeed"));
 		this.events = {};
 		this.id = ++Player.id;
 	}
@@ -35,6 +35,12 @@ class Player {
 			g *= percentage;
 			b *= percentage;
 		}
+		if (this.events["bigger_platform"]) {
+			let percentage = 1 - this.events["bigger_platform"] / EVENT_LASTTIME;
+			percentage = Math.max(0.3, percentage);
+			r *= percentage;
+			b *= percentage;
+		}
 		ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
 		ctx.fillRect(this.x, this.y, this.width, this.height);
 		for (let i in this.events) {
@@ -63,7 +69,7 @@ class Ball {
 		let answer = [];
 		let x = this.x;
 		let y = this.y;
-		let framesTillPowerupChecks = 0; //check powerups every 10th frame to prevent potential lags
+		let framesTillPowerupChecks = 0; //check powerups only every 10th frame to prevent potential lags
 		for (let i = 0; i < ticks; ++i, --framesTillPowerupChecks) {
 			x += this.speed[0];
 			y += this.speed[1];
@@ -82,11 +88,11 @@ class Ball {
 						if (this.speed[1] == 0) {
 							this.speed[1] = (Math.random() - 0.5) / 5;
 						}
-						if (Math.random() < parseInt(localStorage.getItem('ballChance')) / 100) {
-							Ball.speedMultiplier += parseInt(localStorage.getItem('ballAcceleration'));
+						if (Math.random() < parseInt(localStorage.getItem("ballChance")) / 100) {
+							Ball.speedMultiplier += parseInt(localStorage.getItem("ballAcceleration"));
 						}
 						this.owner = player.id;
-						this.events["lastTimeHitPlayer"] = 20;
+						this.events["lastTimeHitPlayer"] = 200;
 					}
 				});
 			}
@@ -154,21 +160,28 @@ class Ball {
 				}
 			}
 		}
+
+		if (this.x < -this.r || this.x > width) {
+			balls = balls.filter((ball) => ball != this);
+			console.log(balls);
+			if (balls.length == 0 && settings.style.display == "none") {
+				//TODO: smth better
+				location.reload();
+			}
+		}
 	}
 }
 
 class PowerUp {
 	static id = 0;
-	constructor(x, y, img, target, onCollect) {
+	constructor(x, y, img, target, color, onCollect) {
 		this.x = x;
 		this.y = y;
 		this.r = height / 25;
 		this.img = new Image(height / 25, height / 25);
 		this.img.src = img;
 		this.target = target;
-		this.isBad;
-		this.color = "#DF4516";
-		this.color = "#16DF2A";
+		this.color = color;
 		this.onCollect = onCollect;
 		this.lifetime = Math.random() * 1400 + 600; //6-20 sec
 		this.id = ++PowerUp.id;
@@ -179,7 +192,7 @@ class PowerUp {
 		ctx.beginPath();
 		ctx.arc(this.x, this.y, this.r, 0, 360);
 		ctx.fill();
-		ctx.drawImage(this.img, this.x - this.r, this.y - this.r, this.r * 1.5, this.r * 1.5);
+		ctx.drawImage(this.img, this.x - 0.75 * this.r, this.y - 0.75 * this.r, this.r * 1.5, this.r * 1.5);
 		this.lifetime -= 1;
 		if (this.lifetime <= 0) {
 			this.collect(null);
@@ -221,7 +234,6 @@ function update() {
 	if (keys["S"]) {
 		p1.y += p1.speed;
 	}
-
 	p1.y = Math.max(-5, Math.min(p1.y, height - p1.height));
 	p1.update(ctx);
 
@@ -255,15 +267,19 @@ function update() {
 	});
 
 	//spawnnig power-ups
-	if (Math.random() < 0.005 && powerups.length < 2) {
+	if (Math.random() < 0.005 && powerups.length < parseInt(localStorage.getItem("maxPowerups"))) {
 		let name = availablePowerUps[Math.floor(Math.random() * availablePowerUps.length)];
 		let target = Math.random() < 0.5 ? "self" : "enemy";
+		let color = "#16DF2A";
 		if (name.includes("ball")) {
 			target = "ball";
+			color = "#ebf10d";
 		} else if (name == "speed_refresh") {
 			target = "ballClass";
+		} else if ((target == "self" && ["smaller_platform", "slower_movement_speed"].includes(name)) || (target == "enemy" && ["bigger_platform", "faster_movement_speed"].includes(name))) {
+			color = "#DF4516";
 		}
-		let powerup = new PowerUp(width / 2 + (Math.random() * width) / 10, (Math.random() * height) / 1.25 + 10, name + ".png", target, powerupsFunctions[name]);
+		let powerup = new PowerUp(width / 2 + (Math.random() * width) / 10, Math.random() * height, name + ".png", target, color, powerupsFunctions[name]);
 		powerups.push(powerup);
 	}
 }
@@ -317,4 +333,5 @@ window.onresize = () => {
 };
 
 var interval;
+var inertia = false;
 restart();
