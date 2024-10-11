@@ -1,7 +1,7 @@
 if (localStorage.getItem("powerups")) {
 	availablePowerUps = localStorage.getItem("powerups").split(";");
 } else {
-	availablePowerUps = ["smaller_platform", "smaller_ball", "slower_movement_sped", "faster_movement_speed", "extra_ball", "bigger_platform", "ball_redirection", "speed_refresh"];
+	availablePowerUps = ["smaller_platform", "smaller_ball", "slower_movement_speed", "faster_movement_speed", "extra_ball", "bigger_platform", "ball_redirection", "speed_refresh"];
 }
 
 const EVENT_LASTTIME = 5000;
@@ -72,3 +72,20 @@ const powerupsOnExpire = {
 		target.speed /= 1.5;
 	},
 };
+
+const settings = document.getElementById('settings');
+const powerupTogglers = document.getElementsByClassName('powerup-toggle');
+powerupTogglers.forEach(powerupToggler => {
+    const pup = powerupToggler.getAttribute('powerup')
+    powerupToggler.style.backgroundImage = `url(${pup}.png)`;
+    powerupToggler.style.backgroundSize = '10vh 10vh';
+    powerupToggler.style.backgroundColor = '#999999';
+    powerupToggler.style.width = '10vh';
+    powerupToggler.style.height = '10vh';
+    powerupToggler.style.borderRadius = '33%';
+    powerupToggler.onclick = () => {
+        if(powerupToggler.getAttribute('state') == 'on'){
+            powerupToggler.setAttribute('state', 'off');
+        }
+    };
+});
