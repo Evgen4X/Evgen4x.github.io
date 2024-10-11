@@ -3,7 +3,7 @@ class Player {
 	constructor(x) {
 		this.x = x;
 		this.y = (3 * height) / 8;
-		this.speed = 4;
+		this.speed = parseInt(localStorage.getItem('playerSpeed'));
 		this.events = {};
 		this.id = ++Player.id;
 	}
@@ -82,8 +82,8 @@ class Ball {
 						if (this.speed[1] == 0) {
 							this.speed[1] = (Math.random() - 0.5) / 5;
 						}
-						if (Math.random() < 0.4) {
-							++Ball.speedMultiplier;
+						if (Math.random() < parseInt(localStorage.getItem('ballChance')) / 100) {
+							Ball.speedMultiplier += parseInt(localStorage.getItem('ballAcceleration'));
 						}
 						this.owner = player.id;
 						this.events["lastTimeHitPlayer"] = 20;
@@ -291,7 +291,7 @@ document.addEventListener("keydown", (event) => {
 	const key = event.key.toUpperCase();
 	keys[key] = true;
 
-	if (!/F..?/.test(key)) {
+	if (!/F?[0-9]+/.test(key)) {
 		event.preventDefault();
 	}
 });

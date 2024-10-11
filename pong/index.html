@@ -12,14 +12,27 @@
 	<body>
 		<div id="settings">
 			<h3>Settings</h3>
-			<div style="width: 80%; display: flex; justify-content: center; align-items: center;">
+			<div style="width: 90%; display: flex; justify-content: space-around; align-items: center;">
 				<div class="powerup-toggle" powerup="ball_redirection" state="on"></div>
 				<div class="powerup-toggle" powerup="bigger_platform" state="on"></div>
 				<div class="powerup-toggle" powerup="extra_ball" state="on"></div>
 				<div class="powerup-toggle" powerup="faster_movement_speed" state="on"></div>
-				<div class="powerup-toggle" powerup="slower_movement_sped" state="on"></div>
+				<div class="powerup-toggle" powerup="slower_movement_speed" state="on"></div>
 				<div class="powerup-toggle" powerup="smaller_ball" state="on"></div>
 				<div class="powerup-toggle" powerup="smaller_platform" state="on"></div>
+				<div class="powerup-toggle" powerup="speed_refresh" state="on"></div>
+			</div>
+			<div>
+				<label for="playerSpeed">Player movement speed</label>
+				<input type="number" id="playerSpeed" val="4">
+			</div>
+			<div>
+				<label for="ballAcceleration">Ball acceleration <b>rate</b></label>
+				<input type="number" id="ballAcceleration" val="1">
+			</div>
+			<div>
+				<label for="ballChance">Ball acceleration <b>chance</b></label>
+				<input type="number" id="ballChance" val="33">
 			</div>
 		</div>
 		<header>

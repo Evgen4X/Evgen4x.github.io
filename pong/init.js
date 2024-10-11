@@ -4,6 +4,8 @@ if (localStorage.getItem("powerups")) {
 	availablePowerUps = ["smaller_platform", "smaller_ball", "slower_movement_speed", "faster_movement_speed", "extra_ball", "bigger_platform", "ball_redirection", "speed_refresh"];
 }
 
+console.log(availablePowerUps);
+
 const EVENT_LASTTIME = 5000;
 
 const powerupsFunctions = {
@@ -74,18 +76,77 @@ const powerupsOnExpire = {
 };
 
 const settings = document.getElementById('settings');
-const powerupTogglers = document.getElementsByClassName('powerup-toggle');
+const powerupTogglers = document.querySelectorAll('.powerup-toggle');
 powerupTogglers.forEach(powerupToggler => {
-    const pup = powerupToggler.getAttribute('powerup')
+    const pup = powerupToggler.getAttribute('powerup');
     powerupToggler.style.backgroundImage = `url(${pup}.png)`;
     powerupToggler.style.backgroundSize = '10vh 10vh';
     powerupToggler.style.backgroundColor = '#999999';
     powerupToggler.style.width = '10vh';
     powerupToggler.style.height = '10vh';
     powerupToggler.style.borderRadius = '33%';
+	if(!availablePowerUps.includes(pup)){
+		powerupToggler.setAttribute('state', 'off');
+		powerupToggler.style.opacity = '40%';
+	}
     powerupToggler.onclick = () => {
+		let powerups = ["smaller_platform", "smaller_ball", "slower_movement_speed", "faster_movement_speed", "extra_ball", "bigger_platform", "ball_redirection", "speed_refresh"];
+		if(localStorage.getItem('powerups')){
+			powerups = localStorage.getItem('powerups').split(';');
+		}
         if(powerupToggler.getAttribute('state') == 'on'){
             powerupToggler.setAttribute('state', 'off');
-        }
+			powerupToggler.style.opacity = '40%';
+			powerups = powerups.filter(powerup => powerup != pup);
+        } else {
+			powerupToggler.setAttribute('state', 'on');
+			powerupToggler.style.opacity = '100%';
+			powerups.push(pup);
+		}
+
+		console.log(powerups);
+
+		localStorage.setItem('powerups', powerups.join(';'));
     };
 });
+
+document.getElementById('settings-button').onclick = () => {
+	settings.style.display = 'flex';
+}
+
+
+const playerSpeedInput = document.getElementById('playerSpeed');
+playerSpeedInput.oninput = () => {
+	let val = Math.max(-100, Math.min(100, parseInt(playerSpeedInput.value)));
+	playerSpeedInput.value = val;
+	localStorage.setItem('playerSpeed', val);
+}
+if(localStorage.getItem('playerSpeed')){
+	playerSpeedInput.value = parseInt(localStorage.getItem('playerSpeed'))
+} else {
+	localStorage.setItem('playerSpeed', 4);
+}
+
+const ballAccelerationInput = document.getElementById('ballAcceleration');
+ballAccelerationInput.oninput = () => {
+	let val = Math.max(0, Math.min(100, parseInt(ballAccelerationInput.value)));
+	ballAccelerationInput.value = val;
+	localStorage.setItem('ballAcceleration', val);
+}
+if(localStorage.getItem('ballAcceleration')){
+	ballAccelerationInput.value = parseInt(localStorage.getItem('ballAcceleration'))
+} else {
+	localStorage.setItem('ballAcceleration', 1);
+}
+
+const ballChanceInput = document.getElementById('ballChance');
+ballAccelerationInput.oninput = () => {
+	let val = Math.max(0, Math.min(100, parseInt(ballAccelerationInput.value)));
+	ballChanceInput.value = val;
+	localStorage.setItem('ballChance', val);
+}
+if(localStorage.getItem('ballChance')){
+	ballChanceInput.value = parseInt(localStorage.getItem('ballChance'))
+} else {
+	localStorage.setItem('ballChance', 1);
+}
