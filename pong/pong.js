@@ -171,6 +171,7 @@ class Ball {
 			console.log(balls);
 			if (balls.length == 0 && settings.style.display == "none") {
 				//TODO: smth better
+				localStorage.setItem('showSettings', 'false');
 				location.reload();
 			}
 		}

@@ -46,9 +46,10 @@
 				<input type="number" id="maxPowerups" val="2" />
 			</div>
 			<div>
-				<button onclick="location.reload()">Save</button>
+		<button onclick="localStorage.removeItem('showSettings'); location.reload()">Save</button>
 				<button onclick="setToDefault()">Set to default</button>
 			</div>
+			<button onclick="settings.style.display = 'none';">Close</button>
 		</div>
 		<header>
 			<div id="back" onclick="window.location.assign('../index.html');"></div>

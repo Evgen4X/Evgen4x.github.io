@@ -89,7 +89,10 @@ function setToDefault() {
 }
 
 const settings = document.getElementById("settings");
-settings.style.display = 'flex';
+if(!localStorage.getItem('showSettings')){
+	settings.style.display = 'flex';
+	localStorage.removeItem('showSettings');
+}
 const powerupTogglers = document.querySelectorAll(".powerup-toggle");
 powerupTogglers.forEach((powerupToggler) => {
 	const pup = powerupToggler.getAttribute("powerup");
