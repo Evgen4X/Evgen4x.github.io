@@ -169,7 +169,7 @@ class Ball {
 		if (this.x < -this.r || this.x > width) {
 			balls = balls.filter((ball) => ball != this);
 			console.log(balls);
-			if (balls.length == 0 && settings.style.display == "none") {
+			if (balls.length == 0 && settings.style.display != "flex") {
 				//TODO: smth better
 				localStorage.setItem('showSettings', 'false');
 				location.reload();
