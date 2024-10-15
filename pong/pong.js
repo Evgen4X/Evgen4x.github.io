@@ -65,16 +65,17 @@ class Ball {
 		this.owner = null;
 	}
 
-	getTrajectory(ticks, players) {
+	getTrajectory(ticks, players, updateSpeed=true) {
+		let speed = this.speed;
 		let answer = [];
 		let x = this.x;
 		let y = this.y;
 		let framesTillPowerupChecks = 0; //check powerups only every 10th frame to prevent potential lags
 		for (let i = 0; i < ticks; ++i, --framesTillPowerupChecks) {
-			x += this.speed[0];
-			y += this.speed[1];
+			x += speed[0];
+			y += speed[1];
 			if (y <= 0 || y >= height - this.r) {
-				this.speed[1] = -this.speed[1];
+				speed[1] = -speed[1];
 				y = Math.max(0, Math.min(y, height - this.r));
 			}
 
@@ -82,11 +83,11 @@ class Ball {
 			if (this.events["lastTimeHitPlayer"] < 1) {
 				players.forEach((player) => {
 					if (player.x <= x + this.r && x - this.r <= player.x + player.width + 1 && player.y <= y - this.r && y <= player.y + player.height) {
-						this.speed[0] = -this.speed[0];
-						this.speed[1] = 1.4 * Math.sin((Math.PI * (y - player.y - player.height / 2)) / player.height);
+						speed[0] = -speed[0];
+						speed[1] = 1.4 * Math.sin((Math.PI * (y - player.y - player.height / 2)) / player.height);
 						//prevent dy from being 0
-						if (this.speed[1] == 0) {
-							this.speed[1] = (Math.random() - 0.5) / 5;
+						if (speed[1] == 0) {
+							speed[1] = (Math.random() - 0.5) / 5;
 						}
 						if (Math.random() < parseInt(localStorage.getItem("ballChance")) / 100) {
 							Ball.speedMultiplier += parseInt(localStorage.getItem("ballAcceleration"));
@@ -118,6 +119,10 @@ class Ball {
 			}
 
 			answer.push([x, y]);
+		}
+
+		if(updateSpeed){
+			this.speed = speed;
 		}
 
 		return answer;

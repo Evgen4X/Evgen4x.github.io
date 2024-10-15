@@ -89,6 +89,7 @@ function setToDefault() {
 }
 
 const settings = document.getElementById("settings");
+settings.style.display = 'flex';
 const powerupTogglers = document.querySelectorAll(".powerup-toggle");
 powerupTogglers.forEach((powerupToggler) => {
 	const pup = powerupToggler.getAttribute("powerup");
@@ -118,6 +119,21 @@ powerupTogglers.forEach((powerupToggler) => {
 		}
 
 		localStorage.setItem("powerups", powerups.join(";"));
+	};
+});
+
+const modeTogglers = document.querySelectorAll(".mode-toggle");
+modeTogglers.forEach((modeToggler) => {
+	const pup = modeToggler.getAttribute("mode");
+	if(pup == localStorage.getItem('mode') || !localStorage.getItem('mode') && pup == 'pvp'){
+		modeToggler.style.backgroundColor = '#999999'
+	}
+	modeToggler.onclick = () => {
+		localStorage.setItem("mode", pup);
+		modeTogglers.forEach((modeToggler2) => {
+			modeToggler2.style.backgroundColor = "#666666";
+		});
+		modeToggler.style.backgroundColor = "#999999";
 	};
 });
 
