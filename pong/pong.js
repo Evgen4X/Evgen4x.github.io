@@ -6,6 +6,7 @@ class Player {
 		this.speed = parseInt(localStorage.getItem("playerSpeed"));
 		this.events = {};
 		this.id = ++Player.id;
+		this.destination = null;
 	}
 
 	resize() {
@@ -15,6 +16,13 @@ class Player {
 	}
 
 	update(ctx) {
+		if(this.destination){
+			this.y += (this.y + this.height / 2 > this.destination ? -1 : 1) * this.speed;
+			if(Math.abs(this.y + this.height / 2 - this.destination) < 2){
+				console.log(this.y, this.height / 2, this.destination)
+				this.destination = null;
+			}
+		}
 		let r = 255;
 		let g = 255;
 		let b = 255;
@@ -324,6 +332,25 @@ document.addEventListener("keyup", (event) => {
 
 	if (!/F..?/.test(key)) {
 		event.preventDefault();
+	}
+});
+
+document.addEventListener('mousedown', () => {
+	keys.lmb = true;
+});
+
+document.addEventListener('mouseup', () => {
+	keys.lmb = false;
+});
+
+document.addEventListener('mousemove', (event) => {
+	if(keys.lmb == true){
+		if(event.clientX < canvas.width * 0.25){
+			p1.destination = event.clientY ;// - canvas.top;
+		} else if(event.clientX > canvas.width * 0.75){
+			p2.destination = event.clientY ;// - canvas.top;
+		}
+		console.log(canvas.clientTop);
 	}
 });
 
