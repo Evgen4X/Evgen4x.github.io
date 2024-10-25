@@ -179,7 +179,7 @@ ballChanceInput.value = parseInt(localStorage.getItem("ballChance"));
 
 const maxPowerupsInput = document.getElementById("maxPowerups");
 maxPowerupsInput.oninput = () => {
-	let val = Math.max(1, Math.min(10, parseInt(maxPowerupsInput.value)));
+	let val = Math.max(1, Math.min(100, parseInt(maxPowerupsInput.value)));
 	maxPowerupsInput.value = val;
 	localStorage.setItem("maxPowerups", val);
 };
