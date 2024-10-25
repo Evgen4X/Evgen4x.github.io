@@ -39,3 +39,14 @@
 	box-shadow: 0 0 0.5em #fff;
 	color: #aaa;
 }
+
+@media screen and (max-width: 800px) {
+	#settings, #settings *, #settings * *{
+		font-size: small;
+		color: red;
+	}
+
+	#settings{
+		height: 70%;
+	}
+}
