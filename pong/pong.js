@@ -341,6 +341,7 @@ document.addEventListener('mousedown', () => {
 
 document.addEventListener('touchstart', () => {
 	keys.lmb = true;
+	console.log(1);
 });
 
 document.addEventListener('mouseup', () => {
@@ -352,13 +353,13 @@ document.addEventListener('touchend', () => {
 });
 
 document.addEventListener('touchmove', (event) => {
+	console.log(event);
 	if(keys.lmb == true){
-		if(event.clientX < canvas.width * 0.25){
-			p1.destination = event.clientY ;// - canvas.top;
-		} else if(event.clientX > canvas.width * 0.75){
-			p2.destination = event.clientY ;// - canvas.top;
+		if(event.touches[0].clientX < canvas.width * 0.25){
+			p1.destination = event.touches[0].clientY ;// - canvas.top;
+		} else if(event.touches[0].clientX > canvas.width * 0.75){
+			p2.destination = event.touches[0].clientY ;// - canvas.top;
 		}
-		console.log(canvas.clientTop);
 	}
 });
 
@@ -369,7 +370,6 @@ document.addEventListener('mousemove', (event) => {
 		} else if(event.clientX > canvas.width * 0.75){
 			p2.destination = event.clientY ;// - canvas.top;
 		}
-		console.log(canvas.clientTop);
 	}
 });
 
