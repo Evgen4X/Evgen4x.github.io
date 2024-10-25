@@ -48,4 +48,8 @@
 	#settings{
 		height: 70%;
 	}
+
+	input[type="number"]{
+		width: 3em;
+	}
 }

@@ -58,8 +58,10 @@ const powerupsFunctions = {
 		let speed = targetList[targetList.length - 1].speed;
 		targetList.push(new Ball(width / 2, height / 2, height / 60, [speed[0] < 0 ? 1 : -1, speed[1] < 0 ? 1 : -1]));
 	},
-	speed_refresh: (ballClass) => {
-		ballClass.speedMultiplier = Math.max(1, Math.sqrt(ballClass.speedMultiplier));
+	speed_refresh: (targets) => {
+		targets.forEach((ball) => {
+			ball.speedMultiplier = Math.max(1, Math.sqrt(ball.speedMultiplier));
+		});
 	},
 };
 
@@ -157,7 +159,7 @@ playerSpeedInput.value = parseInt(localStorage.getItem("playerSpeed"));
 
 const ballAccelerationInput = document.getElementById("ballAcceleration");
 ballAccelerationInput.oninput = () => {
-	let val = Math.max(0, Math.min(100, parseInt(ballAccelerationInput.value)));
+	let val = Math.max(-1, Math.min(10, parseInt(ballAccelerationInput.value)));
 	ballAccelerationInput.value = val;
 	localStorage.setItem("ballAcceleration", val);
 };
@@ -187,3 +189,14 @@ if (!localStorage.getItem("maxPowerups")) {
 	localStorage.setItem("maxPowerups", 2);
 }
 maxPowerupsInput.value = parseInt(localStorage.getItem("maxPowerups"));
+
+const ballInitSpeedInput = document.getElementById("ballInitSpeed");
+ballInitSpeedInput.oninput = () => {
+	let val = Math.max(-10, Math.min(10, parseInt(ballInitSpeedInput.value)));
+	ballInitSpeedInput.value = val;
+	localStorage.setItem("ballInitSpeed", val);
+};
+if (!localStorage.getItem("ballInitSpeed")) {
+	localStorage.setItem("ballInitSpeed", 2);
+}
+ballInitSpeedInput.value = parseInt(localStorage.getItem("ballInitSpeed"));

@@ -15,14 +15,7 @@ class Player {
 		this.y = Math.min(this.y, height - this.height);
 	}
 
-	update(ctx) {
-		if(this.destination){
-			this.y += (this.y + this.height / 2 > this.destination ? -1 : 1) * this.speed;
-			if(Math.abs(this.y + this.height / 2 - this.destination) < 2){
-				console.log(this.y, this.height / 2, this.destination)
-				this.destination = null;
-			}
-		}
+	draw(ctx){
 		let r = 255;
 		let g = 255;
 		let b = 255;
@@ -49,8 +42,22 @@ class Player {
 			r *= percentage;
 			b *= percentage;
 		}
+
 		ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
 		ctx.fillRect(this.x, this.y, this.width, this.height);
+	}
+
+	update(ctx) {
+		if(this.destination){
+			this.y += (this.y + this.height / 2 > this.destination ? -1 : 1) * this.speed;
+			if(Math.abs(this.y + this.height / 2 - this.destination) < 2){
+				console.log(this.y, this.height / 2, this.destination)
+				this.destination = null;
+			}
+		}
+
+		this.draw(ctx)
+
 		for (let i in this.events) {
 			this.events[i] -= 10;
 			if (this.events[i] <= 0) {
@@ -69,6 +76,7 @@ class Ball {
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
+		this.speedMultiplier = Ball.speedMultiplier;
 		this.events = {lastTimeHitPlayer: 0};
 		this.owner = null;
 	}
@@ -98,7 +106,11 @@ class Ball {
 							speed[1] = (Math.random() - 0.5) / 5;
 						}
 						if (Math.random() < parseInt(localStorage.getItem("ballChance")) / 100) {
-							Ball.speedMultiplier += parseInt(localStorage.getItem("ballAcceleration"));
+							if(localStorage.getItem("ballAcceleration") == '-1'){
+								this.speedMultiplier = Math.floor(Math.random() * 8) + 2;
+							} else {
+								this.speedMultiplier += parseInt(localStorage.getItem("ballAcceleration"));
+							}
 						}
 						this.owner = player.id;
 						this.events["lastTimeHitPlayer"] = 200;
@@ -135,8 +147,8 @@ class Ball {
 
 		return answer;
 	}
-
-	update(ctx) {
+	
+	draw(ctx){
 		let r = 255;
 		let g = 255;
 		let b = 255;
@@ -145,12 +157,17 @@ class Ball {
 			g *= percentage;
 			b *= percentage;
 		}
+		
 		ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
 		ctx.beginPath();
 		ctx.arc(this.x, this.y, this.r, 0, 360);
 		ctx.fill();
+	}
 
-		let trajectory = this.getTrajectory(Ball.speedMultiplier, [p1, p2]);
+	update(ctx) {
+		this.draw(ctx);
+
+		let trajectory = this.getTrajectory(this.speedMultiplier, [p1, p2]);
 		let position = trajectory[trajectory.length - 1];
 		this.x = position[0];
 		this.y = position[1];
@@ -285,11 +302,9 @@ function update() {
 		let name = availablePowerUps[Math.floor(Math.random() * availablePowerUps.length)];
 		let target = Math.random() < 0.5 ? "self" : "enemy";
 		let color = "#16DF2A";
-		if (name.includes("ball")) {
+		if (name.includes("ball") || name.includes('refresh')) {
 			target = "ball";
 			color = "#ebf10d";
-		} else if (name == "speed_refresh") {
-			target = "ballClass";
 		} else if ((target == "self" && ["smaller_platform", "slower_movement_speed"].includes(name)) || (target == "enemy" && ["bigger_platform", "faster_movement_speed"].includes(name))) {
 			color = "#DF4516";
 		}
@@ -303,10 +318,21 @@ function restart() {
 	p1.x = width / 10;
 	p2.resize();
 	p2.x = (9 * width) / 10;
-	let speedX = Math.random() > 0.5 ? 1 : -1;
-	let speedY = Math.random() > 0.5 ? 1 : -1;
+	let speedX = parseInt(localStorage.getItem('ballInitSpeed')) * (Math.random() > 0.5 ? 1 : -1);
+	let speedY = parseInt(localStorage.getItem('ballInitSpeed')) * (Math.random() > 0.5 ? 1 : -1);
+	this.speedMultiplier = parseInt(localStorage.getItem('ballInitSpeed'));
+	console.log(speedX);
 	balls = [new Ball(width / 2 - height / 60, height / 2 - height / 60, height / 60, [speedX, speedY])];
-	interval = setInterval(update, 10);
+	ctx.clearRect(0, 0, width, height);
+	ctx.fillStyle = "#000000";
+	ctx.fillRect(0, 0, width, width);
+	p1.draw(ctx);
+	p2.draw(ctx);
+	balls[0].draw(ctx);
+	
+	setTimeout(() => {
+		interval = setInterval(update, 10);
+	}, 666);
 }
 
 const p1 = new Player(width / 10);
@@ -353,7 +379,6 @@ document.addEventListener('touchend', () => {
 });
 
 document.addEventListener('touchmove', (event) => {
-	console.log(event);
 	if(keys.lmb == true){
 		if(event.touches[0].clientX < canvas.width * 0.25){
 			p1.destination = event.touches[0].clientY ;// - canvas.top;
@@ -386,4 +411,5 @@ window.onresize = () => {
 
 var interval;
 var inertia = false;
+
 restart();
