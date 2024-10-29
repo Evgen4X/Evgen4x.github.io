@@ -130,6 +130,18 @@ main h1 {
 	.element {
 		width: 25vw;
 	}
+
+	footer{
+		font-size: large !important;
+	}
+
+	h1{
+		margin-top: 0.33em !important;
+	}
+
+	#waste-of-space{
+		height: 10% !important;
+	}
 }
 
 footer {

@@ -201,4 +201,16 @@ footer a {
 	header {
 		font-size: large;
 	}
+
+	label{
+		font-size: medium; 
+	}
+
+	#settings input{
+		font-size: medium;
+	}
+
+	footer{
+		font-size: large;
+	}
 }
