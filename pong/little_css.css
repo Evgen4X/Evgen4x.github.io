@@ -53,3 +53,7 @@
 		width: 3em;
 	}
 }
+
+canvas{
+	height: 100%;
+}

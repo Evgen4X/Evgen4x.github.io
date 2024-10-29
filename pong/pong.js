@@ -253,10 +253,11 @@ var height = window.innerHeight * 0.86;
 canvas.width = width;
 canvas.height = height;
 
+
 function update() {
 	ctx.clearRect(0, 0, width, height);
 	ctx.fillStyle = "#000000";
-	ctx.fillRect(0, 0, width, width);
+	ctx.fillRect(0, 0, width, height);
 
 	//update of p1
 	if (keys["W"]) {
@@ -325,7 +326,7 @@ function restart() {
 	balls = [new Ball(width / 2 - height / 60, height / 2 - height / 60, height / 60, [speedX, speedY])];
 	ctx.clearRect(0, 0, width, height);
 	ctx.fillStyle = "#000000";
-	ctx.fillRect(0, 0, width, width);
+	ctx.fillRect(0, 0, width, height);
 	p1.draw(ctx);
 	p2.draw(ctx);
 	balls[0].draw(ctx);
@@ -347,7 +348,7 @@ document.addEventListener("keydown", (event) => {
 	const key = event.key.toUpperCase();
 	keys[key] = true;
 
-	if (!/F?[0-9]+/.test(key)) {
+	if (!/F?[0-9]+/.test(key) && key != '-' && key != 'BACKSPACE') {
 		event.preventDefault();
 	}
 });
