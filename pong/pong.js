@@ -295,7 +295,7 @@ function update() {
 	});
 
 	//spawnnig power-ups
-	if (Math.random() < 0.005 && powerups.length < parseInt(localStorage.getItem("maxPowerups"))) {
+	if (Math.random() < parseInt(localStorage.getItem('powerupsChance')) / 1000 && powerups.length < parseInt(localStorage.getItem("maxPowerups"))) {
 		let name = availablePowerUps[Math.floor(Math.random() * availablePowerUps.length)];
 		let target = Math.random() < 0.5 ? "self" : "enemy";
 		let color = "#16DF2A";

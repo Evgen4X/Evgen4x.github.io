@@ -200,3 +200,14 @@ if (!localStorage.getItem("ballInitSpeed")) {
 	localStorage.setItem("ballInitSpeed", 2);
 }
 ballInitSpeedInput.value = parseInt(localStorage.getItem("ballInitSpeed"));
+
+const powerupsChance = document.getElementById("powerupsChance");
+powerupsChance.oninput = () => {
+	let val = Math.max(0, Math.min(1000, parseInt(powerupsChance.value)));
+	powerupsChance.value = val;
+	localStorage.setItem("powerupsChance", val);
+};
+if (!localStorage.getItem("powerupsChance")) {
+	localStorage.setItem("powerupsChance", 5);
+}
+powerupsChance.value = parseInt(localStorage.getItem("powerupsChance"));

@@ -51,6 +51,10 @@
 				<input type="number" id="maxPowerups" val="2" />
 			</div>
 			<div>
+				<label for="powerupsChance">Powerup spawn rate</label>
+				<input type="number" id="powerupsChance" val="5" />
+			</div>
+			<div>
 		<button onclick="localStorage.removeItem('showSettings'); location.reload()">Save</button>
 				<button onclick="setToDefault()">Set to default</button>
 			</div>
@@ -58,7 +62,7 @@
 		</div>
 		<header>
 			<div id="back" onclick="window.location.assign('../index.html');"></div>
-			<div id="title">Pong</div>
+			<div id="title">Ping Pong</div>
 			<div style="display: flex; justify-content: space-between; align-items: center; width: 14vh">
 				<div id="settings-button"></div>
 				<div id="theme-switch"></div>
