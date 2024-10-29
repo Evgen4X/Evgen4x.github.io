@@ -100,11 +100,7 @@ class Ball {
 				players.forEach((player) => {
 					if (player.x <= x + this.r && x - this.r <= player.x + player.width + 1 && player.y <= y - this.r && y <= player.y + player.height) {
 						speed[0] = -speed[0];
-						speed[1] = 1.4 * Math.sin((Math.PI * (y - player.y - player.height / 2)) / player.height);
-						//prevent dy from being 0
-						if (speed[1] == 0) {
-							speed[1] = (Math.random() - 0.5) / 5;
-						}
+						speed[1] = 0 * 1.4 * Math.sin((Math.PI * (y - player.y - player.height / 2)) / player.height);
 						if (Math.random() < parseInt(localStorage.getItem("ballChance")) / 100) {
 							if(localStorage.getItem("ballAcceleration") == '-1'){
 								this.speedMultiplier = Math.floor(Math.random() * 8) + 2;
