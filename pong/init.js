@@ -56,7 +56,7 @@ const powerupsFunctions = {
 	},
 	extra_ball: (targetList) => {
 		let speed = targetList[targetList.length - 1].speed;
-		targetList.push(new Ball(width / 2, height / 2, height / 60, [speed[0] < 0 ? 1 : -1, speed[1] < 0 ? 1 : -1]));
+		targetList.push(new Ball(width / 2, height / 2, height / 60, [speed[0], -speed[1]]));
 	},
 	speed_refresh: (targets) => {
 		targets.forEach((ball) => {
