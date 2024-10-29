@@ -11,7 +11,8 @@ header {
 	justify-content: center;
 	align-items: center;
 	background-color: #000;
-	height: 3rem;
+	height: 3em;
+	font-size: large;
 }
 
 .title {
@@ -21,7 +22,7 @@ header {
 	align-items: center;
 	background-color: rgba(0, 0, 0, 0);
 	color: #fff;
-	font-size: x-large;
+	font-size: xx-large;
 	text-decoration: none;
 	padding: 2% 0;
 }
@@ -88,7 +89,7 @@ nav {
 	flex: 1;
 	outline: none;
 	background-color: #888;
-	font-size: x-large;
+	font-size: 4vw;
 	font-weight: bolder;
 	color: #fff;
 	text-align: center;
@@ -118,7 +119,7 @@ nav {
 
 .kb_row .kb_key {
 	flex: 1;
-	font-size: large;
+	font-size: 4vw;
 	color: #fff;
 	font-weight: bolder;
 	background-color: #888;
@@ -158,14 +159,14 @@ nav {
 	border-radius: 2em;
 	box-shadow: 0 0 2em #000;
 	display: none;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
 	flex-direction: column;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	width: 80%;
+	width: 90%;
 	height: 75%;
 	color: white;
 }
@@ -183,6 +184,10 @@ nav {
 	background-size: 1.5em 1.5em;
 	background-repeat: no-repeat;
 	background-position: right;
+}
+
+label{
+	font-size: xx-large;
 }
 
 input {
@@ -210,25 +215,27 @@ input::placeholder {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	width: 80%;
+	width: 90%;
 }
 
 .button_container button,
 .amount_of_letters {
 	margin: 0.5em;
 	height: 2em;
-	width: 10em;
+	width: 15em;
 	background-color: #878787;
 	opacity: 1;
 	border-radius: 1em;
 	box-shadow: 0 0 0.5em #ddd;
 	font-weight: bold;
+	font-size: x-large;
 	transition: background-color 0.5s linear, box-shadow 0.5s ease-in-out;
 }
 
 .amount_of_letters {
 	width: 2em;
 	margin: 0.1em;
+	font-size: 5vw;
 }
 
 .button_container button:hover {
@@ -242,7 +249,13 @@ input::placeholder {
 	color: #aaa;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (max-width:600px){
+	.absolute{
+		width: 80% !important;
+	}
+}
+
+@media screen and (max-width: 1000px) {
 	#board {
 		margin-top: 2%;
 		margin-bottom: 2%;
@@ -279,4 +292,6 @@ a {
 
 .how_to p {
 	margin: 0.5em;
+	font-size: x-large;
 }
+
