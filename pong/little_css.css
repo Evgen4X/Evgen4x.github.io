@@ -5,14 +5,14 @@
 	align-items: start;
 }
 
-#settings #first-div{
+#settings #first-div {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	width: 90%;
 }
 
-#settings #first-div div{
+#settings #first-div div {
 	margin: 0.5em;
 	height: 2em;
 	width: 15em;
@@ -41,19 +41,25 @@
 }
 
 @media screen and (max-width: 800px) {
-	#settings, #settings *, #settings * *{
+	#settings,
+	#settings *,
+	#settings * * {
 		font-size: small;
 	}
 
-	#settings{
+	#settings {
 		height: 70%;
 	}
 
-	input[type="number"]{
+	input[type="number"] {
 		width: 3em;
 	}
 }
 
-canvas{
+canvas {
 	height: 100%;
+}
+
+footer {
+	border-top: 1px solid var(--bg);
 }

@@ -49,10 +49,8 @@ const powerupsFunctions = {
 			target.events["faster_movement_speed"] += EVENT_LASTTIME;
 		}
 	},
-	ball_redirection: (targets) => {
-		targets.forEach((ball) => {
-			ball.speed[1] = Math.random() * 3 - 1.5;
-		});
+	ball_redirection: (target) => {
+		target.speed[1] = Math.random() * 10 - 5;
 	},
 	extra_ball: (targetList) => {
 		let speed = targetList[targetList.length - 1].speed;
@@ -91,9 +89,9 @@ function setToDefault() {
 }
 
 const settings = document.getElementById("settings");
-if(!localStorage.getItem('showSettings')){
-	settings.style.display = 'flex';
-	localStorage.removeItem('showSettings');
+if (!localStorage.getItem("showSettings")) {
+	settings.style.display = "flex";
+	localStorage.removeItem("showSettings");
 }
 const powerupTogglers = document.querySelectorAll(".powerup-toggle");
 powerupTogglers.forEach((powerupToggler) => {
@@ -130,9 +128,9 @@ powerupTogglers.forEach((powerupToggler) => {
 const modeTogglers = document.querySelectorAll(".mode-toggle");
 modeTogglers.forEach((modeToggler) => {
 	const pup = modeToggler.getAttribute("mode");
-	if(pup == localStorage.getItem('mode') || !localStorage.getItem('mode') && pup == 'pvp'){
-		modeToggler.style.backgroundColor = '#999999'
-		localStorage.setItem('mode', pup);
+	if (pup == localStorage.getItem("mode") || (!localStorage.getItem("mode") && pup == "pvp")) {
+		modeToggler.style.backgroundColor = "#999999";
+		localStorage.setItem("mode", pup);
 	}
 	modeToggler.onclick = () => {
 		localStorage.setItem("mode", pup);
@@ -160,7 +158,7 @@ playerSpeedInput.value = parseInt(localStorage.getItem("playerSpeed"));
 
 const ballAccelerationInput = document.getElementById("ballAcceleration");
 ballAccelerationInput.oninput = () => {
-	let val = Math.max(-1, Math.min(10, parseInt(ballAccelerationInput.value)));
+	let val = Math.max(-10, Math.min(10, parseInt(ballAccelerationInput.value)));
 	ballAccelerationInput.value = val;
 	localStorage.setItem("ballAcceleration", val);
 };
@@ -212,4 +210,3 @@ if (!localStorage.getItem("powerupsChance")) {
 	localStorage.setItem("powerupsChance", 5);
 }
 powerupsChance.value = parseInt(localStorage.getItem("powerupsChance"));
-

@@ -15,7 +15,7 @@ class Player {
 		this.y = Math.min(this.y, height - this.height);
 	}
 
-	draw(ctx){
+	draw(ctx) {
 		let r = 255;
 		let g = 255;
 		let b = 255;
@@ -43,27 +43,31 @@ class Player {
 			b *= percentage;
 		}
 
+		if (document.querySelector("html").classList.contains("light")) {
+			r = 255 - r;
+			g = 255 - g;
+			b = 255 - b;
+		}
+
 		ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
 		ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
 
 	update(ctx) {
-		if(this.destination){
+		if (this.destination) {
 			this.y += (this.y + this.height / 2 > this.destination ? -1 : 1) * this.speed;
-			if(Math.abs(this.y + this.height / 2 - this.destination) < 2){
-				console.log(this.y, this.height / 2, this.destination)
+			if (Math.abs(this.y + this.height / 2 - this.destination) < 2) {
 				this.destination = null;
 			}
 		}
 
-		this.draw(ctx)
+		this.draw(ctx);
 
 		for (let i in this.events) {
 			this.events[i] -= 10;
 			if (this.events[i] <= 0) {
 				delete this.events[i];
 				powerupsOnExpire[i](this);
-				console.log(powerupsOnExpire[i]);
 			}
 		}
 	}
@@ -81,12 +85,13 @@ class Ball {
 		this.owner = null;
 	}
 
-	getTrajectory(ticks, players, updateSpeed=true) {
-		const prevLTHP = this.events['lastTimeHitPlayer'];
+	getTrajectory(ticks, players, updateSpeed = true) {
+		const prevLTHP = this.events["lastTimeHitPlayer"];
 		let speed = [this.speed[0], this.speed[1]];
 		let answer = [];
 		let x = this.x;
 		let y = this.y;
+		let CHANGESPEED = false;
 		let framesTillPowerupChecks = 0; //check powerups only every 10th frame to prevent potential lags
 		for (let i = 0; i < ticks; ++i, --framesTillPowerupChecks) {
 			x += speed[0];
@@ -97,28 +102,29 @@ class Ball {
 			}
 
 			//player collision check
-			if(1 || updateSpeed){
 			if (this.events["lastTimeHitPlayer"] < 1) {
 				players.forEach((player) => {
 					if (player.x <= x + this.r && x - this.r <= player.x + player.width + 1 && player.y <= y - this.r && y <= player.y + player.height) {
+						console.log("!");
 						speed[0] = -speed[0];
-						speed[1] = 1.4 * Math.sin((Math.PI * (y - player.y - player.height / 2)) / player.height);
+						speed[1] = (10 / player.height) * (this.y - player.y) - 5;
 						if (updateSpeed && Math.random() < parseInt(localStorage.getItem("ballChance")) / 100) {
-							if(localStorage.getItem("ballAcceleration") == '-1'){
-								this.speedMultiplier = Math.floor(Math.random() * 8) + 2;
+							if (localStorage.getItem("ballAcceleration")[0] == "-") {
+								let maxSpeed = parseInt(localStorage.getItem("ballAcceleration").substring(1)) / 2;
+								this.speedMultiplier = Math.floor(Math.random() * maxSpeed) + 1;
 							} else {
 								this.speedMultiplier += parseInt(localStorage.getItem("ballAcceleration"));
 							}
 							this.owner = player.id;
-							this.events["lastTimeHitPlayer"] = 200;
+							this.events["lastTimeHitPlayer"] = 50;
 						}
 					}
 				});
 			}
-			--this.events["lastTimeHitPlayer"];}
+			--this.events["lastTimeHitPlayer"];
 
-			if(updateSpeed){
-			//powerups check
+			if (updateSpeed) {
+				//powerups check
 				if (framesTillPowerupChecks == 0) {
 					powerups.forEach((powerup) => {
 						if (powerup.ballCollides(this)) {
@@ -129,6 +135,9 @@ class Ball {
 								target = p1.id == this.owner ? p2 : p1;
 							} else if (powerup.target == "ballClass") {
 								target = Ball;
+							} else if (powerup.target == "ball") {
+								CHANGESPEED = true;
+								target = null;
 							}
 							powerup.collect(target);
 						}
@@ -141,16 +150,19 @@ class Ball {
 			answer.push([x, y]);
 		}
 
-		if(updateSpeed){
+		if (updateSpeed) {
 			this.speed = speed;
+			if (CHANGESPEED) {
+				this.speed[1] = Math.random() * 8 - 4;
+			}
 		} else {
-			this.events['lastTimeHitPlayer'] = prevLTHP;
+			this.events["lastTimeHitPlayer"] = prevLTHP;
 		}
 
 		return answer;
 	}
-	
-	draw(ctx){
+
+	draw(ctx) {
 		let r = 255;
 		let g = 255;
 		let b = 255;
@@ -159,7 +171,13 @@ class Ball {
 			g *= percentage;
 			b *= percentage;
 		}
-		
+
+		if (document.querySelector("html").classList.contains("light")) {
+			r = 255 - r;
+			g = 255 - g;
+			b = 255 - b;
+		}
+
 		ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
 		ctx.beginPath();
 		ctx.arc(this.x, this.y, this.r, 0, 360);
@@ -188,17 +206,15 @@ class Ball {
 				if (this.events[i] <= 0) {
 					delete this.events[i];
 					powerupsOnExpire[i]([this]);
-					console.log(powerupsOnExpire[i]);
 				}
 			}
 		}
 
 		if (this.x < -this.r || this.x > width) {
 			balls = balls.filter((ball) => ball != this);
-			console.log(balls);
 			if (balls.length == 0 && settings.style.display != "flex") {
 				//TODO: smth better
-				localStorage.setItem('showSettings', 'false');
+				localStorage.setItem("showSettings", "false");
 				location.reload();
 			}
 		}
@@ -255,10 +271,12 @@ var height = window.innerHeight * 0.86;
 canvas.width = width;
 canvas.height = height;
 
-
 function update() {
 	ctx.clearRect(0, 0, width, height);
 	ctx.fillStyle = "#000000";
+	if (document.querySelector("html").classList.contains("light")) {
+		ctx.fillStyle = "#cccccc";
+	}
 	ctx.fillRect(0, 0, width, height);
 
 	//update of p1
@@ -272,7 +290,7 @@ function update() {
 	p1.update(ctx);
 
 	//update of p2
-	if(localStorage.getItem('mode') == 'pvp'){
+	if (localStorage.getItem("mode") == "pvp") {
 		if (keys["ARROWUP"]) {
 			p2.y -= p2.speed;
 		}
@@ -282,16 +300,16 @@ function update() {
 
 		p2.y = Math.max(-5, Math.min(p2.y, height - p2.height));
 	} else {
-		const dumbness = parseInt(localStorage.getItem('mode')[3]);
-		const k1 = parseInt(8.14585 * Math.pow(dumbness, -0.877692));
-		const k2 = parseInt(Math.pow(dumbness + 0.543302, 1.52375));
+		const dumbness = parseInt(localStorage.getItem("mode")[3]);
+		let k = dumbness == 1 ? 6 : dumbness == 2 ? 4 : dumbness == 3 ? 2 : dumbness == 4 ? 0.5 : 5;
 		balls.forEach((ball) => {
-			if(ball.owner == p1.id){
-				const traj = ball.getTrajectory(canvas.width, [p1, p2], false);
-				for(let i = 0; i < canvas.width / k1; ++i){
+			if (ball.owner == p1.id) {
+				const traj = ball.getTrajectory(canvas.width / k + 2, [p1, p2], false);
+				for (let i = 0; i < canvas.width / k; ++i) {
 					const point = traj[i];
-					if(point[0] > p2.x){
+					if (point[0] > p2.x) {
 						p2.destination = point[1] + Math.floor(Math.random() * p2.height - p2.height / 2);
+						p2.destination = Math.max(p2.height / 2, Math.min(canvas.height - p2.height / 2, p2.destination));
 						flag = false;
 						break;
 					}
@@ -320,17 +338,21 @@ function update() {
 	});
 
 	//spawnnig power-ups
-	if (Math.random() < parseInt(localStorage.getItem('powerupsChance')) / 1000 && powerups.length < parseInt(localStorage.getItem("maxPowerups"))) {
+	if (Math.random() < parseInt(localStorage.getItem("powerupsChance")) / 1000 && powerups.length < parseInt(localStorage.getItem("maxPowerups"))) {
 		let name = availablePowerUps[Math.floor(Math.random() * availablePowerUps.length)];
 		let target = Math.random() < 0.5 ? "self" : "enemy";
 		let color = "#16DF2A";
-		if (name.includes("ball") || name.includes('refresh')) {
+		if (name == "ball_redirection") {
 			target = "ball";
+			color = "#ebf10d";
+		} else if (name.includes("ball") || name.includes("refresh")) {
+			target = "balls";
 			color = "#ebf10d";
 		} else if ((target == "self" && ["smaller_platform", "slower_movement_speed"].includes(name)) || (target == "enemy" && ["bigger_platform", "faster_movement_speed"].includes(name))) {
 			color = "#DF4516";
 		}
-		let powerup = new PowerUp(width / 2 + (Math.random() * width) / 10, Math.random() * height, name + ".png", target, color, powerupsFunctions[name]);
+		let deviation = (Math.random() * width) / 4 - width / 8;
+		let powerup = new PowerUp(width / 2 + deviation, Math.random() * height, name + ".png", target, color, powerupsFunctions[name]);
 		powerups.push(powerup);
 	}
 }
@@ -340,18 +362,21 @@ function restart() {
 	p1.x = width / 10;
 	p2.resize();
 	p2.x = (9 * width) / 10;
-	let speedX = parseInt(localStorage.getItem('ballInitSpeed')) * (Math.random() > 0.5 ? 1 : -1);
-	let speedY = parseInt(localStorage.getItem('ballInitSpeed')) * (Math.random() > 0.5 ? 1 : -1);
-	this.speedMultiplier = parseInt(localStorage.getItem('ballInitSpeed'));
+	let speedX = parseInt(localStorage.getItem("ballInitSpeed")) * (Math.random() > 0.5 ? 1 : -1);
+	let speedY = (canvas.height / canvas.width) * 2.5 * parseInt(localStorage.getItem("ballInitSpeed")) * (Math.random() > 0.5 ? 1 : -1);
+	this.speedMultiplier = parseInt(localStorage.getItem("ballInitSpeed"));
 	balls = [new Ball(width / 2 - height / 60, height / 2 - height / 60, height / 60, [speedX, speedY])];
 	ctx.clearRect(0, 0, width, height);
 	ctx.fillStyle = "#000000";
+	if (document.querySelector("html").classList.contains("light")) {
+		ctx.fillStyle = "#cccccc";
+	}
 	ctx.fillRect(0, 0, width, height);
 	p1.draw(ctx);
 	p2.draw(ctx);
 	balls[0].draw(ctx);
 	balls[0].owner = p1.id;
-	
+
 	setTimeout(() => {
 		interval = setInterval(update, 10);
 	}, 666);
@@ -369,7 +394,7 @@ document.addEventListener("keydown", (event) => {
 	const key = event.key.toUpperCase();
 	keys[key] = true;
 
-	if (!/F?[0-9]+/.test(key) && key != '-' && key != 'BACKSPACE') {
+	if (!/F?[0-9]+/.test(key) && key != "-" && key != "BACKSPACE") {
 		event.preventDefault();
 	}
 });
@@ -383,38 +408,38 @@ document.addEventListener("keyup", (event) => {
 	}
 });
 
-document.addEventListener('mousedown', () => {
+document.addEventListener("mousedown", () => {
 	keys.lmb = true;
 });
 
-document.addEventListener('touchstart', () => {
+document.addEventListener("touchstart", () => {
 	keys.lmb = true;
 });
 
-document.addEventListener('mouseup', () => {
+document.addEventListener("mouseup", () => {
 	keys.lmb = false;
 });
 
-document.addEventListener('touchend', () => {
+document.addEventListener("touchend", () => {
 	keys.lmb = false;
 });
 
-document.addEventListener('touchmove', (event) => {
-	if(keys.lmb == true){
-		if(event.touches[0].clientX < canvas.width * 0.25){
-			p1.destination = event.touches[0].clientY ;// - canvas.top;
-		} else if(event.touches[0].clientX > canvas.width * 0.75 && localStorage.getItem('mode') == 'pvp'){
-			p2.destination = event.touches[0].clientY ;// - canvas.top;
+document.addEventListener("touchmove", (event) => {
+	if (keys.lmb == true) {
+		if (event.touches[0].clientX < canvas.width * 0.25) {
+			p1.destination = event.touches[0].clientY; // - canvas.top;
+		} else if (event.touches[0].clientX > canvas.width * 0.75 && localStorage.getItem("mode") == "pvp") {
+			p2.destination = event.touches[0].clientY; // - canvas.top;
 		}
 	}
 });
 
-document.addEventListener('mousemove', (event) => {
-	if(keys.lmb == true){
-		if(event.clientX < canvas.width * 0.25){
-			p1.destination = event.clientY ;// - canvas.top;
-		} else if(event.clientX > canvas.width * 0.75 && localStorage.getItem('mode') == 'pvp'){
-			p2.destination = event.clientY ;// - canvas.top;
+document.addEventListener("mousemove", (event) => {
+	if (keys.lmb == true) {
+		if (event.clientX < canvas.width * 0.25) {
+			p1.destination = event.clientY; // - canvas.top;
+		} else if (event.clientX > canvas.width * 0.75 && localStorage.getItem("mode") == "pvp") {
+			p2.destination = event.clientY; // - canvas.top;
 		}
 	}
 });
