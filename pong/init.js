@@ -132,6 +132,7 @@ modeTogglers.forEach((modeToggler) => {
 	const pup = modeToggler.getAttribute("mode");
 	if(pup == localStorage.getItem('mode') || !localStorage.getItem('mode') && pup == 'pvp'){
 		modeToggler.style.backgroundColor = '#999999'
+		localStorage.setItem('mode', pup);
 	}
 	modeToggler.onclick = () => {
 		localStorage.setItem("mode", pup);
@@ -211,3 +212,4 @@ if (!localStorage.getItem("powerupsChance")) {
 	localStorage.setItem("powerupsChance", 5);
 }
 powerupsChance.value = parseInt(localStorage.getItem("powerupsChance"));
+

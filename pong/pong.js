@@ -82,7 +82,8 @@ class Ball {
 	}
 
 	getTrajectory(ticks, players, updateSpeed=true) {
-		let speed = this.speed;
+		const prevLTHP = this.events['lastTimeHitPlayer'];
+		let speed = [this.speed[0], this.speed[1]];
 		let answer = [];
 		let x = this.x;
 		let y = this.y;
@@ -96,42 +97,45 @@ class Ball {
 			}
 
 			//player collision check
+			if(1 || updateSpeed){
 			if (this.events["lastTimeHitPlayer"] < 1) {
 				players.forEach((player) => {
 					if (player.x <= x + this.r && x - this.r <= player.x + player.width + 1 && player.y <= y - this.r && y <= player.y + player.height) {
 						speed[0] = -speed[0];
 						speed[1] = 1.4 * Math.sin((Math.PI * (y - player.y - player.height / 2)) / player.height);
-						if (Math.random() < parseInt(localStorage.getItem("ballChance")) / 100) {
+						if (updateSpeed && Math.random() < parseInt(localStorage.getItem("ballChance")) / 100) {
 							if(localStorage.getItem("ballAcceleration") == '-1'){
 								this.speedMultiplier = Math.floor(Math.random() * 8) + 2;
 							} else {
 								this.speedMultiplier += parseInt(localStorage.getItem("ballAcceleration"));
 							}
+							this.owner = player.id;
+							this.events["lastTimeHitPlayer"] = 200;
 						}
-						this.owner = player.id;
-						this.events["lastTimeHitPlayer"] = 200;
 					}
 				});
 			}
-			--this.events["lastTimeHitPlayer"];
+			--this.events["lastTimeHitPlayer"];}
 
+			if(updateSpeed){
 			//powerups check
-			if (framesTillPowerupChecks == 0) {
-				powerups.forEach((powerup) => {
-					if (powerup.ballCollides(this)) {
-						let target = balls;
-						if (powerup.target == "self") {
-							target = p1.id == this.owner ? p1 : p2;
-						} else if (powerup.target == "enemy") {
-							target = p1.id == this.owner ? p2 : p1;
-						} else if (powerup.target == "ballClass") {
-							target = Ball;
+				if (framesTillPowerupChecks == 0) {
+					powerups.forEach((powerup) => {
+						if (powerup.ballCollides(this)) {
+							let target = balls;
+							if (powerup.target == "self") {
+								target = p1.id == this.owner ? p1 : p2;
+							} else if (powerup.target == "enemy") {
+								target = p1.id == this.owner ? p2 : p1;
+							} else if (powerup.target == "ballClass") {
+								target = Ball;
+							}
+							powerup.collect(target);
 						}
-						powerup.collect(target);
-					}
-				});
+					});
 
-				framesTillPowerupChecks = 10;
+					framesTillPowerupChecks = 10;
+				}
 			}
 
 			answer.push([x, y]);
@@ -139,6 +143,8 @@ class Ball {
 
 		if(updateSpeed){
 			this.speed = speed;
+		} else {
+			this.events['lastTimeHitPlayer'] = prevLTHP;
 		}
 
 		return answer;
@@ -266,14 +272,33 @@ function update() {
 	p1.update(ctx);
 
 	//update of p2
-	if (keys["ARROWUP"]) {
-		p2.y -= p2.speed;
-	}
-	if (keys["ARROWDOWN"]) {
-		p2.y += p2.speed;
-	}
+	if(localStorage.getItem('mode') == 'pvp'){
+		if (keys["ARROWUP"]) {
+			p2.y -= p2.speed;
+		}
+		if (keys["ARROWDOWN"]) {
+			p2.y += p2.speed;
+		}
 
-	p2.y = Math.max(-5, Math.min(p2.y, height - p2.height));
+		p2.y = Math.max(-5, Math.min(p2.y, height - p2.height));
+	} else {
+		const dumbness = parseInt(localStorage.getItem('mode')[3]);
+		const k1 = parseInt(8.14585 * Math.pow(dumbness, -0.877692));
+		const k2 = parseInt(Math.pow(dumbness + 0.543302, 1.52375));
+		balls.forEach((ball) => {
+			if(ball.owner == p1.id){
+				const traj = ball.getTrajectory(canvas.width, [p1, p2], false);
+				for(let i = 0; i < canvas.width / k1; ++i){
+					const point = traj[i];
+					if(point[0] > p2.x){
+						p2.destination = point[1] + Math.floor(Math.random() * p2.height - p2.height / 2);
+						flag = false;
+						break;
+					}
+				}
+			}
+		});
+	}
 	p2.update(ctx);
 
 	//update of balls
@@ -318,7 +343,6 @@ function restart() {
 	let speedX = parseInt(localStorage.getItem('ballInitSpeed')) * (Math.random() > 0.5 ? 1 : -1);
 	let speedY = parseInt(localStorage.getItem('ballInitSpeed')) * (Math.random() > 0.5 ? 1 : -1);
 	this.speedMultiplier = parseInt(localStorage.getItem('ballInitSpeed'));
-	console.log(speedX);
 	balls = [new Ball(width / 2 - height / 60, height / 2 - height / 60, height / 60, [speedX, speedY])];
 	ctx.clearRect(0, 0, width, height);
 	ctx.fillStyle = "#000000";
@@ -326,6 +350,7 @@ function restart() {
 	p1.draw(ctx);
 	p2.draw(ctx);
 	balls[0].draw(ctx);
+	balls[0].owner = p1.id;
 	
 	setTimeout(() => {
 		interval = setInterval(update, 10);
@@ -364,7 +389,6 @@ document.addEventListener('mousedown', () => {
 
 document.addEventListener('touchstart', () => {
 	keys.lmb = true;
-	console.log(1);
 });
 
 document.addEventListener('mouseup', () => {
@@ -379,7 +403,7 @@ document.addEventListener('touchmove', (event) => {
 	if(keys.lmb == true){
 		if(event.touches[0].clientX < canvas.width * 0.25){
 			p1.destination = event.touches[0].clientY ;// - canvas.top;
-		} else if(event.touches[0].clientX > canvas.width * 0.75){
+		} else if(event.touches[0].clientX > canvas.width * 0.75 && localStorage.getItem('mode') == 'pvp'){
 			p2.destination = event.touches[0].clientY ;// - canvas.top;
 		}
 	}
@@ -389,7 +413,7 @@ document.addEventListener('mousemove', (event) => {
 	if(keys.lmb == true){
 		if(event.clientX < canvas.width * 0.25){
 			p1.destination = event.clientY ;// - canvas.top;
-		} else if(event.clientX > canvas.width * 0.75){
+		} else if(event.clientX > canvas.width * 0.75 && localStorage.getItem('mode') == 'pvp'){
 			p2.destination = event.clientY ;// - canvas.top;
 		}
 	}
