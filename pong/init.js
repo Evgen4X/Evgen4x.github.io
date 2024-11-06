@@ -54,7 +54,7 @@ const powerupsFunctions = {
 	},
 	extra_ball: (targetList) => {
 		let speed = targetList[targetList.length - 1].speed;
-		targetList.push(new Ball(width / 2, height / 2, height / 60, [speed[0], -speed[1]]));
+		targetList.push(new Ball(width / 2, height / 2, height / 60, [-speed[0], -speed[1]]));
 	},
 	speed_refresh: (targets) => {
 		targets.forEach((ball) => {
@@ -96,7 +96,7 @@ if (!localStorage.getItem("showSettings")) {
 const powerupTogglers = document.querySelectorAll(".powerup-toggle");
 powerupTogglers.forEach((powerupToggler) => {
 	const pup = powerupToggler.getAttribute("powerup");
-	powerupToggler.style.backgroundImage = `url(${pup}.png)`;
+	powerupToggler.style.backgroundImage = `url(images/${pup}.png)`;
 	powerupToggler.style.backgroundSize = "10vh 10vh";
 	powerupToggler.style.backgroundColor = "#999999";
 	powerupToggler.style.width = "10vh";

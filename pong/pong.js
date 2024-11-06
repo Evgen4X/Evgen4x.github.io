@@ -59,6 +59,8 @@ class Player {
 			if (Math.abs(this.y + this.height / 2 - this.destination) < 2) {
 				this.destination = null;
 			}
+
+			this.y = Math.max(0, Math.min(canvas.height - this.height, this.y));
 		}
 
 		this.draw(ctx);
@@ -67,7 +69,9 @@ class Player {
 			this.events[i] -= 10;
 			if (this.events[i] <= 0) {
 				delete this.events[i];
-				powerupsOnExpire[i](this);
+				if (powerupsOnExpire[i]) {
+					powerupsOnExpire[i](this);
+				}
 			}
 		}
 	}
@@ -107,7 +111,8 @@ class Ball {
 					if (player.x <= x + this.r && x - this.r <= player.x + player.width + 1 && player.y <= y - this.r && y <= player.y + player.height) {
 						console.log("!");
 						speed[0] = -speed[0];
-						speed[1] = (10 / player.height) * (this.y - player.y) - 5;
+						speed[1] = (8 / player.height) * (this.y - player.y) - 4;
+						this.events["lastTimeHitPlayer"] = 50;
 						if (updateSpeed && Math.random() < parseInt(localStorage.getItem("ballChance")) / 100) {
 							if (localStorage.getItem("ballAcceleration")[0] == "-") {
 								let maxSpeed = parseInt(localStorage.getItem("ballAcceleration").substring(1)) / 2;
@@ -116,7 +121,6 @@ class Ball {
 								this.speedMultiplier += parseInt(localStorage.getItem("ballAcceleration"));
 							}
 							this.owner = player.id;
-							this.events["lastTimeHitPlayer"] = 50;
 						}
 					}
 				});
@@ -264,6 +268,19 @@ class PowerUp {
 	}
 }
 
+function getRightmostBallAfter(balls, x) {
+	let ans;
+	let ansX = canvas.width;
+	balls.forEach((ball, i) => {
+		if (ball.x >= x && ball.x < ansX) {
+			ansX = ball.x;
+			ans = i;
+		}
+	});
+
+	return ans;
+}
+
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 var width = window.innerWidth;
@@ -301,21 +318,33 @@ function update() {
 		p2.y = Math.max(-5, Math.min(p2.y, height - p2.height));
 	} else {
 		const dumbness = parseInt(localStorage.getItem("mode")[3]);
-		let k = dumbness == 1 ? 6 : dumbness == 2 ? 4 : dumbness == 3 ? 2 : dumbness == 4 ? 0.5 : 5;
-		balls.forEach((ball) => {
-			if (ball.owner == p1.id) {
-				const traj = ball.getTrajectory(canvas.width / k + 2, [p1, p2], false);
-				for (let i = 0; i < canvas.width / k; ++i) {
-					const point = traj[i];
-					if (point[0] > p2.x) {
-						p2.destination = point[1] + Math.floor(Math.random() * p2.height - p2.height / 2);
-						p2.destination = Math.max(p2.height / 2, Math.min(canvas.height - p2.height / 2, p2.destination));
-						flag = false;
+		const offset = Math.random() * p2.height - p2.height / 2;
+		if (dumbness < 4) {
+			const k = dumbness == 1 ? 1.5 : dumbness == 2 ? 2 : 7;
+			let targetBall = balls[getRightmostBallAfter(balls, canvas.width / k)];
+			if (targetBall) {
+				let traj = targetBall.getTrajectory(10 * k * k, [p2], false);
+				p2.destination = traj[traj.length - 1][1] + offset;
+				for (let i = 0; i < 10 * k * k; ++i) {
+					if (traj[i][0] >= p2.x) {
+						p2.destination = traj[i][1] + offset;
 						break;
 					}
 				}
+			} else if (Math.random() < 0.1) {
+				p2.destination = Math.min(Math.random() * canvas.height, canvas.height - p2.height);
+				if (dumbness == 3) {
+					p2.destination = canvas.height / 2 - p2.height / 2;
+				}
 			}
-		});
+			if (dumbness == 1 && Math.random() < 0.2) {
+				let inc = canvas.height;
+				if (Math.random() < 0.5) {
+					inc *= -1;
+				}
+				p2.destination += inc;
+			}
+		}
 	}
 	p2.update(ctx);
 
@@ -352,7 +381,7 @@ function update() {
 			color = "#DF4516";
 		}
 		let deviation = (Math.random() * width) / 4 - width / 8;
-		let powerup = new PowerUp(width / 2 + deviation, Math.random() * height, name + ".png", target, color, powerupsFunctions[name]);
+		let powerup = new PowerUp(width / 2 + deviation, Math.random() * height, "images/" + name + ".png", target, color, powerupsFunctions[name]);
 		powerups.push(powerup);
 	}
 }

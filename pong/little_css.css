@@ -61,5 +61,5 @@ canvas {
 }
 
 footer {
-	border-top: 1px solid var(--bg);
+	border-top: 1px solid var(--txt);
 }
