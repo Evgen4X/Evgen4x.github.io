@@ -357,16 +357,16 @@ function update() {
     }
     ctx.fillRect(0, 0, width, height);
 
-    ctx.fillStyle = "#cccccc";
+    ctx.fillStyle = "#ffffff";
     if (document.querySelector("html").classList.contains("light")) {
         ctx.fillStyle = "#000000";
     }
-    ctx.font = `${Math.floor(height / 10)}px Arial`;
+    ctx.font = `${Math.floor(height / 8)}px Arial`;
 
-    ctx.fillText(p1.score, 0, 60, parseInt(canvas.width / 10));
+    ctx.fillText(p1.score, 10, 60, parseInt(canvas.width / 10));
     ctx.fillText(
         p2.score,
-        parseInt((canvas.width * 9) / 10),
+        parseInt((canvas.width * 9) / 10) - 10,
         60,
         parseInt(canvas.width / 10)
     );
