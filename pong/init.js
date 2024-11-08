@@ -98,7 +98,9 @@ const powerupsOnExpire = {
 };
 
 function setToDefault() {
+    const theme = localStorage.getItem('theme');
     localStorage.clear();
+    localStorage.setItem('theme', theme);
     location.reload();
 }
 

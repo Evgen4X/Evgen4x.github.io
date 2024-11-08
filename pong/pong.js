@@ -67,7 +67,7 @@ class Player {
                 this.destination = null;
             }
 
-            this.y = Math.max(0, Math.min(canvas.height - this.height, this.y));
+            this.y = Math.max(-15, Math.min(canvas.height - this.height + 15, this.y));
         }
 
         this.draw(ctx);
@@ -121,7 +121,6 @@ class Ball {
                         player.y <= y - this.r &&
                         y <= player.y + player.height
                     ) {
-                        console.log("!");
                         speed[0] = -speed[0];
                         speed[1] =
                             (8 / player.height) * (this.y - player.y) - 4;
@@ -255,7 +254,7 @@ class Ball {
 
         if (this.x < -this.r || this.x > width) {
             const player = p1.id == this.owner ? p1 : p2;
-            player.score += this.speedMultiplier;
+            player.score += parseInt(this.speedMultiplier);
             balls = balls.filter((ball) => ball != this);
             if (balls.length == 0 && settings.style.display != "flex") {
                 //TODO: smth better
@@ -318,7 +317,7 @@ class PowerUp {
     }
 
     collect(target, additionalArgs = []) {
-        if (additionalArgs) {
+        if (additionalArgs.length > 0) {
             this.onCollect(target, additionalArgs);
         } else if (target != null) {
             this.onCollect(target);
@@ -344,8 +343,6 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 var width = window.innerWidth;
 var height = window.innerHeight * 0.86;
-ctx.font = `${Math.floor(height / 10)}px Arial`;
-console.log(`${Math.floor(height / 10)}px Arial`);
 canvas.width = width;
 canvas.height = height;
 
@@ -363,11 +360,11 @@ function update() {
     }
     ctx.font = `${Math.floor(height / 8)}px Arial`;
 
-    ctx.fillText(p1.score, 50, 60, parseInt(canvas.width / 8));
+    ctx.fillText(p1.score, 50, 100, parseInt(canvas.width / 8));
     ctx.fillText(
         p2.score,
-        parseInt((canvas.width * 9) / 50) - 10,
-        60,
+        parseInt((canvas.width * 7) / 8) - 50,
+        100,
         parseInt(canvas.width / 8)
     );
 
@@ -378,7 +375,7 @@ function update() {
     if (keys["S"]) {
         p1.y += p1.speed;
     }
-    p1.y = Math.max(-5, Math.min(p1.y, height - p1.height));
+    p1.y = Math.max(-15, Math.min(p1.y, height - p1.height + 15));
     p1.update(ctx);
 
     //update of p2
@@ -390,7 +387,7 @@ function update() {
             p2.y += p2.speed;
         }
 
-        p2.y = Math.max(-5, Math.min(p2.y, height - p2.height));
+        p2.y = Math.max(-15, Math.min(p2.y, height - p2.height + 15));
     } else {
         const dumbness = parseInt(localStorage.getItem("mode")[3]);
         const offset = Math.random() * p2.height - p2.height / 2;
