@@ -363,10 +363,10 @@ function update() {
     }
     ctx.font = `${Math.floor(height / 8)}px Arial`;
 
-    ctx.fillText(p1.score, 70, 60, parseInt(canvas.width / 8));
+    ctx.fillText(p1.score, 50, 60, parseInt(canvas.width / 8));
     ctx.fillText(
         p2.score,
-        parseInt((canvas.width * 9) / 70) - 10,
+        parseInt((canvas.width * 9) / 50) - 10,
         60,
         parseInt(canvas.width / 8)
     );
