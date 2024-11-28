@@ -92,8 +92,14 @@ class Ball {
         this.y = y;
         this.speed = speed;
         this.speedMultiplier = Ball.speedMultiplier;
-        this.events = { lastTimeHitPlayer: 0 };
+        this.events = { lastTimeHitPlayer: 0, lastTimeHitBall: 0 };
         this.owner = null;
+    }
+
+    ballCollides(ball) {
+        return (
+            Math.sqrt(Math.pow(this.x - ball.x, 2) + Math.pow(this.y - ball.y, 2)) <= ball.r + this.r
+        );
     }
 
     getTrajectory(ticks, players, updateSpeed = true) {
@@ -154,6 +160,22 @@ class Ball {
                 });
             }
             --this.events["lastTimeHitPlayer"];
+
+            if(updateSpeed && this.events["lastTimeHitBall"] < 0){
+                balls.forEach(ball => {
+                    if(ball != this){
+                        if(this.ballCollides(ball)){
+                            this.color = "#ff0000"
+                            const k = Math.sqrt(Math.pow(this.x - ball.x, 2) + Math.pow(this.y - ball.y, 2));
+                            this.speed = [Math.cos(k) * this.speedMultiplier, Math.sin(k) * this.speedMultiplier];
+                            this.events["lastTimeHitBall"] = 100;
+                            ball.events["lastTimeHitBall"] = 100;
+
+                        }
+                    }
+                })
+            }
+            --this.events["lastTimeHitBall"];
 
             if (updateSpeed) {
                 //powerups check
@@ -298,21 +320,9 @@ class PowerUp {
         }
     }
 
-    pointCollides(x, y) {
-        return (
-            this.x - this.r <= x &&
-            x <= this.x + this.r &&
-            this.y - this.r <= y &&
-            y <= this.y + this.r
-        );
-    }
-
     ballCollides(ball) {
         return (
-            this.pointCollides(ball.x - ball.r, ball.y - ball.r) ||
-            this.pointCollides(ball.x + ball.r, ball.y + ball.r) ||
-            this.pointCollides(ball.x - ball.r, ball.y + ball.r) ||
-            this.pointCollides(ball.x + ball.r, ball.y - ball.r)
+            Math.sqrt(Math.pow(this.x - ball.x, 2) + Math.pow(this.y - ball.y, 2)) <= ball.r + this.r
         );
     }
 
