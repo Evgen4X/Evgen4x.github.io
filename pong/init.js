@@ -65,7 +65,7 @@ const powerupsFunctions = {
         const x = args[0],
             y = args[1],
             speed = args[2];
-        const ball = new Ball(x, y, height / 60, [-speed[0], -speed[1]]);
+        const ball = new Ball(x, y + height / 10, [-speed[0], -speed[1]]);
         ball.owner = ball.speed[0] > 0 ? p1.id : p2.id;
         ball.speedMultiplier = parseInt(localStorage.getItem("ballInitSpeed"));
         targetList.push(ball);
@@ -213,7 +213,7 @@ ballChanceInput.value = parseInt(localStorage.getItem("ballChance"));
 
 const maxPowerupsInput = document.getElementById("maxPowerups");
 maxPowerupsInput.oninput = () => {
-    let val = Math.max(1, Math.min(100, parseInt(maxPowerupsInput.value)));
+    let val = Math.max(0, Math.min(100, parseInt(maxPowerupsInput.value)));
     maxPowerupsInput.value = val;
     localStorage.setItem("maxPowerups", val);
 };
@@ -233,9 +233,20 @@ if (!localStorage.getItem("ballInitSpeed")) {
 }
 ballInitSpeedInput.value = parseInt(localStorage.getItem("ballInitSpeed"));
 
+const ballSize = document.getElementById("ballSize");
+ballSize.oninput = () => {
+    let val = Math.max(1, Math.min(100, parseInt(ballSize.value)));
+    ballSize.value = val;
+    localStorage.setItem("ballSize", val);
+};
+if (!localStorage.getItem("ballSize")) {
+    localStorage.setItem("ballSize", 15);
+}
+ballSize.value = parseInt(localStorage.getItem("ballSize"));
+
 const powerupsChance = document.getElementById("powerupsChance");
 powerupsChance.oninput = () => {
-    let val = Math.max(0, Math.min(1000, parseInt(powerupsChance.value)));
+    let val = Math.max(0, Math.min(100, parseInt(powerupsChance.value)));
     powerupsChance.value = val;
     localStorage.setItem("powerupsChance", val);
 };

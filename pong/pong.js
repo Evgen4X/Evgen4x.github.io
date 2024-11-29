@@ -82,17 +82,46 @@ class Player {
             }
         }
     }
+
+    ballCollides(ball){
+        const ballTop = ball.y - ball.r;
+        const ballBottom = ball.y + ball.r;
+        const ballLeft = ball.x - ball.r;
+        const ballRight = ball.x + ball.r;
+
+        const top = this.y;
+        const bottom = this.y + this.height;
+        const left = this.x;
+        const right = this.x + this.width;
+
+        return (
+            (
+                (
+                    (ballRight > left && ballLeft < left) ||
+                    (ballLeft < right && ballRight > right)
+                ) &&
+                ballTop < bottom && ballBottom > top
+            ) || 
+            (
+                (
+                    (ballBottom > top && ballTop < top) ||
+                    (ballTop < bottom && ballBottom > bottom)
+                ) &&
+                ballLeft < right && ballRight > left
+            )
+        );
+    }
 }
 
 class Ball {
     static speedMultiplier = 2;
-    constructor(x, y, r, speed) {
-        this.r = r;
+    constructor(x, y, speed) {
+        this.r = parseInt(localStorage.getItem('ballSize'));
         this.x = x;
         this.y = y;
         this.speed = speed;
         this.speedMultiplier = Ball.speedMultiplier;
-        this.events = { lastTimeHitPlayer: 0, lastTimeHitBall: 0 };
+        this.events = { lastTimeHitPlayer: 0, lastTimeHitBall: 200 };
         this.owner = null;
     }
 
@@ -113,7 +142,7 @@ class Ball {
         for (let i = 0; i < ticks; ++i, --framesTillPowerupChecks) {
             x += speed[0];
             y += speed[1];
-            if (y <= 0 || y >= height - this.r) {
+            if (y <= this.r || y >= height - this.r) {
                 speed[1] = -speed[1];
                 y = Math.max(0, Math.min(y, height - this.r));
             }
@@ -122,10 +151,7 @@ class Ball {
             if (this.events["lastTimeHitPlayer"] < 1) {
                 players.forEach((player) => {
                     if (
-                        player.x <= x + this.r &&
-                        x - this.r <= player.x + player.width + 1 &&
-                        player.y <= y - this.r &&
-                        y <= player.y + player.height
+                        player.ballCollides(this)
                     ) {
                         speed[0] = -speed[0];
                         speed[1] =
@@ -165,12 +191,16 @@ class Ball {
                 balls.forEach(ball => {
                     if(ball != this){
                         if(this.ballCollides(ball)){
-                            this.color = "#ff0000"
-                            const k = Math.sqrt(Math.pow(this.x - ball.x, 2) + Math.pow(this.y - ball.y, 2));
-                            this.speed = [Math.cos(k) * this.speedMultiplier, Math.sin(k) * this.speedMultiplier];
-                            this.events["lastTimeHitBall"] = 100;
-                            ball.events["lastTimeHitBall"] = 100;
-
+                            this.speed = [(this.x - ball.x) / this.r * this.speedMultiplier, (this.y - ball.y) / this.r * this.speedMultiplier];
+                            ball.speed = [(ball.x - this.x) / ball.r * ball.speedMultiplier, (ball.y - this.y) / ball.r * ball.speedMultiplier];
+                            if (this.speed[0] == 0){
+                                this.speed[0] = Math.random() * this.speedMultiplier;
+                            }
+                            if (ball.speed[0] == 0){
+                                ball.speed[0] = Math.random() * ball.speedMultiplier;
+                            }
+                            this.events["lastTimeHitBall"] = 50;
+                            ball.events["lastTimeHitBall"] = 50;
                         }
                     }
                 })
@@ -281,7 +311,9 @@ class Ball {
             if (balls.length == 0 && settings.style.display != "flex") {
                 //TODO: smth better
                 localStorage.setItem("showSettings", "false");
+                setTimeout(() => {
                 location.reload();
+                }, 500);
             }
         }
     }
@@ -507,6 +539,7 @@ function restart() {
     let speedX =
         parseInt(localStorage.getItem("ballInitSpeed")) *
         (Math.random() > 0.5 ? 1 : -1);
+    speedX = -Math.abs(speedX);
     let speedY =
         (canvas.height / canvas.width) *
         2.5 *
@@ -517,9 +550,8 @@ function restart() {
         new Ball(
             width / 2 - height / 60,
             height / 2 - height / 60,
-            height / 60,
             [speedX, speedY]
-        ),
+        )
     ];
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = "#000000";
