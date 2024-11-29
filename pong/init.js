@@ -34,11 +34,13 @@ const powerupsFunctions = {
     },
     smaller_ball: (targets) => {
         targets.forEach((ball) => {
+            ball.r /= 1.75;
+            ball.r = Math.max(ball.r, 1.1);
             if (!ball.events["smaller_ball"]) {
-                ball.r /= 1.75;
                 ball.events["smaller_ball"] = EVENT_LASTTIME;
             } else {
-                ball.events["smaller_ball"] += EVENT_LASTTIME;
+                ball.events["smaller_ball"] += EVENT_LASTTIME * 0.5;
+                ball.events["smaller_ball"] = Math.max(EVENT_LASTTIME, ball.events["smaller_ball"]);
             }
         });
     },
@@ -86,7 +88,7 @@ const powerupsOnExpire = {
     },
     smaller_ball: (target) => {
         target.forEach((ball) => {
-            ball.r *= 1.75;
+            ball.r = parseInt(localStorage.getItem("ballSize"));
         });
     },
     slower_movement_speed: (target) => {
