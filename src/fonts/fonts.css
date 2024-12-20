@@ -1,0 +1,6 @@
+@import url(../fonts/fonts.css);
+
+@font-face {
+	font-family: "PressStart2P-codeman38";
+	src: url(PressStart2P-codeman38.woff2) format("woff2"), url(PressStart2P-codeman38.ttf) format("truetype");
+}

@@ -4,7 +4,7 @@ html.light {
 	--header: #555555;
 	--footer: #000000;
 	--hftxt: #dddddd;
-	--img: url(dark.png);
+	--img: url(src/images/dark.png);
 	--ibg: #f5f5f5;
 	--itxt: #000000;
 }
@@ -15,7 +15,7 @@ html.dark {
 	--header: #777777;
 	--footer: #000000;
 	--hftxt: #ffffff;
-	--img: url(light.png);
+	--img: url(src/images/light.png);
 	--ibg: #555555;
 	--itxt: #cccccc;
 }
@@ -202,15 +202,15 @@ footer a {
 		font-size: large;
 	}
 
-	label{
-		font-size: medium; 
-	}
-
-	#settings input{
+	label {
 		font-size: medium;
 	}
 
-	footer{
+	#settings input {
+		font-size: medium;
+	}
+
+	footer {
 		font-size: large;
 	}
 }

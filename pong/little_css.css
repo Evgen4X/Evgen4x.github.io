@@ -1,3 +1,8 @@
+* {
+	font-family: "PressStart2P-codeman38" !important;
+	font-size-adjust: 0.6 !important;
+}
+
 #settings div {
 	width: 50%;
 	display: flex;
@@ -40,6 +45,16 @@
 	color: #aaa;
 }
 
+#settings label {
+	position: relative;
+	top: 1vh;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+	height: 1.3em;
+	width: 1.5em;
+}
+
 @media screen and (max-width: 800px) {
 	#settings,
 	#settings *,
@@ -70,4 +85,30 @@ canvas {
 
 footer {
 	border-top: 1px solid var(--txt);
+}
+
+#win-block {
+	position: absolute;
+	top: 10vh;
+	width: 14vw;
+	height: 10vh;
+	border: 1vw solid white;
+	border-radius: 1vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2vw;
+	opacity: 0;
+}
+
+#score {
+	position: absolute;
+	top: 10vh;
+	left: 0;
+	width: 96vw;
+	display: flex;
+	justify-content: space-between;
+	align-items: start;
+	font-size: 12.5vh;
+	padding: 0 2vw;
 }

@@ -182,7 +182,7 @@ handleSettingsInput("ballAccelerationRate", -10, 10, "1");
 
 handleSettingsInput("ballAccelerationChance", 0, 100, "40");
 
-handleSettingsInput("ballSize", 2, 100, "10");
+handleSettingsInput("ballSize", 1, 100, "15");
 
 handleSettingsInput("ballInitialSpeed", -10, 10, "2");
 

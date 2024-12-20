@@ -132,12 +132,12 @@ class Ball {
 						speed[0] = -speed[0];
 						speed[1] = (8 / player.height) * (this.y - player.y) - 4;
 						this.events["lastTimeHitPlayer"] = 50;
-						if (updateSpeed && Math.random() < parseInt(localStorage.getItem("ballChance")) / 100) {
-							if (localStorage.getItem("ballAcceleration")[0] == "-") {
-								let maxSpeed = parseInt(localStorage.getItem("ballAcceleration").substring(1)) / 2;
+						if (updateSpeed && Math.random() < BALL_ACCELERATION_CHANCE / 100) {
+							if (BALL_ACCELERATION_RATE < 0) {
+								let maxSpeed = -BALL_ACCELERATION_RATE + 1;
 								this.speedMultiplier = Math.floor(Math.random() * maxSpeed) + 1;
 							} else {
-								this.speedMultiplier += parseInt(localStorage.getItem("ballAcceleration"));
+								this.speedMultiplier += BALL_ACCELERATION_RATE;
 							}
 							this.owner = player.id;
 						}
@@ -151,9 +151,6 @@ class Ball {
 					if (ball != this && ball.events["lastTimeHitBall"] < 0) {
 						if (this.ballCollides(ball)) {
 							this.speed = [((this.x - ball.x) / this.r) * this.speedMultiplier, ((this.y - ball.y) / this.r) * this.speedMultiplier];
-							if (Math.abs(this.speed[0]) <= 0.4) {
-								this.speed[0] = this.speedMultiplier;
-							}
 							ball.speed = [-this.speed[0] / this.speedMultiplier / ball.speedMultiplier, (-this.speed[1] / this.speedMultiplier) * ball.speedMultiplier];
 							this.events["lastTimeHitBall"] = 50;
 							ball.events["lastTimeHitBall"] = 50;
@@ -230,6 +227,10 @@ class Ball {
 	update(ctx) {
 		this.draw(ctx);
 
+		if (Math.abs(this.speed[0]) <= 1) {
+			this.speed[0] = Math.abs(this.speedMultiplier) * (this.speed < 0 ? -1 : 1);
+		}
+
 		let trajectory = this.getTrajectory(this.speedMultiplier, [p1, p2]);
 		let position = trajectory[trajectory.length - 1];
 		this.x = Math.round(position[0]);
@@ -254,15 +255,18 @@ class Ball {
 		}
 
 		if (this.x < -this.r || this.x > width) {
-			const player = p1.id == this.owner ? p1 : p2;
+			const player = this.x < 1 ? p2 : p1;
 			player.score += parseInt(this.speedMultiplier);
 			balls = balls.filter((ball) => ball != this);
 			if (balls.length == 0 && settings.style.display != "flex") {
 				//TODO: smth better
 				localStorage.setItem("showSettings", "false");
+				const win_block = document.getElementById("win-block");
+				win_block.style.left = p1.score > p2.score ? "25vw" : "60vw";
+				win_block.animate([{opacity: 0}, {opacity: 100}], {duration: 250, iterations: 6}); //, easing: "ease-in-out"});
 				setTimeout(() => {
 					location.reload();
-				}, 500);
+				}, 1500);
 			}
 		}
 	}
@@ -341,10 +345,9 @@ function update() {
 	if (document.querySelector("html").classList.contains("light")) {
 		ctx.fillStyle = "#000000";
 	}
-	ctx.font = `${Math.floor(height / 8)}px Arial`;
 
-	ctx.fillText(p1.score, 50, 100, parseInt(canvas.width / 8));
-	ctx.fillText(p2.score, parseInt((canvas.width * 7) / 8) - 50, 100, parseInt(canvas.width / 8));
+	p1score.innerHTML = p1.score;
+	p2score.innerHTML = p2.score;
 
 	//update of p1
 	if (keys["W"]) {
@@ -445,7 +448,7 @@ function restart() {
 	p1.resize();
 	p1.x = width / 10;
 	p2.resize();
-	p2.x = (9 * width) / 10;
+	p2.x = (9 * width) / 10 - p2.width;
 
 	let speedX = BALL_ITITIAL_SPEED * (Math.random() > 0.5 ? 1 : -1);
 	let speedY = (canvas.height / canvas.width) * 2.5 * BALL_ITITIAL_SPEED * (Math.random() > 0.5 ? 1 : -1);
@@ -480,6 +483,9 @@ const BALL_ITITIAL_SPEED = parseInt(localStorage.getItem("ballInitialSpeed"));
 const BALL_SIZE = parseInt(localStorage.getItem("ballSize"));
 const MAX_POWERUPS_AT_A_TIME = parseInt(localStorage.getItem("maximumPowerupsAtATime"));
 const POWERUP_SPAWN_RATE = parseInt(localStorage.getItem("powerupSpawnRate"));
+
+const p1score = document.getElementById("p1-score");
+const p2score = document.getElementById("p2-score");
 
 const p1 = new Player(width / 10);
 const p2 = new Player((9 * width) / 10);
