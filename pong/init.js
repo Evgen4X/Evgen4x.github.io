@@ -55,12 +55,12 @@ const powerupsFunctions = {
 		target.speed[1] = Math.random() * 10 - 5;
 	},
 	extra_ball: (targetList, args) => {
-		const x = args[0],
-			y = args[1],
+		const x = Math.round(args[0]),
+			y = Math.round(args[1]),
 			speed = args[2];
+
 		const ball = new Ball(x, y + height / 10, [-speed[0], -speed[1]]);
 		ball.owner = ball.speed[0] > 0 ? p1.id : p2.id;
-		ball.speedMultiplier = parseInt(localStorage.getItem("ballInitSpeed"));
 		targetList.push(ball);
 	},
 	speed_refresh: (targets) => {
@@ -98,7 +98,7 @@ function setToDefault() {
 }
 
 function saveSettings() {
-	const settings = ["playerSpeed", "ballAccelerationRate", "ballAccelerationChance", "ballInitialSpeed", "maximumPowerupsAtATime", "powerupSpawnRate"];
+	const settings = ["playerSpeed", "ballAccelerationRate", "ballAccelerationChance", "ballInitialSpeed", "ballSize", "maximumPowerupsAtATime", "powerupSpawnRate"];
 	for (let i of settings) {
 		let val = localStorage.getItem(i + "Tmp");
 		if (val) {
@@ -182,8 +182,10 @@ handleSettingsInput("ballAccelerationRate", -10, 10, "1");
 
 handleSettingsInput("ballAccelerationChance", 0, 100, "40");
 
-handleSettingsInput("maximumPowerupsAtATime", 1, 100, "2");
+handleSettingsInput("ballSize", 2, 100, "10");
 
 handleSettingsInput("ballInitialSpeed", -10, 10, "2");
+
+handleSettingsInput("maximumPowerupsAtATime", 1, 100, "2");
 
 handleSettingsInput("powerupSpawnRate", 0, 1000, "5");

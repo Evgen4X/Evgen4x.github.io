@@ -76,19 +76,37 @@ class Player {
 			}
 		}
 	}
+
+	ballCollides(ball) {
+		const ballTop = ball.y - ball.r;
+		const ballBottom = ball.y + ball.r;
+		const ballLeft = ball.x - ball.r;
+		const ballRight = ball.x + ball.r;
+
+		const top = this.y;
+		const bottom = this.y + this.height;
+		const left = this.x;
+		const right = this.x + this.width;
+
+		return (((ballRight > left && ballLeft < left) || (ballLeft < right && ballRight > right)) && ballTop < bottom && ballBottom > top) || (((ballBottom > top && ballTop < top) || (ballTop < bottom && ballBottom > bottom)) && ballLeft < right && ballRight > left);
+	}
 }
 
 class Ball {
 	static speedMultiplier = 2;
 
-	constructor(x, y, r, speed) {
-		this.r = r;
+	constructor(x, y, speed) {
+		this.r = BALL_SIZE;
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
 		this.speedMultiplier = Ball.speedMultiplier;
-		this.events = {lastTimeHitPlayer: 0};
+		this.events = {lastTimeHitPlayer: 0, lastTimeHitBall: 200};
 		this.owner = null;
+	}
+
+	ballCollides(ball) {
+		return Math.sqrt(Math.pow(this.x - ball.x, 2) + Math.pow(this.y - ball.y, 2)) <= ball.r + this.r;
 	}
 
 	getTrajectory(ticks, players, updateSpeed = true) {
@@ -110,16 +128,16 @@ class Ball {
 			//player collision check
 			if (this.events["lastTimeHitPlayer"] < 1) {
 				players.forEach((player) => {
-					if (player.x <= x + this.r && x - this.r <= player.x + player.width + 1 && player.y <= y - this.r && y <= player.y + player.height) {
+					if (player.ballCollides(this)) {
 						speed[0] = -speed[0];
 						speed[1] = (8 / player.height) * (this.y - player.y) - 4;
 						this.events["lastTimeHitPlayer"] = 50;
-						if (updateSpeed && Math.random() < BALL_ACCELERATION_CHANCE / 100) {
-							if (BALL_ACCELERATION_RATE < 0) {
-								let maxSpeed = -BALL_ACCELERATION_RATE + 1;
+						if (updateSpeed && Math.random() < parseInt(localStorage.getItem("ballChance")) / 100) {
+							if (localStorage.getItem("ballAcceleration")[0] == "-") {
+								let maxSpeed = parseInt(localStorage.getItem("ballAcceleration").substring(1)) / 2;
 								this.speedMultiplier = Math.floor(Math.random() * maxSpeed) + 1;
 							} else {
-								this.speedMultiplier += BALL_ACCELERATION_RATE;
+								this.speedMultiplier += parseInt(localStorage.getItem("ballAcceleration"));
 							}
 							this.owner = player.id;
 						}
@@ -127,6 +145,23 @@ class Ball {
 				});
 			}
 			--this.events["lastTimeHitPlayer"];
+
+			if (updateSpeed && this.events["lastTimeHitBall"] < 0) {
+				balls.forEach((ball) => {
+					if (ball != this && ball.events["lastTimeHitBall"] < 0) {
+						if (this.ballCollides(ball)) {
+							this.speed = [((this.x - ball.x) / this.r) * this.speedMultiplier, ((this.y - ball.y) / this.r) * this.speedMultiplier];
+							if (Math.abs(this.speed[0]) <= 0.4) {
+								this.speed[0] = this.speedMultiplier;
+							}
+							ball.speed = [-this.speed[0] / this.speedMultiplier / ball.speedMultiplier, (-this.speed[1] / this.speedMultiplier) * ball.speedMultiplier];
+							this.events["lastTimeHitBall"] = 50;
+							ball.events["lastTimeHitBall"] = 50;
+						}
+					}
+				});
+			}
+			--this.events["lastTimeHitBall"];
 
 			if (updateSpeed) {
 				//powerups check
@@ -197,8 +232,8 @@ class Ball {
 
 		let trajectory = this.getTrajectory(this.speedMultiplier, [p1, p2]);
 		let position = trajectory[trajectory.length - 1];
-		this.x = position[0];
-		this.y = position[1];
+		this.x = Math.round(position[0]);
+		this.y = Math.round(position[1]);
 
 		if (this.events["lastTimeHitY"] && (this.y <= 0 || this.y >= height - this.r)) {
 			this.speed[1] = -this.speed[1];
@@ -208,7 +243,6 @@ class Ball {
 			}, 500);
 		}
 
-<<<<<<< HEAD
 		for (let i in this.events) {
 			if (availablePowerUps.includes(i)) {
 				this.events[i] -= 10;
@@ -226,25 +260,12 @@ class Ball {
 			if (balls.length == 0 && settings.style.display != "flex") {
 				//TODO: smth better
 				localStorage.setItem("showSettings", "false");
-				location.reload();
+				setTimeout(() => {
+					location.reload();
+				}, 500);
 			}
 		}
 	}
-=======
-        if (this.x < -this.r || this.x > width) {
-            const player = p1.id == this.owner ? p1 : p2;
-            player.score += parseInt(this.speedMultiplier);
-            balls = balls.filter((ball) => ball != this);
-            if (balls.length == 0 && settings.style.display != "flex") {
-                //TODO: smth better
-                localStorage.setItem("showSettings", "false");
-                setTimeout(() => {
-                location.reload();
-                }, 500);
-            }
-        }
-    }
->>>>>>> b79f0596285241a1bb8bc4e7df002687dbfa5515
 }
 
 class PowerUp {
@@ -274,21 +295,9 @@ class PowerUp {
 		}
 	}
 
-<<<<<<< HEAD
-	pointCollides(x, y) {
-		return this.x - this.r <= x && x <= this.x + this.r && this.y - this.r <= y && y <= this.y + this.r;
-	}
-
 	ballCollides(ball) {
-		return this.pointCollides(ball.x - ball.r, ball.y - ball.r) || this.pointCollides(ball.x + ball.r, ball.y + ball.r) || this.pointCollides(ball.x - ball.r, ball.y + ball.r) || this.pointCollides(ball.x + ball.r, ball.y - ball.r);
+		return Math.sqrt(Math.pow(this.x - ball.x, 2) + Math.pow(this.y - ball.y, 2)) <= ball.r + this.r;
 	}
-=======
-    ballCollides(ball) {
-        return (
-            Math.sqrt(Math.pow(this.x - ball.x, 2) + Math.pow(this.y - ball.y, 2)) <= ball.r + this.r
-        );
-    }
->>>>>>> b79f0596285241a1bb8bc4e7df002687dbfa5515
 
 	collect(target, additionalArgs = []) {
 		if (additionalArgs.length > 0) {
@@ -433,58 +442,29 @@ function update() {
 }
 
 function restart() {
-<<<<<<< HEAD
 	p1.resize();
 	p1.x = width / 10;
 	p2.resize();
 	p2.x = (9 * width) / 10;
+
 	let speedX = BALL_ITITIAL_SPEED * (Math.random() > 0.5 ? 1 : -1);
 	let speedY = (canvas.height / canvas.width) * 2.5 * BALL_ITITIAL_SPEED * (Math.random() > 0.5 ? 1 : -1);
 	this.speedMultiplier = BALL_ITITIAL_SPEED;
-	balls = [new Ball(width / 2 - height / 60, height / 2 - height / 60, height / 60, [speedX, speedY])];
+
+	balls = [new Ball(width / 2 - height / 60, height / 2 - height / 60, [speedX, speedY])];
+
 	ctx.clearRect(0, 0, width, height);
 	ctx.fillStyle = "#000000";
 	if (document.querySelector("html").classList.contains("light")) {
 		ctx.fillStyle = "#cccccc";
 	}
+
 	ctx.fillRect(0, 0, width, height);
 	p1.draw(ctx);
 	p2.draw(ctx);
+
 	balls[0].draw(ctx);
 	balls[0].owner = p1.id;
-=======
-    p1.resize();
-    p1.x = width / 10;
-    p2.resize();
-    p2.x = (9 * width) / 10;
-    let speedX =
-        parseInt(localStorage.getItem("ballInitSpeed")) *
-        (Math.random() > 0.5 ? 1 : -1);
-    speedX = -Math.abs(speedX);
-    let speedY =
-        (canvas.height / canvas.width) *
-        2.5 *
-        parseInt(localStorage.getItem("ballInitSpeed")) *
-        (Math.random() > 0.5 ? 1 : -1);
-    this.speedMultiplier = parseInt(localStorage.getItem("ballInitSpeed"));
-    balls = [
-        new Ball(
-            width / 2 - height / 60,
-            height / 2 - height / 60,
-            [speedX, speedY]
-        )
-    ];
-    ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = "#000000";
-    if (document.querySelector("html").classList.contains("light")) {
-        ctx.fillStyle = "#cccccc";
-    }
-    ctx.fillRect(0, 0, width, height);
-    p1.draw(ctx);
-    p2.draw(ctx);
-    balls[0].draw(ctx);
-    balls[0].owner = p1.id;
->>>>>>> b79f0596285241a1bb8bc4e7df002687dbfa5515
 
 	setTimeout(() => {
 		interval = setInterval(update, 10);
@@ -497,10 +477,9 @@ const PLAYER_SPEED = parseInt(localStorage.getItem("playerSpeed"));
 const BALL_ACCELERATION_RATE = parseInt(localStorage.getItem("ballAccelerationRate"));
 const BALL_ACCELERATION_CHANCE = parseInt(localStorage.getItem("ballAccelerationChance"));
 const BALL_ITITIAL_SPEED = parseInt(localStorage.getItem("ballInitialSpeed"));
+const BALL_SIZE = parseInt(localStorage.getItem("ballSize"));
 const MAX_POWERUPS_AT_A_TIME = parseInt(localStorage.getItem("maximumPowerupsAtATime"));
 const POWERUP_SPAWN_RATE = parseInt(localStorage.getItem("powerupSpawnRate"));
-
-console.log(PLAYING_MODE);
 
 const p1 = new Player(width / 10);
 const p2 = new Player((9 * width) / 10);
