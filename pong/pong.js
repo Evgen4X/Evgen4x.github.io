@@ -208,6 +208,7 @@ class Ball {
 			}, 500);
 		}
 
+<<<<<<< HEAD
 		for (let i in this.events) {
 			if (availablePowerUps.includes(i)) {
 				this.events[i] -= 10;
@@ -229,6 +230,21 @@ class Ball {
 			}
 		}
 	}
+=======
+        if (this.x < -this.r || this.x > width) {
+            const player = p1.id == this.owner ? p1 : p2;
+            player.score += parseInt(this.speedMultiplier);
+            balls = balls.filter((ball) => ball != this);
+            if (balls.length == 0 && settings.style.display != "flex") {
+                //TODO: smth better
+                localStorage.setItem("showSettings", "false");
+                setTimeout(() => {
+                location.reload();
+                }, 500);
+            }
+        }
+    }
+>>>>>>> b79f0596285241a1bb8bc4e7df002687dbfa5515
 }
 
 class PowerUp {
@@ -258,6 +274,7 @@ class PowerUp {
 		}
 	}
 
+<<<<<<< HEAD
 	pointCollides(x, y) {
 		return this.x - this.r <= x && x <= this.x + this.r && this.y - this.r <= y && y <= this.y + this.r;
 	}
@@ -265,6 +282,13 @@ class PowerUp {
 	ballCollides(ball) {
 		return this.pointCollides(ball.x - ball.r, ball.y - ball.r) || this.pointCollides(ball.x + ball.r, ball.y + ball.r) || this.pointCollides(ball.x - ball.r, ball.y + ball.r) || this.pointCollides(ball.x + ball.r, ball.y - ball.r);
 	}
+=======
+    ballCollides(ball) {
+        return (
+            Math.sqrt(Math.pow(this.x - ball.x, 2) + Math.pow(this.y - ball.y, 2)) <= ball.r + this.r
+        );
+    }
+>>>>>>> b79f0596285241a1bb8bc4e7df002687dbfa5515
 
 	collect(target, additionalArgs = []) {
 		if (additionalArgs.length > 0) {
@@ -409,6 +433,7 @@ function update() {
 }
 
 function restart() {
+<<<<<<< HEAD
 	p1.resize();
 	p1.x = width / 10;
 	p2.resize();
@@ -427,6 +452,39 @@ function restart() {
 	p2.draw(ctx);
 	balls[0].draw(ctx);
 	balls[0].owner = p1.id;
+=======
+    p1.resize();
+    p1.x = width / 10;
+    p2.resize();
+    p2.x = (9 * width) / 10;
+    let speedX =
+        parseInt(localStorage.getItem("ballInitSpeed")) *
+        (Math.random() > 0.5 ? 1 : -1);
+    speedX = -Math.abs(speedX);
+    let speedY =
+        (canvas.height / canvas.width) *
+        2.5 *
+        parseInt(localStorage.getItem("ballInitSpeed")) *
+        (Math.random() > 0.5 ? 1 : -1);
+    this.speedMultiplier = parseInt(localStorage.getItem("ballInitSpeed"));
+    balls = [
+        new Ball(
+            width / 2 - height / 60,
+            height / 2 - height / 60,
+            [speedX, speedY]
+        )
+    ];
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = "#000000";
+    if (document.querySelector("html").classList.contains("light")) {
+        ctx.fillStyle = "#cccccc";
+    }
+    ctx.fillRect(0, 0, width, height);
+    p1.draw(ctx);
+    p2.draw(ctx);
+    balls[0].draw(ctx);
+    balls[0].owner = p1.id;
+>>>>>>> b79f0596285241a1bb8bc4e7df002687dbfa5515
 
 	setTimeout(() => {
 		interval = setInterval(update, 10);
