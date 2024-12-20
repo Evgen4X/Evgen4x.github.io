@@ -56,6 +56,14 @@
 	}
 }
 
+.powerup-toggle {
+	background-size: 10vh 10vh;
+	background-color: #999999;
+	width: 10vh !important;
+	height: 10vh;
+	border-radius: 33%;
+}
+
 canvas {
 	height: 100%;
 }
