@@ -88,7 +88,10 @@ class Player {
 		const left = this.x;
 		const right = this.x + this.width;
 
-		return (((ballRight > left && ballLeft < left) || (ballLeft < right && ballRight > right)) && ballTop < bottom && ballBottom > top) || (((ballBottom > top && ballTop < top) || (ballTop < bottom && ballBottom > bottom)) && ballLeft < right && ballRight > left);
+		return (
+			(((ballRight > left && ballLeft < left) || (ballLeft < right && ballRight > right)) && ballTop < bottom && ballBottom > top) ||
+			(((ballBottom > top && ballTop < top) || (ballTop < bottom && ballBottom > bottom)) && ballLeft < right && ballRight > left)
+		);
 	}
 }
 
@@ -110,6 +113,7 @@ class Ball {
 	}
 
 	getTrajectory(ticks, players, updateSpeed = true) {
+		let playerCollisionOccured = false;
 		const prevLTHP = this.events["lastTimeHitPlayer"];
 		let speed = [this.speed[0], this.speed[1]];
 		let answer = [];
@@ -129,6 +133,7 @@ class Ball {
 			if (this.events["lastTimeHitPlayer"] < 1) {
 				players.forEach((player) => {
 					if (player.ballCollides(this)) {
+						playerCollisionOccured = true;
 						speed[0] = -speed[0];
 						speed[1] = (8 / player.height) * (this.y - player.y) - 4;
 						this.events["lastTimeHitPlayer"] = 50;
@@ -151,7 +156,10 @@ class Ball {
 					if (ball != this && ball.events["lastTimeHitBall"] < 0) {
 						if (this.ballCollides(ball)) {
 							this.speed = [((this.x - ball.x) / this.r) * this.speedMultiplier, ((this.y - ball.y) / this.r) * this.speedMultiplier];
-							ball.speed = [-this.speed[0] / this.speedMultiplier / ball.speedMultiplier, (-this.speed[1] / this.speedMultiplier) * ball.speedMultiplier];
+							ball.speed = [
+								-this.speed[0] / this.speedMultiplier / ball.speedMultiplier,
+								(-this.speed[1] / this.speedMultiplier) * ball.speedMultiplier,
+							];
 							this.events["lastTimeHitBall"] = 50;
 							ball.events["lastTimeHitBall"] = 50;
 						}
@@ -179,6 +187,7 @@ class Ball {
 								target = null;
 								powerup.collect(balls, [this.x, this.y, this.speed]);
 							}
+							playSound("sounds/powerupTake.mp3");
 							powerup.collect(target);
 						}
 					});
@@ -199,7 +208,7 @@ class Ball {
 			this.events["lastTimeHitPlayer"] = prevLTHP;
 		}
 
-		return answer;
+		return [answer, playerCollisionOccured];
 	}
 
 	draw(ctx) {
@@ -231,7 +240,11 @@ class Ball {
 			this.speed[0] = Math.abs(this.speedMultiplier) * (this.speed < 0 ? -1 : 1);
 		}
 
-		let trajectory = this.getTrajectory(this.speedMultiplier, [p1, p2]);
+		let trajectory_collision = this.getTrajectory(this.speedMultiplier, [p1, p2]);
+		let trajectory = trajectory_collision[0];
+		if (trajectory_collision[1]) {
+			playSound("sounds/ballHit.mp3");
+		}
 		let position = trajectory[trajectory.length - 1];
 		this.x = Math.round(position[0]);
 		this.y = Math.round(position[1]);
@@ -263,6 +276,7 @@ class Ball {
 				localStorage.setItem("showSettings", "false");
 				const win_block = document.getElementById("win-block");
 				win_block.style.left = p1.score > p2.score ? "25vw" : "60vw";
+				playSound("sounds/gameEnd.mp3");
 				win_block.animate([{opacity: 0}, {opacity: 100}], {duration: 250, iterations: 6}); //, easing: "ease-in-out"});
 				setTimeout(() => {
 					location.reload();
@@ -377,7 +391,7 @@ function update() {
 			const k = dumbness == 1 ? 1.5 : dumbness == 2 ? 2 : 7;
 			let targetBall = balls[getRightmostBallAfter(balls, canvas.width / k)];
 			if (targetBall) {
-				let traj = targetBall.getTrajectory(10 * k * k, [p2], false);
+				let traj = targetBall.getTrajectory(10 * k * k, [p2], false)[0];
 				p2.destination = traj[traj.length - 1][1] + offset;
 				for (let i = 0; i < 10 * k * k; ++i) {
 					if (traj[i][0] >= p2.x) {
@@ -435,7 +449,10 @@ function update() {
 		} else if (name.includes("ball") || name.includes("refresh")) {
 			target = "balls";
 			color = "#ebf10d";
-		} else if ((target == "self" && ["smaller_platform", "slower_movement_speed"].includes(name)) || (target == "enemy" && ["bigger_platform", "faster_movement_speed"].includes(name))) {
+		} else if (
+			(target == "self" && ["smaller_platform", "slower_movement_speed"].includes(name)) ||
+			(target == "enemy" && ["bigger_platform", "faster_movement_speed"].includes(name))
+		) {
 			color = "#DF4516";
 		}
 		let deviation = (Math.random() * width) / 4 - width / 8;

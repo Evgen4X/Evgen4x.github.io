@@ -1,7 +1,16 @@
 if (localStorage.getItem("powerups")) {
 	availablePowerUps = localStorage.getItem("powerups").split(";");
 } else {
-	availablePowerUps = ["smaller_platform", "smaller_ball", "slower_movement_speed", "faster_movement_speed", "extra_ball", "bigger_platform", "ball_redirection", "speed_refresh"];
+	availablePowerUps = [
+		"smaller_platform",
+		"smaller_ball",
+		"slower_movement_speed",
+		"faster_movement_speed",
+		"extra_ball",
+		"bigger_platform",
+		"ball_redirection",
+		"speed_refresh",
+	];
 }
 
 const EVENT_LASTTIME = 7500;
@@ -90,6 +99,11 @@ const powerupsOnExpire = {
 	},
 };
 
+function playSound(path) {
+	let audio = new Audio(path);
+	audio.play();
+}
+
 function setToDefault() {
 	const theme = localStorage.getItem("theme");
 	localStorage.clear();
@@ -98,7 +112,15 @@ function setToDefault() {
 }
 
 function saveSettings() {
-	const settings = ["playerSpeed", "ballAccelerationRate", "ballAccelerationChance", "ballInitialSpeed", "ballSize", "maximumPowerupsAtATime", "powerupSpawnRate"];
+	const settings = [
+		"playerSpeed",
+		"ballAccelerationRate",
+		"ballAccelerationChance",
+		"ballInitialSpeed",
+		"ballSize",
+		"maximumPowerupsAtATime",
+		"powerupSpawnRate",
+	];
 	for (let i of settings) {
 		let val = localStorage.getItem(i + "Tmp");
 		if (val) {
@@ -138,7 +160,16 @@ powerupTogglers.forEach((powerupToggler) => {
 		powerupToggler.style.opacity = "40%";
 	}
 	powerupToggler.onclick = () => {
-		let powerups = ["smaller_platform", "smaller_ball", "slower_movement_speed", "faster_movement_speed", "extra_ball", "bigger_platform", "ball_redirection", "speed_refresh"];
+		let powerups = [
+			"smaller_platform",
+			"smaller_ball",
+			"slower_movement_speed",
+			"faster_movement_speed",
+			"extra_ball",
+			"bigger_platform",
+			"ball_redirection",
+			"speed_refresh",
+		];
 		if (localStorage.getItem("powerups")) {
 			powerups = localStorage.getItem("powerups").split(";");
 		}

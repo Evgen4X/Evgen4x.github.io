@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="../src/fonts/fonts.css" />
+		<link rel="stylesheet" href="../default.css" />
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="author" content="Evgen4X" />
+		<meta name="description" content="My own page!" />
+		<meta name="keywords" content="Evgen4X" />
+		<title>TITLE</title>
+	</head>
+	<body>
+		<div id="settings">
+			<h3>Settings</h3>
+			<div>
+				<button onclick="saveSettings();">Save</button>
+				<button onclick="setToDefault();">Set to default</button>
+			</div>
+			<button onclick="settings.style.display = 'none';">Close</button>
+		</div>
+		<header>
+			<div id="back" onclick="window.location.assign('../index.html');"></div>
+			<div id="title">TITLE</div>
+			<div style="display: flex; justify-content: space-between; align-items: center; width: 14vh">
+				<div id="settings-button"></div>
+				<div id="theme-switch"></div>
+			</div>
+		</header>
+		<main></main>
+		<footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
+
+		<script src="../themeSwitch.js"></script>
+	</body>
+</html>

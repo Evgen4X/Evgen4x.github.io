@@ -1,0 +1,70 @@
+#settings div {
+	width: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: start;
+}
+
+#settings #first-div {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 90%;
+}
+
+#settings #first-div div {
+	margin: 0.5em;
+	height: 2em;
+	width: 15em;
+	background-color: #666666;
+	opacity: 1;
+	border-radius: 1em;
+	box-shadow: 0 0 0.5em #ddd;
+	font-weight: bold;
+	transition: background-color 0.5s linear, box-shadow 0.5s ease-in-out;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: black;
+	border: 3px inset black;
+}
+
+#settings #first-div div:hover {
+	background-color: #555;
+	box-shadow: 0 0 0.8em #fff;
+}
+
+#settings #first-div div:active {
+	background-color: #333;
+	box-shadow: 0 0 0.5em #fff;
+	color: #aaa;
+}
+
+#settings label {
+	position: relative;
+	top: 1vh;
+}
+
+@media screen and (max-width: 800px) {
+	#settings,
+	#settings *,
+	#settings * * {
+		font-size: small;
+	}
+
+	#settings {
+		height: 70%;
+	}
+
+	input[type="number"] {
+		width: 3em;
+	}
+}
+
+input[type="checkbox"]:not(:checked) {
+	background-color: red;
+}
+
+input[type="checkbox"]:checked {
+	background-color: green;
+}
