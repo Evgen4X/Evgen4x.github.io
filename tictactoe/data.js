@@ -2,6 +2,7 @@ const COLORS = {
 	border: () => (CURRENT_THEME() == "light" ? "#111111" : "#cccccc"),
 	naught: () => "#0000ff",
 	cross: () => "#ff0000",
+	dark: () => (CURRENT_THEME() == "light" ? "#555555" : "#dddddd"),
 };
 
 const canvas = document.querySelector("canvas");
@@ -114,4 +115,30 @@ function getComputerMove(field) {
 		console.log(analyzeMove(field, available[index]));
 		return available[index];
 	}
+}
+
+function gameOver(winner) {
+	const win_block1 = document.querySelector(".win-block[player='1']");
+	const win_block2 = document.querySelector(".win-block[player='2']");
+	if (winner != 0) {
+		win_block1.style.color = winner == 1 ? COLORS.cross() : COLORS.naught();
+		win_block1.style.borderColor = winner == 1 ? COLORS.cross() : COLORS.naught();
+		win_block2.style.color = winner == 1 ? COLORS.cross() : COLORS.naught();
+		win_block2.style.borderColor = winner == 1 ? COLORS.cross() : COLORS.naught();
+	} else {
+		win_block1.innerHTML = "DRAW!";
+		win_block2.innerHTML = "DRAW!";
+	}
+	if (winner != -1) {
+		win_block1.animate([{opacity: 0}, {opacity: 100}], {duration: 250, iterations: 6}); //, easing: "ease-in-out"});
+	}
+	if (winner != 1) {
+		win_block2.animate([{opacity: 0}, {opacity: 100}], {duration: 250, iterations: 6}); //, easing: "ease-in-out"});
+	}
+
+	const restart = document.getElementById("again");
+	restart.animate([{opacity: 0}, {opacity: 100}], {duration: 1500, fill: "forwards", easing: "ease-in"});
+	restart.onclick = () => {
+		window.location.reload();
+	};
 }

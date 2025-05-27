@@ -3,7 +3,7 @@ function mainLoop() {
 	drawField(field);
 }
 
-var field = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var field = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 const mainLoopInterval = setInterval(mainLoop, 40);
 
 canvas.onclick = (event) => {
@@ -28,8 +28,15 @@ canvas.onclick = (event) => {
 				DATA.turn = !DATA.turn;
 			}
 		}
-		if (checkField(field) != 0) {
-			console.log(checkField(field));
+		let chq = checkField(field);
+		if (chq != 0) {
+			if (!DATA.modifiers.includes("override")) {
+				gameOver(chq);
+			}
+		}
+
+		if (!DATA.modifiers.includes("override") && field.every((val) => val != 0)) {
+			gameOver(0);
 		}
 	}
 };

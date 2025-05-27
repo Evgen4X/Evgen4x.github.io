@@ -68,3 +68,56 @@ input[type="checkbox"]:not(:checked) {
 input[type="checkbox"]:checked {
 	background-color: green;
 }
+
+.win-block {
+	position: absolute;
+	top: 40vh;
+	width: 25vw;
+	height: 20vh;
+	border: calc(min(2vw, 2vh)) solid white;
+	border-radius: 4vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 10vh;
+	opacity: 0;
+}
+
+.win-block[player="1"] {
+	left: 5vw;
+}
+
+.win-block[player="2"] {
+	right: 5vw;
+}
+
+#again {
+	background-color: #000080;
+	font-size: larger;
+	border-radius: 2em;
+	color: #dddd99;
+	padding: 0.5em;
+	margin-top: -3em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 2px solid black;
+	transition: all 500ms ease-out;
+	opacity: 0;
+}
+
+#again:hover {
+	font-size: x-large;
+	padding: 0.25em;
+	margin-top: -2.5em;
+	border-width: 3px;
+	background-color: #000060;
+}
+
+#again:active {
+	font-size: large;
+	padding: 0.35em;
+	margin-top: -3em;
+	border-width: 2px;
+	background-color: #000040;
+}
