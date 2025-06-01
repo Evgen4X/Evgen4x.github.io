@@ -89,7 +89,7 @@ nav {
 	flex: 1;
 	outline: none;
 	background-color: #888;
-	font-size: 4vw;
+	font-size: calc(min(4vw, 3vh));
 	font-weight: bolder;
 	color: #fff;
 	text-align: center;
@@ -119,7 +119,7 @@ nav {
 
 .kb_row .kb_key {
 	flex: 1;
-	font-size: 4vw;
+	font-size: calc(min(4vw, 3vh));
 	color: #fff;
 	font-weight: bolder;
 	background-color: #888;
@@ -154,7 +154,7 @@ nav {
 
 .absolute {
 	padding: 1em;
-	background-color: #101010;
+	background-color: #101010e8;
 	border: 0.4em solid #000;
 	border-radius: 2em;
 	box-shadow: 0 0 2em #000;
@@ -186,7 +186,7 @@ nav {
 	background-position: right;
 }
 
-label{
+label {
 	font-size: xx-large;
 }
 
@@ -228,14 +228,14 @@ input::placeholder {
 	border-radius: 1em;
 	box-shadow: 0 0 0.5em #ddd;
 	font-weight: bold;
-	font-size: x-large;
+	font-size: large;
 	transition: background-color 0.5s linear, box-shadow 0.5s ease-in-out;
 }
 
 .amount_of_letters {
 	width: 2em;
 	margin: 0.1em;
-	font-size: 5vw;
+	font-size: calc(min(4vw, 3vh));
 }
 
 .button_container button:hover {
@@ -249,8 +249,8 @@ input::placeholder {
 	color: #aaa;
 }
 
-@media screen and (max-width:600px){
-	.absolute{
+@media screen and (max-width: 600px) {
+	.absolute {
 		width: 80% !important;
 	}
 }
@@ -262,21 +262,21 @@ input::placeholder {
 	}
 
 	.absolute {
-		width: 50%;
+		width: 70%;
 	}
 
 	#alert {
-		width: 40%;
+		width: 50%;
 	}
 }
 
 @media screen and (min-width: 1000px) {
 	.absolute {
-		width: 33.3%;
+		width: 50%;
 	}
 
 	#alert {
-		width: 33.3%;
+		width: 45%;
 	}
 }
 
@@ -292,6 +292,5 @@ a {
 
 .how_to p {
 	margin: 0.5em;
-	font-size: x-large;
+	font-size: normal;
 }
-
