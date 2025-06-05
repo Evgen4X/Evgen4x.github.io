@@ -15,7 +15,7 @@ html {
 body {
 	background-color: var(--background-color);
 	background-size: 200% 200%;
-	background-image: radial-gradient(#fdf2dc 70%, transparent 25%);
+	background-image: radial-gradient(#ffdf9e 70%, transparent 25%);
 }
 
 footer {
