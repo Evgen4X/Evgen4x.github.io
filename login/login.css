@@ -1,6 +1,7 @@
 @import url("../default.css");
 
 body {
+	user-select: none;
 	margin: 0;
 	padding: 0;
 	/* background-color: var(--background-color2); */
@@ -42,15 +43,49 @@ main > div {
 }
 input[type="text"],
 input[type="password"] {
-	width: 25vw;
+	user-select: text;
+	width: 30vw;
 	height: 5vh;
 	font-weight: 600;
 	border-radius: 8px;
 	border: 2px solid #333;
 	background-color: rgba(255, 255, 255, 0.75);
 }
+#password-div {
+	width: 30vw;
+	height: 5vh;
+	font-weight: 600;
+	border-radius: 8px;
+	border: 2px solid #333;
+	background-color: rgba(255, 255, 255, 0.75);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+input[type="password"],
+.id-input-password {
+	width: 20vw !important;
+	background-color: transparent !important;
+	outline: none !important;
+	border: none !important;
+}
+button#password-show {
+	cursor: pointer;
+	position: relative;
+	left: calc(1 * (min(4vw, 3vh) - 3vh));
+	display: block;
+	width: 3vh;
+	min-width: 4vh;
+	height: 4vh;
+	background-color: transparent;
+	background-image: url(showPassword.png);
+	background-size: 4vh 4vh;
+	background-repeat: no-repeat;
+	outline: none;
+	border: none;
+}
 input[type="submit"] {
-	width: 25vw;
+	width: 30vw;
 	height: 7vh;
 	border-radius: 8px;
 	border: 2px solid #333;
@@ -59,4 +94,14 @@ input[type="submit"] {
 	font-size: 100%;
 	font-weight: bold;
 	background-color: var(--accent-color);
+}
+input[type="submit"]:hover {
+	filter: brightness(85%);
+}
+input[type="submit"]:active {
+	filter: brightness(70%);
+}
+input[type="text"]:focus,
+#password-div:has(:focus) {
+	filter: brightness(90%);
 }

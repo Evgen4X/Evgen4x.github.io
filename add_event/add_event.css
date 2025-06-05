@@ -1,0 +1,121 @@
+h1#title {
+	text-align: center;
+}
+h1 {
+	user-select: none;
+}
+.menu {
+	user-select: none;
+	background: var(--background-color2, #fff);
+	border-radius: 10px;
+	box-shadow: 0 2px 8px #0002;
+	padding: 24px 20px;
+	width: 90%;
+	max-width: 500px;
+	margin: 0 auto 32px auto;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 8px;
+}
+
+.profile-img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: #eee;
+}
+
+.profile-name {
+	user-select: text;
+	font-weight: bold;
+}
+
+.post-textarea {
+	width: 97%;
+	min-height: 60px;
+	border-radius: 8px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	font-size: 1rem;
+	margin-bottom: 8px;
+}
+
+.post-row {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 8px;
+}
+
+.post-title,
+.post-date,
+.post-time,
+.post-place {
+	border-radius: 8px;
+	border: 1px solid #ccc;
+	padding: 8px;
+	font-size: 1rem;
+	flex: 1;
+}
+
+.post-date,
+.post-time {
+	max-width: 140px;
+}
+
+.post-actions {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+
+.photo-label {
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+}
+
+.photo-icon {
+	width: 24px;
+	vertical-align: middle;
+}
+
+.submit {
+	flex: 1;
+	background: var(--accent-color, #1877f2);
+	color: #fff;
+	border: none;
+	border-radius: 8px;
+	padding: 10px 0;
+	font-weight: bold;
+	cursor: pointer;
+	transition: 0.2s;
+}
+
+.submit:hover {
+	background: #145dc1;
+}
+.cancel {
+	flex: 1;
+	background: #f21818;
+	color: #fff;
+	border: none;
+	border-radius: 8px;
+	padding: 10px 0;
+	font-weight: bold;
+	cursor: pointer;
+	transition: 0.2s;
+}
+.cancel:hover {
+	background: rgb(131, 4, 4);
+}
+input:focus,
+textarea:focus {
+	filter: brightness(95%);
+}

@@ -5,6 +5,7 @@
 	--text-color: #01161e;
 	--disable-color: #333;
 	--text-color-light: #feeae1;
+	--background-color-dark: #f7b06e;
 }
 
 body,
@@ -12,6 +13,8 @@ html {
 	margin: 0 !important;
 	padding: 0 !important;
 	min-height: 100vh;
+	width: 100vw;
+	overflow-x: clip;
 }
 
 * {
@@ -25,24 +28,67 @@ body {
 }
 
 header {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100vw;
+	user-select: none;
+	padding: 0 0 0 1vw;
+	/* width: 99vw; */
+	margin: 0;
+	width: 100%;
 	height: 5vh;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
+	/* background-color: var(--accent-color); */
 }
 
+#scroll-anchor {
+	position: absolute;
+	width: 10vw;
+	left: 0;
+	height: 1px;
+	/* display: none; */
+	background-color: #ff000066;
+}
+
+header #header-buttons {
+	display: flex;
+	justify-content: space-between;
+	gap: 1vw;
+	align-items: center;
+}
+.button {
+	width: 60px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	border-radius: 10%;
+	cursor: pointer;
+	padding: 0;
+	background-color: var(--accent-color);
+	color: white;
+	font-weight: bold;
+}
+.button:hover {
+	filter: brightness(90%);
+}
+.button:active {
+	filter: brightness(70%);
+}
+.button img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
 footer {
-	position: sticky;
-	bottom: 0;
+	user-select: none;
+	position: sticky !important;
+	top: 95vh;
 	left: 0;
 	width: 100vw;
 	height: 5vh;
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: 1fr;
 	background-color: var(--disable-color);
 	color: var(--text-color);
@@ -58,4 +104,8 @@ footer .footer-option {
 
 img.icon {
 	width: calc(10vh / 3);
+}
+
+a {
+	text-decoration: none;
 }

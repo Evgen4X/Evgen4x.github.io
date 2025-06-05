@@ -4,18 +4,20 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Mój profil</title>
+		<link rel="icon" href="../tarnow-icon.png" />
 		<link rel="stylesheet" href="../default.css" />
 		<link rel="stylesheet" href="../mojeOsiedle.css" />
 		<link rel="stylesheet" href="profile.css" />
 	</head>
 	<body>
+		<footer></footer>
 		<header></header>
-		<main>
+		<main style="overflow-y: hidden">
 			<div id="main-header">
 				<div id="icon-div">
 					<img src="missingIcon.png" alt="missing icon" />
-					<p>Kebastian Siusior</p>
 				</div>
+				<div id="user-name">Kebastian Siusior</div>
 				<div id="counters-div">
 					<div class="counter">
 						<div class="counter-what">Ogłoszenia</div>
@@ -56,8 +58,9 @@
 					</div>
 				</div>
 			</div>
+			<div id="waste-of-space" style="height: 20vh; width: 100vw">&nbsp;</div>
+			<div id="scroll-anchor"></div>
 		</main>
-		<footer></footer>
 
 		<script src="../init.js"></script>
 	</body>
