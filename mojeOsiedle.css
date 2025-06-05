@@ -1,0 +1,62 @@
+@import url("./default.css");
+
+.announce {
+	background-color: var(--background-color2);
+	width: 170px;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	color: var(--text-color);
+	overflow: hidden;
+	box-shadow: 0px 0px 10px #999;
+}
+body {
+	margin: 0;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.anounceGrid {
+	display: grid;
+	grid-template-columns: auto auto;
+	gap: 10px;
+}
+p {
+	margin: 0;
+}
+.annouceText {
+	margin: 10px;
+}
+
+.annouceImg {
+	border-radius: 6px;
+	width: 100%;
+}
+
+.annouceHeader {
+	padding: 10px;
+	background-color: var(--accent-color);
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.announceContent {
+	padding: 10px;
+}
+
+.announceProfile {
+	border-radius: 50%;
+	height: 40px;
+	width: 40px;
+}
+
+.announcName {
+	color: white;
+}
+
+.announcDate {
+	color: var(--disable-color);
+	font-size: 0.8rem;
+}

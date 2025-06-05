@@ -1,0 +1,41 @@
+:root {
+	--background-color: #fdfcdc;
+	--background-color2: #fed9b7;
+	--accent-color: #0081a7;
+	--text-color: #01161e;
+	--disable-color: #333;
+}
+
+body,
+html {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: var(--background-color);
+	background-size: 200% 200%;
+	background-image: radial-gradient(#fdf2dc 70%, transparent 25%);
+}
+
+footer {
+	position: sticky;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	height: 5vh;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr;
+	background-color: var(--disable-color);
+	color: var(--text-color);
+}
+
+footer .footer-option {
+	background-color: transparent;
+	border: 1px solid black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: var(--accent-color);
+}

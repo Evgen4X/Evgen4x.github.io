@@ -1,0 +1,43 @@
+@import url("../default.css");
+
+main {
+	/* padding: 0 5vw; */
+	width: 100%;
+	display: grid;
+	grid-template-rows: 2fr 1fr 1fr 16fr;
+	row-gap: 1vh;
+}
+
+#icon-div {
+	grid-row: 1;
+	width: 20%;
+}
+
+#icon-div img {
+	width: 100%;
+}
+
+#bio {
+	grid-row: 2;
+}
+
+#profile-links {
+	grid-row: 3;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr;
+	column-gap: 5vw;
+}
+
+#user-announcements {
+	grid-row: 4;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.userAnnounce {
+	width: 45%;
+	height: 30vh;
+	background-color: var(--disable-color);
+	color: var(--accent-color);
+}
