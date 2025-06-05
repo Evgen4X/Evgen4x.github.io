@@ -79,6 +79,7 @@ main div {
 	min-height: 81vh;
 }
 
-.search {
+#search {
 	background-color: transparent;
+	border: none;
 }
