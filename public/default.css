@@ -1,0 +1,127 @@
+:root {
+	--background-color: #fdfcdc;
+	--background-color2: #fed9b7;
+	--accent-color: #0081a7;
+	--text-color: #01161e;
+	--disable-color: #333;
+	--text-color-light: #feeae1;
+	--background-color-dark: #f7b06e;
+}
+
+body,
+html {
+	margin: 0 !important;
+	padding: 0 !important;
+	min-height: 100vh;
+	width: 100vw;
+	overflow-x: clip;
+}
+
+* {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+body {
+	background-color: var(--background-color);
+	background-size: 200% 200%;
+	background-image: radial-gradient(#ffdf9e 70%, transparent 25%);
+}
+
+header {
+	user-select: none;
+	padding: 0 0 0 1vw;
+	/* width: 99vw; */
+	margin: 0;
+	width: 100%;
+	height: 5vh;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	/* background-color: var(--accent-color); */
+}
+
+header #header-buttons {
+	display: flex;
+	justify-content: space-between;
+	gap: 1vw;
+	align-items: center;
+}
+.button {
+	width: 12000px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	border-radius: 10%;
+	cursor: pointer;
+	padding: 0;
+	background-color: var(--accent-color);
+	color: white;
+	font-weight: bold;
+}
+.button:hover {
+	filter: brightness(90%);
+}
+.button:active {
+	filter: brightness(70%);
+}
+.button img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	margin: auto;
+	padding: 0 0 0 15%;
+}
+footer {
+	user-select: none;
+	position: sticky !important;
+	top: 95vh;
+	left: 0;
+	width: 100vw;
+	height: 5vh;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: 1fr;
+	background-color: var(--disable-color);
+	color: var(--text-color);
+}
+
+footer .footer-option {
+	background-color: transparent;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: var(--accent-color);
+}
+
+footer .footer-option a {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: var(--accent-color);
+}
+
+footer .footer-option a img {
+	width: 5vh;
+}
+
+footer .footer-option a img.footer-img-focus {
+	background: radial-gradient(#ffffff99, #00000000, #00000000);
+}
+
+img.icon {
+	width: calc(10vh / 3);
+}
+
+a {
+	text-decoration: none;
+	color: var(--text-color);
+}
+.likeButton img,
+.commentButton img {
+	width: 2em !important;
+	height: 2em !important;
+}

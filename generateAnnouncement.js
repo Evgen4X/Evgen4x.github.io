@@ -1,4 +1,0 @@
-function generateAnnouncement(){
-    let text = ``;
-
-}
