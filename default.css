@@ -4,18 +4,34 @@
 	--accent-color: #0081a7;
 	--text-color: #01161e;
 	--disable-color: #333;
+	--text-color-light: #feeae1;
 }
 
 body,
 html {
-	margin: 0;
-	padding: 0;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+* {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
 body {
 	background-color: var(--background-color);
 	background-size: 200% 200%;
 	background-image: radial-gradient(#ffdf9e 70%, transparent 25%);
+}
+
+header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 5vh;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
 }
 
 footer {
@@ -33,9 +49,12 @@ footer {
 
 footer .footer-option {
 	background-color: transparent;
-	border: 1px solid black;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	color: var(--accent-color);
+}
+
+img.icon {
+	width: calc(10vh / 3);
 }

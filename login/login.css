@@ -37,7 +37,8 @@ main > div {
 	overflow-y: auto;
 }
 #title {
-	font-size: 50px;
+	/* font-size: 50px; */
+	font-size: xx-large;
 }
 input[type="text"],
 input[type="password"] {
