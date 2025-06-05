@@ -133,7 +133,7 @@ p {
 	height: 60px;
 	display: flex;
 	align-items: center;
-	justify-self: center;
+	justify-content: start;
 	/* background-color: rgb(197, 190, 190); */
 	margin: 0;
 }

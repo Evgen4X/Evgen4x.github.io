@@ -1,0 +1,4 @@
+function generateAnnouncement(){
+    let text = ``;
+
+}
