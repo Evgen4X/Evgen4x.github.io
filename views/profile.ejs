@@ -22,7 +22,7 @@
 				<div id="counters-div">
 					<div class="counter">
 						<div class="counter-what">Eventy</div>
-						<div class="counter-how-many"><%= result[0].numberofposts %></div>
+						<div class="counter-how-many"><%= result.length %></div>
 					</div>
 					<div class="counter">
 						<div class="counter-what">Coś</div>
@@ -36,7 +36,7 @@
 			</div>
 			<div id="bio"><%= result[0].bio %></div>
 			<div class="anounceGrid">
-				<% for(let i = 0; i < result[0].numberofposts; i++) { %>
+				<% for(let i = 0; i < result.length; i++) { %>
 				<div class="announce" announceId="<%= i %>">
 					<div class="annouceHeader">
 						<img class="announceProfile" src="/image.jpg" alt="" />
@@ -48,10 +48,15 @@
 					<div class="announceContent">
 						<hr />
 						<p class="annouceText"><%= result[i].content %></p>
-						<img class="annouceImg" src="<%= `/${result[i].image}` %>" alt="" />
+						<img class="annouceImg" src="data:image/jpeg;base64,<%= result[i].image.toString('base64') %>" alt="" />
+
 						<div class="bar">
 							<button class="likeButton" onclick="likeClicked(<%= i %>);">
+								<% if(result[i].liked){ %>
+								<img src="/icons/heartOn.png" alt="Like" />
+								<% } else { %>
 								<img src="/icons/heartOff.png" alt="Like" />
+								<% } %>
 								<p class="likeCount"><%= result[i].likes %></p>
 							</button>
 							<button class="commentButton" onclick="">
@@ -70,7 +75,6 @@
 			<div id="waste-of-space" style="height: 20vh; width: 100vw">&nbsp;</div>
 			<% } %>
 		</main>
-
 		<script src="/init.js"></script>
 		<script src="/like.js"></script>
 	</body>

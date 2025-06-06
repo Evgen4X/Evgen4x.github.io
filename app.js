@@ -1,14 +1,16 @@
 //requires
 const express = require("express");
 const mysql = require("mysql");
+
 //app
 
 const app = express();
-// let email_ = req.body.email;
-let email_;
-var password_;
-
 app.use(express.urlencoded({extended: true}));
+var email_;
+var password_;
+var estate_mode;
+var query_main =
+	"select content, image, CONCAT(YEAR(post.date),'-',MONTH(post.date),'-',DAY(post.date)) AS date_format, name, likes, liked, surname from post INNER JOIN users ON post.users_id = users.id ORDER BY post.date DESC";
 
 //connect to mongoDB
 // const dbURL = "mongodb+srv://admin:haslo123@cluster.zy4soi2.mongodb.net/LokalsiTarnowDB?retryWrites=true&w=majority&appName=Cluster";
@@ -23,7 +25,7 @@ app.use(express.urlencoded({extended: true}));
 // 	});
 
 const connection = mysql.createConnection({
-	host: "192.168.126.221",
+	host: "192.168.0.175",
 	user: "root",
 	password: "",
 	database: "localsitarnowdb",
@@ -59,25 +61,28 @@ app.post("/add_post", (req, res) => {
 	var image = req.body.image;
 	var user_id = 1; //req.body.user_id;
 	var estate_id = 1; //req.body.estate_id;
-	console.log(content, image);
+	var date_ = req.body.date_;
+	console.log("content:", content, "image: ", image);
 
-	connection.query(`INSERT INTO post VALUES(NULL, '${content}', ${image}',0,0,${user_id},${estate_id})`, (error, result) => {
-		if (error) {
-			console.log(error);
-			connection.query(
-				"select content, image, name, image, surname from post INNER JOIN users ON post.users_id = users.id",
-				(error, result) => {
-					if (!error) {
-						// console.log(result);
-						res.render("index", {title: "Nasze osiedle", result: result});
-					} else {
-						// console.log(error);
-						res.render("index", {title: "Nasze osiedle", result: undefined});
-					}
+	connection.query(
+		`INSERT INTO post(content, image,likes, comments_id, users_id, estate_id,date) VALUES('${content}', '${image}',0,0,${user_id},${estate_id},CURRENT_DATE())`,
+		(error, result) => {
+			// console.log(error);
+			connection.query(query_main, (error, result) => {
+				if (!error) {
+					// console.log(result);
+					// for (let i = 0; i < result.length; ++i) {
+					// 	result[i][image] = result[i][image].toString("hex");
+					// 	console.log(new Buffer(result[i][image]));
+					// }
+					res.render("index", {title: "Nasze osiedle", result: result});
+				} else {
+					// console.log(error);
+					res.render("index", {title: "Nasze osiedle", result: undefined});
 				}
-			);
-		} else res.render("add_event", {title: "Dodaj event"});
-	});
+			});
+		}
+	);
 });
 
 //set ejs
@@ -94,7 +99,7 @@ app.get("/", (req, res) => {
 	if (email_ == null && password_ == null) {
 		res.render("login", {title: "Logowanie"});
 	} else {
-		connection.query("select content, image, name, likes, surname from post INNER JOIN users ON post.users_id = users.id", (error, result) => {
+		connection.query(query_main, (error, result) => {
 			if (!error) {
 				// console.log(result);
 				res.render("index", {title: "Nasze osiedle", result: result});
@@ -130,7 +135,7 @@ app.get("/login", (req, res) => {
 	if (email_ == null && password_ == null) {
 		res.render("login", {title: "Logowanie"});
 	} else {
-		const query = "select content, image, name, likes, surname from post INNER JOIN users ON post.users_id = users.id";
+		const query = query_main;
 		connection.query(query, (error, results) => {
 			if (!error) {
 				// console.log(result);
@@ -149,10 +154,15 @@ app.get("/profile", (req, res) => {
 	//res.render("index", {title: "Nasze osiedle", result: result});
 
 	connection.query(
-		`select name, surname, bio, post.content, image, likes, count(*) as numberofposts, count(comments.id) as comments from (users join post on users.id = post.users_id) join comments on post.id = comments.post_id where users_id = ${user_id} group by post.id;`,
-		// `SELECT name, surname, bio, content, image, likes, count(*) as numberofposts from users INNER JOIN post ON users.id = post.users_id WHERE users_id = ${user_id}`,
+		`select name, surname, bio, post.content, image, likes, liked from (users join post on users.id = post.users_id) where users_id = ${user_id} group by post.id;`,
 		(error, result) => {
 			if (!error) {
+				result.forEach((row) => {
+					if (row.image) {
+						row.base64Image = row.image.toString("base64");
+					}
+				});
+				console.log(result);
 				res.render("profile", {title: "Mój profil", result: result});
 			} else {
 				console.log(error);
@@ -182,18 +192,15 @@ app.post("/login-submit", (req, res) => {
 
 		if (results.length > 0) {
 			console.log("ZALOGOWANO!");
-			connection.query(
-				"select content, image, name, likes, surname from post INNER JOIN users ON post.users_id = users.id",
-				(error, result) => {
-					if (!error) {
-						// console.log(result);
-						res.render("index", {title: "Nasze osiedle", result: result});
-					} else {
-						// console.log(error);
-						res.render("index", {title: "Nasze osiedle", result: undefined});
-					}
+			connection.query(query_main, (error, result) => {
+				if (!error) {
+					// console.log(result);
+					res.render("index", {title: "Nasze osiedle", result: result});
+				} else {
+					// console.log(error);
+					res.render("index", {title: "Nasze osiedle", result: undefined});
 				}
-			);
+			});
 		} else {
 			console.log("BŁĘDNE DANE!");
 			res.status(401).send("Nieprawidłowy email lub hasło");

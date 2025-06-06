@@ -19,8 +19,7 @@ if (header) {
 	header.innerHTML = `
 <h1>Lokalsi Tarnów</h1>
 <div id="header-buttons">
-	<a href="/add_event"><button class="button" style="width: 120%;">Dodaj Event</button></a>
-	<button class="button" style='background-color: transparent;'><img src="${url}/icons/tarnow-icon.png" alt="herb tarnowa" /></button>
+	<button class="button" style='background-color: transparent;' onclick="setEstate('NowaWartosc')"><img src="${url}/icons/tarnow-icon.png" alt="herb tarnowa" /></button>
 </div>
 `;
 	//<button id="search" class="button"><img class="icon" src="${url}/icons/searchIcon.png"></button>
@@ -31,7 +30,7 @@ if (footer) {
 	// <div class="footer-option"><a href="/"><img src="/icons/eventsIcon.png"></a></div>
 	// <div class="footer-option">d</div>
 	// <div class="footer-option"><a href="/profile"><img src="/icons/profileIcon.png"></a></div>`;
-	footer.innerHTML = addOption("/", "/icons/eventsIcon.png");
 	footer.innerHTML += addOption("/notexists", "/icons/eventsIcon.png");
+	footer.innerHTML += addOption("/", "/icons/eventsIcon.png");
 	footer.innerHTML += addOption("/profile", "/icons/profileIcon.png");
 }

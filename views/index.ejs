@@ -12,6 +12,8 @@
 	<body>
 		<header></header>
 		<footer></footer>
+
+		<a href="/add_event"><button class="button button2">Dodaj Event</button></a>
 		<!-- CHYBA NIE POTREBNE!!!! <div class="topBar">
 			<label>
 				<p>Filtruj:</p>
@@ -26,15 +28,19 @@
 						<img class="announceProfile" src="image.jpg" alt="" />
 						<div>
 							<p class="announcName"> <%= `${result[0].name} ${result[0].surname}` %></p>
-							<p class="announcDate">6 dni temu</p>
+							<p class="announcDate"><%= `${result[i].date_format}`  %></p>
 						</div>
 					</div>
 					<div class="announceContent">
 						<p class="annouceText"><%= `${result[i].content}` %></p>
-						<img class="annouceImg" src="<%= result[i].image %>" alt="" />
+						<img class="annouceImg" src="data:image/jpeg;base64,<%= result[i].image.toString('base64') %>" alt="" />
 						<div class="bar">
 							<button class="likeButton" onclick="likeClicked(<%= i %>)">
-								<img src="icons/heartOff.png" alt="Like" />
+								<% if(result[i].liked){ %>
+								<img src="/icons/heartOn.png" alt="Like" />
+								<% } else { %>
+								<img src="/icons/heartOff.png" alt="Like" />
+								<% } %>
 								<p class="likeCount"><%= result[i].likes %></p>
 							</button>
 							<button class="commentButton" onclick="">
@@ -55,5 +61,7 @@
 
 		<script src="/init.js"></script>
 		<script src="/like.js"></script>
+		
 	</body>
+
 </html>

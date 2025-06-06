@@ -28,8 +28,10 @@ body {
 	background-size: 200% 200%;
 	background-image: radial-gradient(#ffdf9e 70%, transparent 25%); */
 	background-image: url("background.png");
-	/* background: linear-gradient(to top right, var(--accent-color), #ffe8c6 15%, #ffe8c6 85%, var(--accent-color) 95%); */
+	background-repeat: repeat;
 	background-size: 100% 100%;
+	/* background: linear-gradient(to top right, var(--accent-color), #ffe8c6 15%, #ffe8c6 85%, var(--accent-color) 95%); */
+	/* background-size: 100% 100%; */
 }
 
 header {
@@ -59,19 +61,32 @@ header #header-buttons {
 	margin-block-end: 1vh;
 }
 .button {
-	width: 8vw;
+	width: 10vw;
 	height: 50px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	border: none;
-	border-radius: 10%;
+	border-radius: 0;
 	cursor: pointer;
 	padding: 0;
-	background-color: var(--accent-color-light);
-	color: white;
+	/* background-color: var(--accent-color-light); */
+	background-color: rgb(235, 136, 22);
+	color: var(--text-color);
 	font-weight: bold;
 }
+
+.button2 {
+	position: fixed;
+	top: 85%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1002;
+	width: 160px;
+	border-radius: 10px;
+	box-shadow: 0 0 5px #777;
+}
+
 .button:hover {
 	filter: brightness(90%);
 }
@@ -83,10 +98,10 @@ header #header-buttons {
 	height: 100%;
 	object-fit: contain;
 	margin: auto;
-	padding: 0 0 0 12.5%;
+	/* padding: 0 0 0 12.5%; */
 }
 footer {
-	z-index: 999;
+	z-index: 1000;
 	user-select: none;
 	position: fixed !important;
 	top: 93vh;

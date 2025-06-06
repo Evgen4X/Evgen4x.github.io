@@ -25,7 +25,7 @@ body {
 }
 main {
 	margin: 0;
-	margin-top: 5vh;
+	margin-top: 6vh;
 	width: 100%;
 	min-height: 100px;
 	height: auto;
@@ -39,20 +39,48 @@ main {
 	/* padding: 24px 12px; */
 }
 
+/* .anounceGrid {
+	min-height: 92vh;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	row-gap: 10px;
+	column-gap: calc(min(3vw, 5vh));
+	margin: 5vh 0 0 0;
+} */
 .anounceGrid {
 	min-height: 92vh;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	/* grid-template-rows: repeat(2, 1fr); */
 	row-gap: 10px;
 	column-gap: calc(min(3vw, 5vh));
 	margin: 5vh 0 0 0;
 }
+
+@media (max-width: 700px) {
+	.anounceGrid {
+		grid-template-columns: 1fr;
+	}
+}
+
 .announce {
 	width: 100%;
 	max-width: 900px;
 	margin: 0 0;
-	height: 72vh;
+	height: fit-content;
+	overflow: visible !important;
+}
+.annouceHeader::after {
+	content: "";
+	z-index: 999;
+	display: block;
+	width: 4em;
+	height: 4em;
+	background-image: url(pin.png);
+	background-size: 4em 4em;
+	position: relative;
+	top: -1.5em;
+	left: 4.5em;
+	border-radius: 50%;
 }
 
 /* .anounceGrid {
@@ -78,8 +106,8 @@ p {
 
 .annouceImg {
 	border-radius: 6px;
-	width: 100%;
-	height: auto;
+	width: 101%;
+	max-height: 180px;
 	/* margin-top: 2vh; */
 	margin-bottom: 2vh;
 	/* width: 50%; */
@@ -115,7 +143,7 @@ p {
 }
 
 .announcDate {
-	color: var(--disable-color);
+	color: var(--text-color-light);
 	font-size: 0.8rem;
 }
 .bar {
@@ -123,6 +151,7 @@ p {
 	/* align-items: center;
 	justify-content: center; */
 	gap: 20px;
+	padding-bottom: 0.5em;
 }
 
 .bar button {
