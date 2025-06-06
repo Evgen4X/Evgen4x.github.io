@@ -15,5 +15,5 @@ function cancel() {
 			return;
 		}
 	}
-	window.open("../", "_self");
+	window.location.replace("/");
 }

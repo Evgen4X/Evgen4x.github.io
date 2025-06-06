@@ -1,6 +1,8 @@
 @import url("../default.css");
 
 main {
+	margin-left: 2vw;
+	margin-top: 10vh;
 	width: 95vw;
 	display: flex;
 	justify-content: start;
@@ -9,7 +11,11 @@ main {
 }
 
 main div {
-	margin-top: 1vh;
+	margin-top: 4vh;
+}
+
+main div * {
+	margin-top: 0;
 }
 
 #main-header {
@@ -65,34 +71,8 @@ main div {
 	overflow-y: hidden;
 	font-size: small;
 	word-break: break-all;
-}
-
-#profile-links {
-	user-select: none;
-	height: 5vh;
-	width: 90vw;
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr;
-	column-gap: 5vw;
-}
-
-#profile-links button {
-	/* background-color: var(--disable-color); */
-	/* color: var(--text-color-light); */
-	background-color: var(--background-color-dark);
-	color: var(--text-color);
-	border: none;
-	outline: none;
-	border-radius: 1vw;
-}
-
-#profile-links button:hover {
-	filter: brightness(85%);
-}
-
-#profile-links button:active {
-	filter: brightness(70%);
+	text-align: left;
+	width: 70vw;
 }
 
 #user-announcements {
@@ -108,6 +88,6 @@ main div {
 	border: none;
 }
 
-.announce {
+/* .announce {
 	max-height: 100vw;
-}
+} */

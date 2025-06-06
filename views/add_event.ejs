@@ -5,38 +5,47 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Utwórz wydarzenie</title>
 		<link rel="icon" href="ow-icon.png" />
-		<link rel="stylesheet" href="ult.css" />
+		<link rel="stylesheet" href="/default.css" />
 		<link rel="stylesheet" href="/add_event/add_event.css" />
 	</head>
 	<body>
 		<main>
 			<h1 id="title">Utwórz wydarzenie</h1>
 			<div class="menu">
-				<div class="header">
-					<img src="..//image.jpg" alt="Profil" class="profile-img" />
-					<span class="profile-name">Imie Nazwisko</span>
-				</div>
-				<textarea class="post-textarea" placeholder="Co chcesz ogłosić?"></textarea>
-				<div class="post-row">
-					<input type="text" class="post-title" placeholder="Tytuł wydarzenia" />
-					<input type="date" class="post-date" />
-				</div>
-				<div class="post-row">
-					<input type="time" class="post-time" />
-					<input type="text" class="post-place" placeholder="Miejsce" />
-				</div>
+				<form method="post" action="/add_post">
+					<div class="header">
+						<img src="..//image.jpg" alt="Profil" class="profile-img" />
+						<span class="profile-name"><%= `${result.name} ${result.surname}` %></span>
+					</div>
+					<textarea name="content" class="post-textarea" placeholder="Co chcesz ogłosić?"></textarea>
+					<div class="post-row">
+						<input name="title" type="text" class="post-title" placeholder="Tytuł wydarzenia" />
+						<input name="date" type="date" class="post-date" />
+					</div>
+					<div class="post-row">
+						<input type="time" class="post-time" />
+						<input type="text" class="post-place" placeholder="Miejsce" />
+					</div>
 
-				<div class="post-actions">
-					<label class="photo-label">
-						<img src="..//image.jpg" alt="Dodaj zdjęcie" class="photo-icon" />
-						<input type="file" accept="image/*" style="display: none" />
-					</label>
+					<div class="post-actions">
+						<label class="photo-label">
+							<img src="..//image.jpg" alt="Dodaj zdjęcie" class="photo-icon" />
+							<input name="image" type="file" accept="image/*" style="display: none" />
+						</label>
 
-					<button type="button" class="cancel" onclick="cancel()">Anuluj</button>
-					<button type="button" class="submit">Utwórz wydarzenie</button>
-				</div>
+						<button type="button" class="cancel" onclick="cancel()">Anuluj</button>
+						<input type="submit" class="submit" value="Utwórz wydarzenie" />
+					</div>
+				</form>
 			</div>
 		</main>
+
+		<script>
+			function upload() {
+				window.location.replace("/add_post");
+			}
+		</script>
+
 		<script src="cancel.js"></script>
 		<script src="../darkmode.js"></script>
 	</body>

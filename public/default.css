@@ -2,10 +2,12 @@
 	--background-color: #fdfcdc;
 	--background-color2: #fed9b7;
 	--accent-color: #0081a7;
+	--accent-color-light: #009ccc;
 	--text-color: #01161e;
 	--disable-color: #333;
 	--text-color-light: #feeae1;
 	--background-color-dark: #f7b06e;
+	--sepia: #a7936e;
 }
 
 body,
@@ -22,33 +24,43 @@ html {
 }
 
 body {
-	background-color: var(--background-color);
+	/* background-color: var(--background-color);
 	background-size: 200% 200%;
-	background-image: radial-gradient(#ffdf9e 70%, transparent 25%);
+	background-image: radial-gradient(#ffdf9e 70%, transparent 25%); */
+	background-image: url("background.png");
+	/* background: linear-gradient(to top right, var(--accent-color), #ffe8c6 15%, #ffe8c6 85%, var(--accent-color) 95%); */
+	background-size: 100% 100%;
 }
 
 header {
+	z-index: 999;
+	position: absolute;
+	top: 1vh;
 	user-select: none;
-	padding: 0 0 0 1vw;
-	/* width: 99vw; */
 	margin: 0;
+	padding: 0;
 	width: 100%;
-	height: 5vh;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	/* background-color: var(--accent-color); */
+	height: 10vh;
 }
-
+header h1 {
+	padding: 0;
+	margin-left: 2%;
+	margin-block-start: 0.5vh;
+	margin-block-end: 0vh;
+	float: left;
+}
 header #header-buttons {
 	display: flex;
-	justify-content: space-between;
+	justify-content: right;
 	gap: 1vw;
 	align-items: center;
+	margin-right: 2%;
+	margin-block-start: 1vh;
+	margin-block-end: 1vh;
 }
 .button {
-	width: 12000px;
-	height: 40px;
+	width: 8vw;
+	height: 50px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -56,7 +68,7 @@ header #header-buttons {
 	border-radius: 10%;
 	cursor: pointer;
 	padding: 0;
-	background-color: var(--accent-color);
+	background-color: var(--accent-color-light);
 	color: white;
 	font-weight: bold;
 }
@@ -71,22 +83,23 @@ header #header-buttons {
 	height: 100%;
 	object-fit: contain;
 	margin: auto;
-	padding: 0 0 0 15%;
+	padding: 0 0 0 12.5%;
 }
 footer {
+	z-index: 999;
 	user-select: none;
-	position: sticky !important;
-	top: 95vh;
+	position: fixed !important;
+	top: 93vh;
+	/* bottom: 0; */
 	left: 0;
 	width: 100vw;
-	height: 5vh;
+	height: 0vh;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: 1fr;
 	background-color: var(--disable-color);
 	color: var(--text-color);
 }
-
 footer .footer-option {
 	background-color: transparent;
 	display: flex;

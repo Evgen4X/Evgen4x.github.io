@@ -10,8 +10,8 @@
 		<link rel="stylesheet" href="mojeOsiedle.css" />
 	</head>
 	<body>
-		<footer></footer>
 		<header></header>
+		<footer></footer>
 		<!-- CHYBA NIE POTREBNE!!!! <div class="topBar">
 			<label>
 				<p>Filtruj:</p>
@@ -19,22 +19,23 @@
 		</div> -->
 		<main>
 			<div class="anounceGrid">
-				<div class="announce">
+				<% if(result){for(let i = 0; i<result.length; i++){ %>
+
+				<div class="announce" announceId="<%= i %>">
 					<div class="annouceHeader">
 						<img class="announceProfile" src="image.jpg" alt="" />
 						<div>
-							<p class="announcName">Kebastian Siusior</p>
+							<p class="announcName"> <%= `${result[0].name} ${result[0].surname}` %></p>
 							<p class="announcDate">6 dni temu</p>
 						</div>
 					</div>
 					<div class="announceContent">
-						<hr />
-						<p class="annouceText">Wywóz śmieci - już 24 stycznia</p>
-						<img class="annouceImg" src="image.jpg" alt="" />
+						<p class="annouceText"><%= `${result[i].content}` %></p>
+						<img class="annouceImg" src="<%= result[i].image %>" alt="" />
 						<div class="bar">
-							<button class="likeButton">
+							<button class="likeButton" onclick="likeClicked(<%= i %>)">
 								<img src="icons/heartOff.png" alt="Like" />
-								<p class="likeCount">12</p>
+								<p class="likeCount"><%= result[i].likes %></p>
 							</button>
 							<button class="commentButton" onclick="">
 								<img src="icons/commentIcon.png" alt="Comment" />
@@ -47,58 +48,12 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="announce">
-					<div class="annouceHeader">
-						<img class="announceProfile" src="image.jpg" alt="" />
-						<div>
-							<p class="announcName">Kebastian Siusior</p>
-							<p class="announcDate">6 dni temu</p>
-						</div>
-					</div>
-					<div class="announceContent">
-						<hr />
-						<p class="annouceText">Wywóz śmieci - już 24 stycznia</p>
-						<img class="annouceImg" src="image.jpg" alt="" />
-						<div class="bar">
-							<button class="likeButton">
-								<img src="icons/heartOff.png" alt="Like" />
-								<p class="likeCount">12</p>
-							</button>
-							<button class="commentButton">
-								<img src="icons/commentIcon.png" alt="Comment" />
-								<p class="commentCount">5</p>
-							</button>
-						</div>
-					</div>
-				</div>
-				<div class="announce">
-					<div class="annouceHeader">
-						<img class="announceProfile" src="image.jpg" alt="" />
-						<div>
-							<p class="announcName">Kebastian Siusior</p>
-							<p class="announcDate">6 dni temu</p>
-						</div>
-					</div>
-					<div class="announceContent">
-						<hr />
-						<p class="annouceText">Wywóz śmieci - już 24 stycznia</p>
-						<img class="annouceImg" src="image.jpg" alt="" />
-						<div class="bar">
-							<button class="likeButton">
-								<img src="icons/heartOff.png" alt="Like" />
-								<p class="likeCount">12</p>
-							</button>
-							<button class="commentButton">
-								<img src="icons/commentIcon.png" alt="Comment" />
-								<p class="commentCount">5</p>
-							</button>
-						</div>
-					</div>
-				</div>
+				<% }}; %>
 			</div>
 			<div id="waste-of-space" style="height: 20vh; width: 100vw">&nbsp;</div>
 		</main>
+
 		<script src="/init.js"></script>
+		<script src="/like.js"></script>
 	</body>
 </html>

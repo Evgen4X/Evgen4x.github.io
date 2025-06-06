@@ -1,0 +1,117 @@
+@import url("../default.css");
+
+body {
+	user-select: none;
+	margin: 0;
+	padding: 0;
+	/* background-color: var(--background-color2); */
+	background-color: #474646;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+main {
+	margin-top: 10vh;
+	/* position: absolute; */
+	/* background-color: rgba(127, 127, 127, 0.75); */
+	background-color: var(--background-color2);
+	color: var(--background-color-dark);
+	/* background-color: var(--sepia); */
+	/* top: 10vh; */
+	/* left: 35vw; */
+	height: 80vh;
+	width: 50vw;
+	border-radius: 5vh;
+	display: flex;
+	justify-content: baseline;
+	align-items: center;
+	flex-direction: column;
+	/* gap: 5vh; */
+}
+
+main > div {
+	width: 30vw;
+	height: 60vh;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-wrap: wrap;
+	overflow-y: auto;
+}
+#title {
+	/* font-size: 50px; */
+	font-size: xx-large;
+}
+input[type="text"],
+input[type="password"] {
+	user-select: text;
+	width: 30vw;
+	height: 5vh;
+	font-weight: 600;
+	border-radius: 8px;
+	/* border: 2px solid #333; */
+	border: none;
+	background-color: rgba(255, 255, 255, 0.75);
+}
+input[type="text"]:active {
+	border: none;
+}
+#password-div {
+	width: 30vw;
+	height: 5vh;
+	font-weight: 600;
+	border-radius: 8px;
+	/* border: 2px solid #333; */
+	border: none;
+	background-color: rgba(255, 255, 255, 0.75);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+input[type="password"],
+.id-input-password {
+	width: 20vw !important;
+	background-color: transparent !important;
+	outline: none !important;
+	border: none !important;
+}
+button#password-show {
+	cursor: pointer;
+	position: relative;
+	left: calc(1 * (min(4vw, 3vh) - 3vh));
+	display: block;
+	width: 3vh;
+	min-width: 4vh;
+	height: 4vh;
+	background-color: transparent;
+	background-image: url(showPassword.png);
+	background-size: 4vh 4vh;
+	background-repeat: no-repeat;
+	outline: none;
+	border: none;
+}
+input[type="submit"] {
+	width: 30vw;
+	height: 7vh;
+	border-radius: 8px;
+	/* border: 2px solid #333; */
+	border: none;
+	/* background-color: rgba(255, 255, 255, 0.75); */
+	background-color: var(--background-color-dark);
+	color: var(--text-color-light);
+	cursor: pointer;
+	font-size: 100%;
+	font-weight: bold;
+	/* background-color: var(--accent-color); */
+}
+input[type="submit"]:hover {
+	filter: brightness(85%);
+}
+input[type="submit"]:active {
+	filter: brightness(70%);
+}
+input[type="text"]:focus,
+#password-div:has(:focus) {
+	filter: brightness(90%);
+}

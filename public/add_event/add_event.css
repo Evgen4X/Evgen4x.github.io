@@ -6,7 +6,8 @@ h1 {
 }
 .menu {
 	user-select: none;
-	background: var(--background-color2, #fff);
+	/* background: var(--background-color2); */
+	background-color: rgb(41, 79, 96);
 	border-radius: 10px;
 	box-shadow: 0 2px 8px #0002;
 	padding: 24px 20px;
@@ -19,6 +20,7 @@ h1 {
 }
 
 .header {
+	color: white;
 	display: flex;
 	align-items: center;
 	gap: 12px;

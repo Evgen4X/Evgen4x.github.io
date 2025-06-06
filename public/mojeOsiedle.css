@@ -1,31 +1,33 @@
 @import url("./default.css");
 
 .announce {
+	box-sizing: content-box;
 	user-select: none;
-	background-color: rgb(238, 231, 178);
+	background-color: var(--background-color2);
 	/* background-color: var(--background-color2); */
-	width: 32vw;
+	width: 30vw;
 	border-radius: 10px;
 	display: flex;
 	flex-direction: column;
 	color: var(--text-color);
 	overflow: hidden;
 	box-shadow: 0px 0px 10px #999;
-	height: auto;
+	/* height: 65vh; */
 }
 body {
 	margin: 0;
+	padding: 0;
 	/* padding: 20px; */
-	display: flex;
+	/* display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: center; */
 }
 main {
 	margin: 0;
-	margin-top: 40px;
+	margin-top: 5vh;
 	width: 100%;
-	min-height: 400px;
+	min-height: 100px;
 	height: auto;
 	display: flex;
 	flex-direction: column;
@@ -40,13 +42,17 @@ main {
 .anounceGrid {
 	min-height: 92vh;
 	display: grid;
-	grid-template-columns: auto auto;
-	gap: 10px;
+	grid-template-columns: 1fr 1fr;
+	/* grid-template-rows: repeat(2, 1fr); */
+	row-gap: 10px;
+	column-gap: calc(min(3vw, 5vh));
+	margin: 5vh 0 0 0;
 }
 .announce {
 	width: 100%;
 	max-width: 900px;
-	margin: 0 auto;
+	margin: 0 0;
+	height: 72vh;
 }
 
 /* .anounceGrid {
@@ -67,27 +73,34 @@ p {
 
 .annouceText {
 	user-select: text;
-	margin: 10px;
+	margin: 20px;
 }
 
 .annouceImg {
 	border-radius: 6px;
 	width: 100%;
 	height: auto;
+	/* margin-top: 2vh; */
+	margin-bottom: 2vh;
 	/* width: 50%; */
 	/* height: auto; */
 }
 
 .annouceHeader {
 	padding: 10px;
-	background-color: var(--accent-color);
+	background-color: rgb(41, 79, 96);
 	display: flex;
 	align-items: center;
 	gap: 10px;
 }
 
 .announceContent {
-	padding: 10px;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: column;
 }
 
 .announceProfile {
@@ -176,7 +189,6 @@ p {
 	flex-shrink: 0;
 	background: #eee;
 }
-
 .commentText {
 	margin: 0;
 	padding: 6px 0;

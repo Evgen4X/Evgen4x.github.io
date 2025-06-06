@@ -4,17 +4,52 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" href="/tarnow-icon.png" />
+		<link rel="stylesheet" href="/default.css" />
+		<link rel="stylesheet" href="fonts/Doctor_Glitch.css" />
 		<title>Error 404</title>
 		<style>
 			* {
 				text-align: center;
-				font-size: 150%;
 				user-select: none;
+				font-family: "Doctor Glitch" !important;
+			}
+
+			body {
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+				flex-direction: column;
+			}
+
+			h1 {
+				margin: 0;
+				color: var(--disable-color);
+				font-size: calc(min(5vw, 10vh));
+			}
+
+			span {
+				position: relative;
 			}
 		</style>
 	</head>
 	<body>
-		<h1>Error 404</h1>
-		<h6>bruh</h6>
+		<h1>
+			<span>S</span><span>t</span><span>r</span><span>o</span><span>n</span><span>a</span><span>&nbsp;&nbsp;</span><span>w</span
+			><span>&nbsp;&nbsp;</span><span>b</span><span>u</span><span>d</span><span>o</span><span>w</span><span>i</span><span>e</span>
+		</h1>
+		<footer></footer>
+		<script src="init.js"></script>
+		<script>
+			const spans = document.querySelectorAll("h1 span");
+			function animate(i) {
+				spans[i].animate([{top: 0}, {top: "-10vh"}, {top: 0}], {duration: 750, easing: "ease-in-out"});
+				let time = i == spans.length - 1 ? 450 : 100;
+				setTimeout(() => {
+					animate((i + 1) % spans.length);
+				}, time);
+			}
+
+			animate(0);
+		</script>
 	</body>
 </html>

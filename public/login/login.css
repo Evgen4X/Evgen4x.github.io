@@ -15,8 +15,9 @@ main {
 	margin-top: 10vh;
 	/* position: absolute; */
 	/* background-color: rgba(127, 127, 127, 0.75); */
-	background-color: var(--disable-color);
-	color: var(--accent-color);
+	background-color: var(--background-color2);
+	color: var(--background-color-dark);
+	/* background-color: var(--sepia); */
 	/* top: 10vh; */
 	/* left: 35vw; */
 	height: 80vh;
@@ -26,6 +27,7 @@ main {
 	justify-content: baseline;
 	align-items: center;
 	flex-direction: column;
+	/* gap: 5px; */
 }
 
 main > div {
@@ -48,15 +50,20 @@ input[type="password"] {
 	height: 5vh;
 	font-weight: 600;
 	border-radius: 8px;
-	border: 2px solid #333;
+	/* border: 2px solid #333; */
+	border: none;
 	background-color: rgba(255, 255, 255, 0.75);
+}
+input[type="text"]:active {
+	border: none;
 }
 #password-div {
 	width: 30vw;
 	height: 5vh;
 	font-weight: 600;
 	border-radius: 8px;
-	border: 2px solid #333;
+	/* border: 2px solid #333; */
+	border: none;
 	background-color: rgba(255, 255, 255, 0.75);
 	display: flex;
 	justify-content: space-between;
@@ -88,12 +95,15 @@ input[type="submit"] {
 	width: 30vw;
 	height: 7vh;
 	border-radius: 8px;
-	border: 2px solid #333;
-	background-color: rgba(255, 255, 255, 0.75);
+	/* border: 2px solid #333; */
+	border: none;
+	/* background-color: rgba(255, 255, 255, 0.75); */
+	background-color: var(--background-color-dark);
+	color: var(--text-color-light);
 	cursor: pointer;
 	font-size: 100%;
 	font-weight: bold;
-	background-color: var(--accent-color);
+	/* background-color: var(--accent-color); */
 }
 input[type="submit"]:hover {
 	filter: brightness(85%);
