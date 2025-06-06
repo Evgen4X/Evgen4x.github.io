@@ -10,7 +10,7 @@ var email_;
 var password_;
 var estate_;
 var query_main =
-	"select content, image, CONCAT(YEAR(post.date),'-',MONTH(post.date),'-',DAY(post.date)) AS date_format, name, likes, liked, surname from post INNER JOIN users ON post.users_id = users.id ORDER BY post.date DESC";
+	"select content, image, CONCAT(YEAR(post.date),'-',MONTH(post.date),'-',DAY(post.date),' ',HOUR(post.date),':',MINUTE(post.date)) AS date_format, name, likes, liked, surname from post INNER JOIN users ON post.users_id = users.id WHERE users.estate_id = post.estate_id and users.id = ? ORDER BY post.date DESC";
 
 //connect to mongoDB
 // const dbURL = "mongodb+srv://admin:haslo123@cluster.zy4soi2.mongodb.net/LokalsiTarnowDB?retryWrites=true&w=majority&appName=Cluster";
@@ -78,7 +78,7 @@ app.post("/add_post", (req, res) => {
 		`INSERT INTO post(content, image,likes, comments_id, users_id, estate_id,date) VALUES('${content}', '${image}',0,0,${user_id},${estate_id},CURRENT_DATE())`,
 		(error, result) => {
 			// console.log(error);
-			connection.query(query_main, (error, result) => {
+			connection.query(query_main, [user_id], (error, result) => {
 				if (!error) {
 					// console.log(result);
 					// for (let i = 0; i < result.length; ++i) {
@@ -109,11 +109,21 @@ app.get("/", (req, res) => {
 	if (email_ == null && password_ == null) {
 		res.render("login", {title: "Logowanie"});
 	} else {
-		connection.query(query_main, (error, result) => {
+		// user_id = 1; //req.body.user_id;
+		const query = "SELECT id, estates_id FROM users WHERE email = ? AND password = ?";
+
+		connection.query(query, [email_, password_], (error, result) => {
+			if (result) {
+				user_id = result[0].id;
+			}
+		});
+		console.log("user_id: ", user_id);
+		connection.query(query_main, [user_id], (error, result) => {
 			if (!error) {
 				// console.log(result);
 				res.render("index", {title: "Nasze osiedle", result: result});
 			} else {
+				console.log(error);
 				// console.log(error);
 				res.render("index", {title: "Nasze osiedle", result: undefined});
 			}
@@ -146,8 +156,16 @@ app.get("/login", (req, res) => {
 	if (email_ == null && password_ == null) {
 		res.render("login", {title: "Logowanie"});
 	} else {
-		const query = query_main;
-		connection.query(query, (error, result) => {
+		user_id = 1; //req.body.user_id;
+		const query = "SELECT id, estates_id FROM users WHERE email = ? AND password = ?";
+
+		connection.query(query, [email_, password_], (error, result) => {
+			if (result) {
+				user_id = result[0].id;
+			}
+		});
+
+		connection.query(query_main, [user_id], (error, result) => {
 			if (!error) {
 				// console.log(result);
 				res.render("index", {title: "Nasze osiedle", result: result});
@@ -210,7 +228,15 @@ app.post("/login-submit", (req, res) => {
 			console.log("ZALOGOWANO!");
 			// estate_ = results[0].name;
 			// console.log(estate_);
-			connection.query(query_main, (error, result) => {
+			user_id = 1; //req.body.user_id;
+			const query = "SELECT id, estates_id FROM users WHERE email = ? AND password = ?";
+
+			connection.query(query, [email_, password_], (error, result) => {
+				if (result) {
+					user_id = result[0].id;
+				}
+			});
+			connection.query(query_main, [user_id], (error, result) => {
 				if (!error) {
 					// console.log(result);
 					res.render("index", {title: "Nasze osiedle", result: result});
@@ -221,7 +247,9 @@ app.post("/login-submit", (req, res) => {
 			});
 		} else {
 			console.log("BŁĘDNE DANE!");
-			res.status(401).send("Nieprawidłowy email lub hasło");
+			// res.status(401).send("Nieprawidłowy email lub hasło");
+
+			res.render("login");
 		}
 	});
 });
