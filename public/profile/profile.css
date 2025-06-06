@@ -19,12 +19,16 @@ main div * {
 }
 
 #main-header {
+	background-color: rgb(41, 79, 96);
+	border-radius: 10px;
+	padding: 20px;
 	user-select: none;
 	margin: 0;
 	display: grid;
 	grid-template-columns: 1.34fr 2.66fr;
-	grid-template-rows: 2fr 1fr;
+	grid-template-rows: 2fr 0.8fr;
 	height: 13vh;
+	color: white;
 }
 
 #counters-div {
@@ -36,6 +40,10 @@ main div * {
 }
 
 .counter {
+	color: black;
+	background-color: var(--background-color2);
+	padding: 10px;
+	border-radius: 5px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -66,12 +74,13 @@ main div * {
 }
 
 #bio {
+	text-align: center;
+	background-color: red;
 	min-height: 5vh;
 	max-height: 9vh;
 	overflow-y: hidden;
 	font-size: small;
 	word-break: break-all;
-	text-align: left;
 	width: 70vw;
 }
 

@@ -21,25 +21,25 @@
 				<div id="user-name"><%= `${result[0].name} ${result[0].surname}` %></div>
 				<div id="counters-div">
 					<div class="counter">
-						<div class="counter-what">Eventy</div>
+						<div class="counter-what">Twoje Eventy</div>
 						<div class="counter-how-many"><%= result.length %></div>
 					</div>
 					<div class="counter">
-						<div class="counter-what">Coś</div>
-						<div class="counter-how-many">0</div>
+						<div class="counter-what">Punkty Osiedla</div>
+						<div class="counter-how-many"><%= result.reduce((acc, cur) => acc + parseInt(cur.likes), 0) %></div>
 					</div>
 					<div class="counter">
-						<div class="counter-what">Obserwujący</div>
+						<div class="counter-what">Twoi znajomi</div>
 						<div class="counter-how-many">0</div>
 					</div>
 				</div>
 			</div>
-			<div id="bio"><%= result[0].bio %></div>
+			<!-- ?\	<div id="bio"><%= result[0].bio %></div> -->
 			<div class="anounceGrid">
 				<% for(let i = 0; i < result.length; i++) { %>
 				<div class="announce" announceId="<%= i %>">
 					<div class="annouceHeader">
-						<img class="announceProfile" src="/image.jpg" alt="" />
+						<img class="announceProfile" src="missingIcon.png" alt="" />
 						<div>
 							<p class="announcName"><%= `${result[i].name} ${result[i].surname}` %></p>
 							<p class="announcDate">6 dni temu</p>

@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Utwórz wydarzenie</title>
-		<link rel="icon" href="ow-icon.png" />
+		<link rel="icon" href="tarnow-icon.png" />
 		<link rel="stylesheet" href="/default.css" />
 		<link rel="stylesheet" href="/add_event/add_event.css" />
 	</head>
@@ -14,24 +14,24 @@
 			<div class="menu">
 				<form method="post" action="/add_post">
 					<div class="header">
-						<img src="..//image.jpg" alt="Profil" class="profile-img" />
+						<img src="/missingIcon.png" alt="Profil" class="profile-img" />
 						<span class="profile-name"><%= `${result.name} ${result.surname}` %></span>
 					</div>
 					<textarea name="content" class="post-textarea" placeholder="Co chcesz ogłosić?"></textarea>
 					<div class="post-row">
-						<input name="title" type="text" class="post-title" placeholder="Tytuł wydarzenia" readonly />
-						<input name="date_" type="date" class="post-date" readonly />
+						<input name="title" type="text" class="post-title" placeholder="Tytuł wydarzenia" />
+						<input name="date_" type="date" class="post-date" />
 					</div>
 					<div class="post-row">
 						<input type="time" class="post-time" />
-						<input type="text" class="post-place" placeholder="Miejsce" readonly />
+						<input type="text" class="post-place" placeholder="Miejsce" />
 					</div>
 
 					<div class="post-actions">
-						<label class="photo-label">
+						<!-- <label class="photo-label">
 							<img src="..//image.jpg" alt="Dodaj zdjęcie" class="photo-icon" />
 							<input name="image" type="file" accept="image/*" style="display: none" />
-						</label>
+						</label> -->
 
 						<button type="button" class="cancel" onclick="cancel()">Anuluj</button>
 						<input type="submit" class="submit" value="Utwórz wydarzenie" />

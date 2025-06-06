@@ -28,10 +28,9 @@ h1 {
 }
 
 .profile-img {
-	width: 40px;
-	height: 40px;
+	width: 5em;
 	border-radius: 50%;
-	background: #eee;
+	/* background: #eee; */
 }
 
 .profile-name {
@@ -47,6 +46,7 @@ h1 {
 	padding: 10px;
 	font-size: 1rem;
 	margin-bottom: 8px;
+	text-decoration: none;
 }
 
 .post-row {

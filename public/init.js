@@ -3,7 +3,6 @@ const footer = document.querySelector("footer");
 
 function addOption(src, srcimg) {
 	let text = `<div class="footer-option"><a href="${src}"><img src="${srcimg}"`;
-	console.log(href, url + src);
 	if (href == url + src || href == url + src + "/") {
 		text += ` class="footer-img-focus"`;
 	}
@@ -19,7 +18,7 @@ if (header) {
 	header.innerHTML = `
 <h1>Lokalsi Tarnów</h1>
 <div id="header-buttons">
-	<button class="button" style='background-color: transparent;' onclick="setEstate('NowaWartosc')"><img src="${url}/icons/tarnow-icon.png" alt="herb tarnowa" /></button>
+	<a href='/' class="button" style='background-color: transparent;'><img src="${url}/icons/tarnow-icon.png" alt="herb tarnowa" /></a>
 </div>
 `;
 	//<button id="search" class="button"><img class="icon" src="${url}/icons/searchIcon.png"></button>

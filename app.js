@@ -8,7 +8,7 @@ const app = express();
 app.use(express.urlencoded({extended: true}));
 var email_;
 var password_;
-var estate_mode;
+var estate_;
 var query_main =
 	"select content, image, CONCAT(YEAR(post.date),'-',MONTH(post.date),'-',DAY(post.date)) AS date_format, name, likes, liked, surname from post INNER JOIN users ON post.users_id = users.id ORDER BY post.date DESC";
 
@@ -61,8 +61,18 @@ app.post("/add_post", (req, res) => {
 	var image = req.body.image;
 	var user_id = 1; //req.body.user_id;
 	var estate_id = 1; //req.body.estate_id;
-	var date_ = req.body.date_;
-	console.log("content:", content, "image: ", image);
+
+	const query = "SELECT id, estates_id FROM users WHERE email = ? AND password = ?";
+
+	connection.query(query, [email_, password_], (error, result) => {
+		if (result) {
+			user_id = result[0].id;
+			estate_id = result[0].estates_id;
+		}
+	});
+
+	//var date_ = req.body.date_;
+	// console.log("content:", content, "image: ", image);
 
 	connection.query(
 		`INSERT INTO post(content, image,likes, comments_id, users_id, estate_id,date) VALUES('${content}', '${image}',0,0,${user_id},${estate_id},CURRENT_DATE())`,
@@ -124,7 +134,7 @@ app.get("/add_event", (req, res) => {
 		}
 
 		if (result.length > 0) {
-			console.log(result[0].name, result[0].surname, "!!!!!");
+			// console.log(result[0].name, result[0].surname, "!!!!!");
 			res.render("add_event", {title: "Dodaj event", result: result[0]});
 		} else {
 			res.status(401).send("Nieautoryzowany dostęp");
@@ -132,11 +142,12 @@ app.get("/add_event", (req, res) => {
 	});
 });
 app.get("/login", (req, res) => {
+	console.log(email_);
 	if (email_ == null && password_ == null) {
 		res.render("login", {title: "Logowanie"});
 	} else {
 		const query = query_main;
-		connection.query(query, (error, results) => {
+		connection.query(query, (error, result) => {
 			if (!error) {
 				// console.log(result);
 				res.render("index", {title: "Nasze osiedle", result: result});
@@ -150,7 +161,7 @@ app.get("/login", (req, res) => {
 
 app.get("/profile", (req, res) => {
 	result = null;
-	let user_id = 1; //req.body.user_id
+	let user_id = 1; //req.body.user_id;
 	//res.render("index", {title: "Nasze osiedle", result: result});
 
 	connection.query(
@@ -162,7 +173,8 @@ app.get("/profile", (req, res) => {
 						row.base64Image = row.image.toString("base64");
 					}
 				});
-				console.log(result);
+				// console.log(result);
+
 				res.render("profile", {title: "Mój profil", result: result});
 			} else {
 				console.log(error);
@@ -175,6 +187,10 @@ app.get("/profile", (req, res) => {
 
 app.get("/register", (req, res) => {
 	res.render("register", {title: "Rejestracja"});
+});
+
+app.get("/logout", (req, res) => {
+	res.render("logout", {title: "Log out"});
 });
 
 //error 404
@@ -192,6 +208,8 @@ app.post("/login-submit", (req, res) => {
 
 		if (results.length > 0) {
 			console.log("ZALOGOWANO!");
+			// estate_ = results[0].name;
+			// console.log(estate_);
 			connection.query(query_main, (error, result) => {
 				if (!error) {
 					// console.log(result);

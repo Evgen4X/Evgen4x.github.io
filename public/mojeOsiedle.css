@@ -79,7 +79,7 @@ main {
 	background-size: 4em 4em;
 	position: relative;
 	top: -1.5em;
-	left: 4.5em;
+	left: 3.5em;
 	border-radius: 50%;
 }
 
@@ -133,8 +133,8 @@ p {
 
 .announceProfile {
 	border-radius: 50%;
-	height: 40px;
-	width: 40px;
+	/* height: 40px; */
+	width: 4em;
 }
 
 .announcName {
