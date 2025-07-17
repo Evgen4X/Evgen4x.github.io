@@ -6022,6 +6022,7 @@ var answers = [
 	"FITS",
 	"FIVE",
 	"FIX",
+	"FIXES",
 	"FIXATION",
 	"FIXED",
 	"FIXTURE",
