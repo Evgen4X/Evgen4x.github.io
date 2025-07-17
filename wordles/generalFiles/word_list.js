@@ -9259,7 +9259,7 @@ var answers = [
 	"MANDIBULAR",
 	"MANEUVER",
 	"MANEUVERS",
-	"MANGANESE",
+	"MANGO",
 	"MANIA",
 	"MANIC",
 	"MANIFEST",
