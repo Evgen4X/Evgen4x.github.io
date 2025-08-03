@@ -17,11 +17,8 @@ function keyType(event) {
 	if (key == "Backspace") {
 		typeLetter("⌫");
 		return;
-	} else if ("qazwsxedcrfvtgbyhnujmikolp".includes(key)) {
+	} else if (alphabet.includes(key.toUpperCase())) {
 		typeLetter(key.toUpperCase());
-		return;
-	} else if (key == "Enter") {
-		typeLetter("Enter");
 	}
 }
 
@@ -29,7 +26,7 @@ function typeLetter(text) {
 	const row = document.querySelector('.brd_row[status="active"]');
 	const letter = document.querySelector('.letter[status="active"]');
 
-	if (text == "Enter") {
+	if (text == "ENTER") {
 		let word = "";
 		for (let i = 1; i < letters_number + 1; i++) {
 			word += document.querySelectorAll(`.brd_row[status="active"] .letter[index="${i}"]`)[0].textContent;
@@ -39,7 +36,7 @@ function typeLetter(text) {
 			return;
 		}
 		if (!is_word(word) && check_dict) {
-			msg_alert("Evter a valid word!", 3000);
+			msg_alert("Enter a valid word!", 3000);
 			return;
 		}
 		let potential_answer = find_word(word, checks);

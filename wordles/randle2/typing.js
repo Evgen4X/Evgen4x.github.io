@@ -13,11 +13,8 @@ function keyType(event) {
 	if (key == "Backspace") {
 		typeLetter("⌫");
 		return;
-	} else if ("qazwsxedcrfvtgbyhnujmikolp".includes(key)) {
+	} else if (alphabet.includes(key.toUpperCase())) {
 		typeLetter(key.toUpperCase());
-		return;
-	} else if (key == "Enter") {
-		typeLetter("Enter");
 	}
 }
 
@@ -25,12 +22,13 @@ function typeLetter(text) {
 	const row = document.querySelector('.brd_row[status="active"]');
 	const letter = document.querySelector('.letter[status="active"]');
 
-	if (text == "Enter") {
+	if (text == "ENTER") {
 		let word = "";
 		for (let i = 1; i < letters_number + 1; i++) {
 			word += document.querySelectorAll(`.brd_row[status="active"] .letter[index="${i}"]`)[0].innerHTML;
 		}
 		if (word.length != letters_number) {
+			msg_alert("Enter a full word!", 3000);
 			return;
 		}
 		if (!is_word(word) && check_dict) {
@@ -80,8 +78,10 @@ function typeLetter(text) {
 						if (event == "5050") {
 							letter.style.animation = `rotate 0.8s linear ${i * 200 + "ms"} 1 normal forwards`;
 							setTimeout(() => {
-								letter.style.backgroundImage = "linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
-								button.style.backgroundImage = "linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
+								letter.style.backgroundImage =
+									"linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
+								button.style.backgroundImage =
+									"linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
 							}, i * 200 + 400);
 							continue;
 						}
@@ -99,8 +99,10 @@ function typeLetter(text) {
 					if (event == "5050") {
 						letter.style.animation = `rotate 0.8s linear ${i * 200 + "ms"} 1 normal forwards`;
 						setTimeout(() => {
-							letter.style.backgroundImage = "linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
-							button.style.backgroundImage = "linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
+							letter.style.backgroundImage =
+								"linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
+							button.style.backgroundImage =
+								"linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
 						}, i * 200 + 400);
 						continue;
 					}
@@ -182,11 +184,23 @@ const hue = Math.floor(Math.random() * 100 + 100),
 	saturation = Math.floor(Math.random() * 40 + 60),
 	lightness = Math.floor(Math.random() * 30);
 const rgreen = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-const ryellow = `hsl(${hue + Math.floor(Math.random() * 200 - 100)}, ${saturation - Math.floor(Math.random() * 25)}%, ${lightness + Math.floor(Math.random() * 50)}%)`;
-const rgray = `hsl(${hue + Math.floor(Math.random() * 200 - 100)}, ${saturation - Math.floor(Math.random() * 25)}%, ${lightness + Math.floor(Math.random() * 50)}%)`;
+const ryellow = `hsl(${hue + Math.floor(Math.random() * 200 - 100)}, ${saturation - Math.floor(Math.random() * 25)}%, ${
+	lightness + Math.floor(Math.random() * 50)
+}%)`;
+const rgray = `hsl(${hue + Math.floor(Math.random() * 200 - 100)}, ${saturation - Math.floor(Math.random() * 25)}%, ${
+	lightness + Math.floor(Math.random() * 50)
+}%)`;
 
 var possible_events = ["normal", "reverse", "random", "5050", "lier", "greens", "alphabetical"];
-var events_descs = ["Nothing special, just a normal Wordle", "Blue means that there's a letter in your guess in that spot", "Colors are randomized", "Green and yellow are mixed", "Sometimes there will be lie", "You get only greens, no yellows, no grays", "Orange means that the correct letter is earlier in the alphabet and purple that is later"];
+var events_descs = [
+	"Nothing special, just a normal Wordle",
+	"Blue means that there's a letter in your guess in that spot",
+	"Colors are randomized",
+	"Green and yellow are mixed",
+	"Sometimes there will be lie",
+	"You get only greens, no yellows, no grays",
+	"Orange means that the correct letter is earlier in the alphabet and purple that is later",
+];
 var events = [];
 for (let i = 1; i < letters_number + 1; i++) {
 	let index;

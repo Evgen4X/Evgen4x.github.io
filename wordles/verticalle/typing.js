@@ -19,11 +19,8 @@ function keyType(event) {
 	if (key == "Backspace") {
 		typeLetter("⌫");
 		return;
-	} else if ("qazwsxedcrfvtgbyhnujmikolp".includes(key)) {
+	} else if (alphabet.includes(key.toUpperCase())) {
 		typeLetter(key.toUpperCase());
-		return;
-	} else if (key == "Enter") {
-		typeLetter("ENTER");
 	}
 }
 
@@ -42,7 +39,7 @@ function typeLetter(text) {
 			return;
 		}
 		if (!is_word(word) && check_dict) {
-			msg_alert("Evter a valid word!", 3000);
+			msg_alert("Enter a valid word!", 3000);
 			return;
 		}
 		let check = check_word_vertical(word, answer, row.getAttribute("index"));

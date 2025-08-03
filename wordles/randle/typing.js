@@ -13,11 +13,8 @@ function keyType(event) {
 	if (key == "Backspace") {
 		typeLetter("⌫");
 		return;
-	} else if ("qazwsxedcrfvtgbyhnujmikolp".includes(key)) {
+	} else if (alphabet.includes(key.toUpperCase())) {
 		typeLetter(key.toUpperCase());
-		return;
-	} else if (key == "Enter") {
-		typeLetter("Enter");
 	}
 }
 
@@ -39,7 +36,7 @@ function typeLetter(text) {
 		});
 	}
 
-	if (text == "Enter") {
+	if (text == "ENTER") {
 		let word = "";
 		for (let i = 1; i < letters_number + 1; i++) {
 			word += document.querySelectorAll(`.brd_row[status="active"] .letter[index="${i}"]`)[0].innerHTML;
@@ -52,11 +49,11 @@ function typeLetter(text) {
 			word = word.split("").reverse().join("");
 		}
 		if (!is_word(word) && check_dict && event != "unreal") {
-			msg_alert("Evter a valid word!", 3000);
+			msg_alert("Enter a valid word!", 3000);
 			return;
 		}
 		if (event == "unreal" && is_word(word)) {
-			msg_alert("Enter an <b>IN</b>valid word!", 3000);
+			msg_alert("Enter a <b>non-existing word!", 3000);
 			return;
 		}
 		for (let i = 1; i < letters_number + 1; i++) {
@@ -133,8 +130,10 @@ function typeLetter(text) {
 					if (event == "5050") {
 						letter.style.animation = `rotate 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
 						setTimeout(() => {
-							letter.style.backgroundImage = "linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
-							button.style.backgroundImage = "linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
+							letter.style.backgroundImage =
+								"linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
+							button.style.backgroundImage =
+								"linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
 						}, (i - 1) * 200 + 400);
 						i++;
 						continue;
@@ -160,8 +159,10 @@ function typeLetter(text) {
 				if (event == "5050") {
 					letter.style.animation = `rotate 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
 					setTimeout(() => {
-						letter.style.backgroundImage = "linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
-						button.style.backgroundImage = "linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
+						letter.style.backgroundImage =
+							"linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
+						button.style.backgroundImage =
+							"linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%)";
 					}, (i - 1) * 200 + 400);
 					i++;
 					continue;
@@ -259,8 +260,12 @@ const hue = Math.floor(Math.random() * 100 + 100),
 	saturation = Math.floor(Math.random() * 40 + 60),
 	lightness = Math.floor(Math.random() * 30);
 const rgreen = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-const ryellow = `hsl(${hue + Math.floor(Math.random() * 200 - 100)}, ${saturation - Math.floor(Math.random() * 25)}%, ${lightness + Math.floor(Math.random() * 50)}%)`;
-const rgray = `hsl(${hue + Math.floor(Math.random() * 200 - 100)}, ${saturation - Math.floor(Math.random() * 25)}%, ${lightness + Math.floor(Math.random() * 50)}%)`;
+const ryellow = `hsl(${hue + Math.floor(Math.random() * 200 - 100)}, ${saturation - Math.floor(Math.random() * 25)}%, ${
+	lightness + Math.floor(Math.random() * 50)
+}%)`;
+const rgray = `hsl(${hue + Math.floor(Math.random() * 200 - 100)}, ${saturation - Math.floor(Math.random() * 25)}%, ${
+	lightness + Math.floor(Math.random() * 50)
+}%)`;
 //event "deny"
 var denied = new Array();
 do {
@@ -272,8 +277,36 @@ do {
 //flag
 var kb_reset = false;
 
-var possible_events = ["vowel", "blind", "unreal", "reverse", "random", "50/50", "lier", "backwards", "deny", "greens", "shuffle", "repeat", "alphabetical"];
-var events_descs = ["Every bordered spot must be a vowel", "You won't see the color of the grey spots", "Enter anything but a real word!", "Blue means that in that spot should be another letter of your guess", "Colors are randomized", "Greens and yellows are mixed", "One spot lies to you", "The word must be reversed", "You are not allowed to use 6 random letters", "You get only greens, no yellows, no grays", "Order of letters will be randomized after your guess", "You must use any letter twice", "Orange means that the correct letter is earlier in the alphabet and purple means that the letter is later"];
+var possible_events = [
+	"vowel",
+	"blind",
+	"unreal",
+	"reverse",
+	"random",
+	"50/50",
+	"lier",
+	"backwards",
+	"deny",
+	"greens",
+	"shuffle",
+	"repeat",
+	"alphabetical",
+];
+var events_descs = [
+	"Every bordered spot must be a vowel",
+	"You won't see the color of the grey spots",
+	"Enter anything but a real word!",
+	"Blue means that in that spot should be another letter of your guess",
+	"Colors are randomized",
+	"Greens and yellows are mixed",
+	"One spot lies to you",
+	"The word must be reversed",
+	"You are not allowed to use 6 random letters",
+	"You get only greens, no yellows, no grays",
+	"Order of letters will be randomized after your guess",
+	"You must use any letter twice",
+	"Orange means that the correct letter is earlier in the alphabet and purple means that the letter is later",
+];
 var events = [];
 for (let i = 1; i < 6; i++) {
 	let index = Math.floor(Math.random() * possible_events.length);

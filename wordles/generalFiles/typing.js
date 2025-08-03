@@ -10,7 +10,7 @@ function keyType(event) {
 	const key = event.key.toUpperCase();
 	if (key == "BACKSPACE") {
 		typeLetter("⌫");
-	} else if (alphabet.includes(key)) {
+	} else if (alphabet.includes(key.toUpperCase())) {
 		typeLetter(key.toUpperCase());
 	}
 }
@@ -29,7 +29,7 @@ function typeLetter(text) {
 			return;
 		}
 		if (check_dict && !is_word(word)) {
-			msg_alert("Evter a valid word!", 3000);
+			msg_alert("Enter a valid word!", 3000);
 			return;
 		}
 		let check = check_word(word, answer),

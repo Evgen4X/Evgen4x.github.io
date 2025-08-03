@@ -22,7 +22,36 @@ function generate(cols, rows, alphabet_, breakpoints) {
 	letters_number = cols;
 
 	if (alphabet_ == null || alphabet_.length == 0) {
-		alphabet_ = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "ENTER", "Z", "X", "C", "V", "B", "N", "M", "⌫"];
+		alphabet_ = [
+			"Q",
+			"W",
+			"E",
+			"R",
+			"T",
+			"Y",
+			"U",
+			"I",
+			"O",
+			"P",
+			"A",
+			"S",
+			"D",
+			"F",
+			"G",
+			"H",
+			"J",
+			"K",
+			"L",
+			"ENTER",
+			"Z",
+			"X",
+			"C",
+			"V",
+			"B",
+			"N",
+			"M",
+			"⌫",
+		];
 		answers = answers.filter((answer) => answer.length == cols);
 		if (params.get("word") == null) {
 			answer = answers[Math.floor(Math.random() * answers.length)];
@@ -157,6 +186,35 @@ function show_how_to() {
 	document.querySelector(".how_to").style.display = "flex";
 }
 
-var alphabet;
+var alphabet = [
+	"Q",
+	"W",
+	"E",
+	"R",
+	"T",
+	"Y",
+	"U",
+	"I",
+	"O",
+	"P",
+	"A",
+	"S",
+	"D",
+	"F",
+	"G",
+	"H",
+	"J",
+	"K",
+	"L",
+	"ENTER",
+	"Z",
+	"X",
+	"C",
+	"V",
+	"B",
+	"N",
+	"M",
+	"⌫",
+];
 
 show_how_to();
