@@ -665,7 +665,6 @@ const HomeScreenBG = new Element(
 	<button class='homeScreenButton' onclick='switchScreens(HomeScreen, CreditsScreen);'>Credits</button>
 	<button class='homeScreenButton' onclick='history.back();'>Exit</button>
 </div>
-<img src="" width="50vw" height: "100vh" />
 <div class='imagePreload' style='background-image: url(files/images/cameraScreen01.png);'></div>
 <div class='imagePreload' style='background-image: url(files/images/cameraScreen02.jpg);'></div>
 <div class='imagePreload' style='background-image: url(files/images/cameraScreen03.png);'></div>
