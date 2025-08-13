@@ -169,6 +169,7 @@ nav {
 	width: 90%;
 	height: 75%;
 	color: white;
+	z-index: 100;
 }
 
 .absolute .go_answer {
@@ -186,14 +187,21 @@ nav {
 	background-position: right;
 }
 
+form {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+}
+
 label {
-	font-size: xx-large;
+	font-size: x-large;
 }
 
 input {
 	margin: 1em;
 	height: 2em;
-	width: 15em;
+	width: 17em;
 	background-color: rgba(0, 0, 0, 0);
 	outline: none;
 	border: none;
@@ -219,6 +227,7 @@ input::placeholder {
 }
 
 .button_container button,
+.button_container .button,
 .amount_of_letters {
 	margin: 0.5em;
 	height: 2em;
@@ -230,23 +239,39 @@ input::placeholder {
 	font-weight: bold;
 	font-size: large;
 	transition: background-color 0.5s linear, box-shadow 0.5s ease-in-out;
+	text-align: center;
+	padding: auto;
 }
 
 .amount_of_letters {
 	width: 2em;
 	margin: 0.1em;
-	font-size: calc(min(4vw, 3vh));
+	font-size: calc(min(3.5vw, 2.5vh));
 }
 
-.button_container button:hover {
+.button_container button:hover,
+.button_container .button:hover {
 	background-color: #555;
 	box-shadow: 0 0 0.8em #fff;
 }
 
-.button_container button:active {
+.button_container button:active,
+.button_container .button:active {
 	background-color: #333;
 	box-shadow: 0 0 0.5em #fff;
 	color: #aaa;
+}
+
+#hard-mode-button[state="off"] {
+	background-color: #080;
+	box-shadow: 0 0 0.5em #0f0;
+	border-color: #060;
+}
+
+#hard-mode-button[state="on"] {
+	background-color: #900;
+	box-shadow: 0 0 0.5em #f00;
+	border-color: #700;
 }
 
 @media screen and (max-width: 600px) {

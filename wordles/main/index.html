@@ -9,7 +9,60 @@
 		<title>Wordles</title>
 	</head>
 	<body>
+		<div id="windows">
+			<div class="windows-item" onclick="window.close();">
+				<img src="../../src/images/shut-down-icon.png" />
+				<span>Shut down</span>
+			</div>
+			<div class="windows-item" onclick="restart();">
+				<img src="../../src/images/restart-icon.png" />
+				<span>Restart</span>
+			</div>
+		</div>
+
+		<div id="bootup">
+			<div id="bootup-text">Evgen4X</div>
+		</div>
+
 		<canvas id="canvas"></canvas>
+
+		<main></main>
+
+		<footer>
+			<div id="right-bar"></div>
+			<div id="left-bar">
+				<div id="made-by">Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></div>
+				<div id="icon-cookie"></div>
+				<div id="icon-wifi"></div>
+				<div id="datetime"></div>
+			</div>
+		</footer>
+
+		<script>
+			function easyGenerate(name) {
+				main.appendChild(generateShortcut(name[0].toUpperCase() + name.substring(1), `../${name}/${name}.html`, `${name}_screen.png`));
+			}
+			function generation() {
+				main.style.display = "grid";
+				document.querySelector("footer").style.display = "flex";
+				main.appendChild(generateShortcut("Back", "../../index.html"));
+				easyGenerate("wordle");
+				easyGenerate("colorle");
+				easyGenerate("blindle");
+				easyGenerate("word500");
+				easyGenerate("randle");
+				easyGenerate("randle2");
+				easyGenerate("alphabetle");
+				easyGenerate("absurdle");
+				easyGenerate("verticalle");
+				easyGenerate("numberle");
+			}
+			const urlPrefix = "../../";
+		</script>
+		<script src="../../generalFiles/generation.js"></script>
+		<script src="../../generalFiles/animation.js"></script>
+
+		<!--		<canvas id="canvas"></canvas>
 		<main>
 			<h1>Wordles</h1>
 			<div>
@@ -83,15 +136,15 @@
 						<div class="screenshot"></div>
 						<div class="button">play</div>
 					</a>
-				</div>
-				<!-- REMOVED TEMPORARILY -->
-				<!-- <div class="container">
+				</div>-->
+		<!-- REMOVED TEMPORARILY -->
+		<!-- <div class="container">
 					<a class="element" id="dontle" href="../dontle/dontle.html">
 						<h3>Don'tle</h3>
 						<div class="screenshot"></div>
 						<div class="button">play</div>
 					</a>
-				</div> -->
+				</div> --><!--
 				<div class="container">
 					<a class="element" id="numberle" href="../numberle/numberle.html">
 						<h3>Numberle</h3>
@@ -110,6 +163,6 @@
 					document.querySelector(`#${el.id} .screenshot`).innerHTML = `<img class="screenshot-img" src="${el.id}_screen.png">`;
 				}
 			});
-		</script>
+		</script>-->
 	</body>
 </html>

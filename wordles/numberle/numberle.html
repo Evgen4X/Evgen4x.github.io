@@ -59,11 +59,14 @@
 				<button class="amount_of_letters">20</button>
 			</div>
 			<div class="button_container">
-				<button onclick="show_custom();">Custom numberle</button>
-				<button onclick="close_all();">Back</button>
+				<button id="hard-mode-button" onclick="toggle_hard_mode();"></button>
 			</div>
 			<div class="button_container">
+				<button onclick="show_custom();">Custom numberle</button>
 				<button id="hide_all" onclick="hide_all();">Hide all letters</button>
+			</div>
+			<div class="button_container">
+				<button onclick="close_all();">Back</button>
 			</div>
 		</div>
 
@@ -74,7 +77,7 @@
 			<input id="link_input" type="text" name="answer" placeholder="Number" pattern="[0-9]{10}" />
 			<a id="link"></a>
 			<div class="button_container">
-				<button onclick="get_link();">Generate link</button>
+				<button onclick="get_link(1, 20);">Generate link</button>
 				<button onclick="close_all();">Cancel</button>
 			</div>
 		</div>
@@ -132,8 +135,10 @@
 
 		<script src="../generalFiles/setup.js"></script>
 		<script src="../generalFiles/check.js"></script>
-		<script src="check.js"></script>
 		<script src="numberle.js"></script>
 		<script src="../generalFiles/typing.js"></script>
+		<script>
+			show_how_to("numberle");
+		</script>
 	</body>
 </html>

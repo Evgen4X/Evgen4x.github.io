@@ -88,6 +88,20 @@ function decode(text) {
 	return ans;
 }
 
+function show_settings() {
+	document.querySelector(".settings").style.display = "flex";
+}
+
+function show_custom() {
+	document.querySelector(".custom").style.display = "flex";
+}
+
+function close_all() {
+	document.querySelectorAll(".absolute").forEach((el) => {
+		el.style.display = "none";
+	});
+}
+
 function msg_alert(msg, time) {
 	let msgbox = document.querySelector("#alert"),
 		spanbox = document.querySelector("#alert #alert-span");
@@ -96,6 +110,29 @@ function msg_alert(msg, time) {
 	setTimeout(() => {
 		msgbox.animate([{top: "0"}, {top: "-12%"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.5, 1)"});
 	}, time);
+}
+
+function show_add_report() {
+	document.querySelector(".add-report").style.display = "flex";
+}
+
+const addReportInput = document.getElementById("add-report-input");
+
+addReportInput.onchange = () => {
+	document.getElementById(
+		"add-report-link"
+	).href = `https://mail.google.com/mail/?view=cm&fs=1&to=y.maskaiev.5555@gmail.com&body=Hello!%0DI was playing your beautiful Worlde games and found out that a word was missing from the dictionary ;(%0DCould you please add this word:%20${addReportInput.value}%0D%0DThanks in advance!%20Best wishes!`;
+};
+
+function show_how_to(name) {
+	let sht = sessionStorage.getItem("shownHowTo");
+	console.log(sht, name);
+	if (!sht || !sht.split(";").includes(name)) {
+		document.querySelector(".how_to").style.display = "flex";
+		if (name) {
+			sessionStorage.setItem("shownHowTo", sht + ";" + name);
+		}
+	}
 }
 
 var alphabet = [

@@ -54,21 +54,21 @@ function typeLetter(text) {
 			button.style.animation = `to_color 0s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
 			i++;
 		}
+		let index = parseInt(row.getAttribute("index"));
+		row.setAttribute("status", "filled");
+		let next_row = document.querySelectorAll(`.brd_row[index="${index + 1}"]`)[0];
 		if (check.every((status) => status == 2)) {
 			setTimeout(() => {
 				show_game_over(true);
 			}, 2000);
 			return;
 		}
-		let index = parseInt(row.getAttribute("index"));
 		if (index == 6) {
 			setTimeout(() => {
 				show_game_over(false);
 			}, 2000);
 			return;
 		}
-		row.setAttribute("status", "filled");
-		let next_row = document.querySelectorAll(`.brd_row[index="${index + 1}"]`)[0];
 		next_row.setAttribute("status", "active");
 		set_first();
 	} else if (text == "⌫") {

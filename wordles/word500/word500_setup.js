@@ -135,11 +135,59 @@ function close_all() {
 	});
 }
 
-function show_how_to() {
-	document.querySelector(".how_to").style.display = "flex";
+function show_how_to(name) {
+	let sht = sessionStorage.getItem("shownHowTo");
+	console.log(sht, name);
+	if (!sht || !sht.split(";").includes(name)) {
+		document.querySelector(".how_to").style.display = "flex";
+		if (name) {
+			sessionStorage.setItem("shownHowTo", sht + ";" + name);
+		}
+	}
 }
 
-let alphabet = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "ENTER", "Z", "X", "C", "V", "B", "N", "M", "⌫"];
+function show_add_report() {
+	document.querySelector(".add-report").style.display = "flex";
+}
+
+const addReportInput = document.getElementById("add-report-input");
+
+addReportInput.onchange = () => {
+	document.getElementById(
+		"add-report-link"
+	).href = `https://mail.google.com/mail/?view=cm&fs=1&to=y.maskaiev.5555@gmail.com&body=Hello!%0DI was playing your beautiful Worlde games and found out that a word was missing from the dictionary ;(%0DCould you please add this word:%20${addReportInput.value}%0D%0DThanks in advance!%20Best wishes!`;
+};
+
+let alphabet = [
+	"Q",
+	"W",
+	"E",
+	"R",
+	"T",
+	"Y",
+	"U",
+	"I",
+	"O",
+	"P",
+	"A",
+	"S",
+	"D",
+	"F",
+	"G",
+	"H",
+	"J",
+	"K",
+	"L",
+	"ENTER",
+	"Z",
+	"X",
+	"C",
+	"V",
+	"B",
+	"N",
+	"M",
+	"⌫",
+];
 
 var kb_buttons, brd_rows, brd_letters, letters_number;
 
@@ -153,5 +201,3 @@ if (params.get("length") == null) {
 } else {
 	generate(parseInt(params.get("length")), 8);
 }
-
-show_how_to();

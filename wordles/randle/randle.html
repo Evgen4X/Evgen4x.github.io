@@ -52,8 +52,22 @@
 				<button class="amount_of_letters">15</button>
 			</div>
 			<div class="button_container">
+				<button onclick="show_add_report();">Add a word</button>
+			</div>
+			<div class="button_container">
 				<button onclick="show_custom();">Custom randle</button>
 				<button onclick="close_all();">Back</button>
+			</div>
+		</div>
+
+		<div class="absolute add-report">
+			<h1>Request adding a word</h1>
+			<input id="add-report-input" type="text" placeholder="Which word would you like to add?" />
+			<div class="button_container">
+				<a id="add-report-link" target="_blank" class="button">Request</a>
+			</div>
+			<div class="button_container">
+				<button onclick="close_all();">Cancel</button>
 			</div>
 		</div>
 
@@ -114,5 +128,8 @@
 		<script src="setup.js"></script>
 		<script src="check.js"></script>
 		<script src="typing.js"></script>
+		<script>
+			show_how_to("randle");
+		</script>
 	</body>
 </html>

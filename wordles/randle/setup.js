@@ -141,6 +141,43 @@ function get_link() {
 	return;
 }
 
+function show_settings() {
+	document.querySelector(".settings").style.display = "flex";
+}
+
+function show_custom() {
+	document.querySelector(".custom").style.display = "flex";
+}
+
+function close_all() {
+	document.querySelectorAll(".absolute").forEach((el) => {
+		el.style.display = "none";
+	});
+}
+
+function show_add_report() {
+	document.querySelector(".add-report").style.display = "flex";
+}
+
+const addReportInput = document.getElementById("add-report-input");
+
+addReportInput.onchange = () => {
+	document.getElementById(
+		"add-report-link"
+	).href = `https://mail.google.com/mail/?view=cm&fs=1&to=y.maskaiev.5555@gmail.com&body=Hello!%0DI was playing your beautiful Worlde games and found out that a word was missing from the dictionary ;(%0DCould you please add this word:%20${addReportInput.value}%0D%0DThanks in advance!%20Best wishes!`;
+};
+
+function show_how_to(name) {
+	let sht = sessionStorage.getItem("shownHowTo");
+	console.log(sht, name);
+	if (!sht || !sht.split(";").includes(name)) {
+		document.querySelector(".how_to").style.display = "flex";
+		if (name) {
+			sessionStorage.setItem("shownHowTo", sht + ";" + name);
+		}
+	}
+}
+
 var alphabet = [
 	"Q",
 	"W",

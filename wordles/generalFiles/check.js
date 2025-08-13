@@ -2,6 +2,50 @@ function is_word(word) {
 	return answers.includes(word);
 }
 
+function ordinal(n) {
+	let lastDigit = n % 10;
+	if (n >= 4 && n <= 20) return n + "th";
+	if (lastDigit == 1) return n + "st";
+	if (lastDigit == 2) return n + "nd";
+	if (lastDigit == 3) return n + "rd";
+	return n + "th";
+}
+
+function oncetwice(n) {
+	if (n == 1) return "once";
+	if (n == 2) return "twice";
+	if (n == 3) return "thrice";
+	return `${n} times`;
+}
+
+function check_hard_mode(word, known) {
+	//Third: check if greens were typed
+	for (let i in known["green"]) {
+		let green = known["green"][i];
+		if (green && word[i] != green) {
+			return `${ordinal(parseInt(i) + 1)} ${LETTER_NAME} must be ${green}`;
+		}
+	}
+
+	//Second: check if yellows were used
+	for (let i in known["yellow"]) {
+		// let times = known["yellow"][i];
+		let expected = known["yellow"][i];
+		let occurrences = 0;
+		for (let j in word) {
+			if (!known["green"][j] && word[j] == i) {
+				++occurrences;
+			}
+		}
+
+		if (occurrences < expected) {
+			return `${LETTER_NAME[0].toUpperCase() + LETTER_NAME.slice(1)} ${i} must be used at least ${oncetwice(expected)}`;
+		}
+	}
+
+	return null;
+}
+
 function check_word(word, answer) {
 	const result = [];
 	const remainingLetters = answer.split("");
@@ -40,15 +84,16 @@ function new_game() {
 	window.location.href = url;
 }
 
-function get_link() {
+function get_link(minLength = 3, maxLength = 15) {
+	console.log(alphabet);
 	let text = document.getElementById("link_input").value.toUpperCase();
-	if (text.length < 3 || text.length > 15) {
-		msg_alert(`The word must be from 3 to 15 letters long!<br>You word's length: ${text.length}`, 3000);
+	if (text.length < minLength || text.length > maxLength) {
+		msg_alert(`The word must be from ${minLength} to ${maxLength} ${LETTER_NAME}s long!<br>You'r word length: ${text.length}`, 3000);
 		return;
 	}
 	for (let i of text) {
-		if (!"QAZWSXEDCRFVTGBYHNUJMIKOLP".includes(i)) {
-			msg_alert("Invalid word!", 3000);
+		if (!alphabet.includes(i)) {
+			msg_alert("Invalid characters found!", 3000);
 			return;
 		}
 	}
@@ -60,32 +105,3 @@ function get_link() {
 	link.innerHTML = "Link is here";
 	return;
 }
-
-function show_settings() {
-	document.querySelector(".settings").style.display = "flex";
-}
-
-function show_custom() {
-	document.querySelector(".custom").style.display = "flex";
-}
-
-function close_all() {
-	document.querySelectorAll(".absolute").forEach((el) => {
-		el.style.display = "none";
-	});
-}
-
-function show_how_to() {
-	document.querySelector(".how_to").style.display = "flex";
-}
-
-function hide_all() {
-	let target = brd_letters[0].style.opacity == "1" ? "0" : "1";
-	brd_letters.forEach((letter) => {
-		letter.style.opacity = target;
-	});
-	document.getElementById("hide_all").innerHTML = ["Show all letters", "Hide all letters"][parseInt(target)];
-	close_all();
-}
-
-show_how_to();

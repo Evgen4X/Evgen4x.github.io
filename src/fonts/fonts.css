@@ -4,3 +4,8 @@
 	font-family: "PressStart2P-codeman38";
 	src: url(PressStart2P-codeman38.woff2) format("woff2"), url(PressStart2P-codeman38.ttf) format("truetype");
 }
+
+@font-face {
+	font-family: "Black-Chancery";
+	src: url(BLKCHCRY.TTF);
+}

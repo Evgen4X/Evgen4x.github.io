@@ -99,9 +99,16 @@ footer {
 	align-items: center;
 	font-size: 2vw;
 	opacity: 0;
+	z-index: 999;
+	background-color: black;
+}
+
+html.light #win-block {
+	background-color: #ccc;
 }
 
 #score {
+	z-index: 998;
 	position: absolute;
 	top: 10vh;
 	left: 0;

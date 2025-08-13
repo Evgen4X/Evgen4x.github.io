@@ -1,4 +1,8 @@
-var kb_buttons, brd_rows, brd_letters, letters_number;
+const HARD_MODE = "wordleHardMode";
+const SHORT_MESSAGE_TIME = 2500;
+var LETTER_NAME = "letter"; // used in alerts, "number" for numberle
+
+var kb_buttons, brd_rows, brd_letters, letters_number, known_letters;
 
 function hide_letter(event) {
 	const target = event.target;
@@ -10,6 +14,7 @@ function hide_letter(event) {
 }
 
 function generate(cols, rows, alphabet_, breakpoints) {
+	known_letters = {green: new Array(cols), yellow: {}};
 	let html = "";
 	for (let i = 1; i <= rows; i++) {
 		html += `<div class="brd_row" index="${i}">`;
@@ -84,7 +89,6 @@ function generate(cols, rows, alphabet_, breakpoints) {
 			kbd.appendChild(row);
 			row = document.createElement("div");
 			row.classList.add("kb_row");
-			console.log(kbd);
 		}
 	}
 
@@ -101,30 +105,6 @@ function generate(cols, rows, alphabet_, breakpoints) {
 	return alphabet_;
 }
 
-function encode(text) {
-	let ans = "",
-		n,
-		chr;
-	for (let i of text) {
-		n = Math.floor(Math.random() * 30);
-		chr = i.charCodeAt(0);
-		ans += String.fromCharCode(chr - n) + String.fromCharCode(chr + n);
-	}
-	return ans;
-}
-
-function decode(text) {
-	let ans = "",
-		s1,
-		s2;
-	for (let i = 0; i < text.length; i += 2) {
-		s1 = text[i].charCodeAt(0);
-		s2 = text[i + 1].charCodeAt(0);
-		ans += String.fromCharCode((s1 + s2) / 2);
-	}
-	return ans;
-}
-
 function hide_all() {
 	let target = brd_letters[0].style.opacity == "1" ? "0" : "1";
 	brd_letters.forEach((letter) => {
@@ -139,14 +119,15 @@ function encode(text) {
 		n,
 		chr;
 	for (let i of text) {
-		n = Math.floor(Math.random() * 30);
 		chr = i.charCodeAt(0);
+		n = Math.floor(Math.random() * (chr - 33));
 		ans += String.fromCharCode(chr - n) + String.fromCharCode(chr + n);
 	}
 	return ans;
 }
 
 function decode(text) {
+	console.log("!");
 	let ans = "",
 		s1,
 		s2;
@@ -176,15 +157,71 @@ function show_custom() {
 	document.querySelector(".custom").style.display = "flex";
 }
 
+function show_add_report() {
+	document.querySelector(".add-report").style.display = "flex";
+}
+
+const addReportInput = document.getElementById("add-report-input");
+
+if (addReportInput) {
+	addReportInput.onchange = () => {
+		document.getElementById(
+			"add-report-link"
+		).href = `https://mail.google.com/mail/?view=cm&fs=1&to=y.maskaiev.5555@gmail.com&body=Hello!%0DI was playing your beautiful Worlde games and found out that a word was missing from the dictionary ;(%0DCould you please add this word:%20${addReportInput.value}%0D%0DThanks in advance!%20Best wishes!`;
+	};
+}
+
 function close_all() {
 	document.querySelectorAll(".absolute").forEach((el) => {
 		el.style.display = "none";
 	});
 }
 
-function show_how_to() {
-	document.querySelector(".how_to").style.display = "flex";
+function show_how_to(name) {
+	let sht = sessionStorage.getItem("shownHowTo");
+	if (!sht || !sht.split(";").includes(name)) {
+		document.querySelector(".how_to").style.display = "flex";
+		if (name) {
+			sessionStorage.setItem("shownHowTo", sht + ";" + name);
+		}
+	}
 }
+
+function hide_all() {
+	let target = brd_letters[0].style.opacity == "1" ? "0" : "1";
+	brd_letters.forEach((letter) => {
+		letter.style.opacity = target;
+	});
+	document.getElementById("hide_all").innerHTML = ["Show all letters", "Hide all letters"][parseInt(target)];
+	close_all();
+}
+
+function toggle_hard_mode() {
+	if (localStorage.getItem(HARD_MODE) == "off") {
+		localStorage.setItem(HARD_MODE, "on");
+		hardModeButton.setAttribute("state", "on");
+		hardModeButton.innerHTML = "Hard mode";
+	} else {
+		localStorage.setItem(HARD_MODE, "off");
+		hardModeButton.setAttribute("state", "off");
+		hardModeButton.innerHTML = "Normal mode";
+	}
+}
+
+function init_toggle_buttons() {
+	if (!localStorage.getItem(HARD_MODE)) {
+		localStorage.setItem(HARD_MODE, "off");
+	}
+	if (localStorage.getItem(HARD_MODE) == "off") {
+		hardModeButton.setAttribute("state", "off");
+		hardModeButton.innerHTML = "Normal mode";
+	} else {
+		hardModeButton.setAttribute("state", "on");
+		hardModeButton.innerHTML = "Hard mode";
+	}
+}
+
+const hardModeButton = document.getElementById("hard-mode-button");
 
 var alphabet = [
 	"Q",
@@ -216,5 +253,3 @@ var alphabet = [
 	"M",
 	"⌫",
 ];
-
-show_how_to();

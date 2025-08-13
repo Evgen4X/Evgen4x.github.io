@@ -9,4 +9,4 @@ if (params.get("length") == null) {
 	alphabet = generate(parseInt(params.get("length")), 6);
 }
 
-console.log(alphabet);
+init_toggle_buttons();

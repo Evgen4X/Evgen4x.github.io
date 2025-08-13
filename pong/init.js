@@ -13,6 +13,7 @@ if (localStorage.getItem("powerups")) {
 	];
 }
 
+const GAMESPEED_COEFFICIENT = 2;
 const EVENT_LASTTIME = 7500;
 
 const powerupsFunctions = {

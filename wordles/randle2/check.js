@@ -81,16 +81,6 @@ function set_first() {
 	document.querySelectorAll('.brd_row[status="active"] .letter[index="1"]')[0].setAttribute("status", "active");
 }
 
-function msg_alert(msg, time) {
-	let msgbox = document.querySelector("#alert"),
-		spanbox = document.querySelector("#alert #alert-span");
-	spanbox.innerHTML = msg;
-	msgbox.animate([{top: "-12%"}, {top: "0"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.4, 1)"});
-	setTimeout(() => {
-		msgbox.animate([{top: "0"}, {top: "-12%"}], {duration: 1000, fill: "forwards", easing: "cubic-bezier(0, 1, 0.5, 1)"});
-	}, time);
-}
-
 function new_game() {
 	let url = new URL(window.location.href);
 	url.searchParams.delete("word");
@@ -126,23 +116,3 @@ function has_repeated(text) {
 	}
 	return false;
 }
-
-function show_settings() {
-	document.querySelector(".settings").style.display = "flex";
-}
-
-function show_custom() {
-	document.querySelector(".custom").style.display = "flex";
-}
-
-function close_all() {
-	document.querySelectorAll(".absolute").forEach((el) => {
-		el.style.display = "none";
-	});
-}
-
-function show_how_to() {
-	document.querySelector(".how_to").style.display = "flex";
-}
-
-show_how_to();

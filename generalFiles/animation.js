@@ -1,8 +1,44 @@
+function bootUpAnimation() {
+	const bootup = document.getElementById("bootup");
+	const text = document.getElementById("bootup-text");
+	if (sessionStorage.getItem("booted")) {
+		for (let i = 0; ++i < 50; gen());
+		setInterval(anim, 40);
+		setInterval(gen, 200);
+		generation();
+		bootup.style.display = "none";
+		canvas.style.display = "block";
+	} else {
+		sessionStorage.setItem("booted", "booted");
+		setTimeout(() => {
+			text.style.fontSize = emulatorType == "android" ? "20vw" : "30vh";
+			bootup.animate([{backgroundColor: "#000000"}, {backgroundColor: "#222222"}], {duration: 100, fill: "forwards"});
+			setTimeout(() => {
+				text.animate([{opacity: 0}, {opacity: 1}, {opacity: 1}, {opacity: 1}, {opacity: 1}, {opacity: 1}, {opacity: 0}], {
+					duration: 2500,
+					fill: "forwards",
+				});
+				setTimeout(() => {
+					canvas.style.display = "block";
+					for (let i = 0; ++i < 50; gen());
+					setInterval(anim, 40);
+					setInterval(gen, 200);
+					generation();
+					bootup.animate([{opacity: 1}, {opacity: 0}], {duration: 250});
+					setTimeout(() => {
+						bootup.style.display = "none";
+					}, 250);
+				}, 2750);
+			}, 1500);
+		}, 1000);
+	}
+}
+
 function anim() {
 	ctx.fillStyle = "black";
 	ctx.fillRect(0, 0, CWidth, CHeight);
-	ctx.strokeStyle = "white";
-	ctx.fillStyle = "white";
+	ctx.strokeStyle = "#aaaaaa";
+	ctx.fillStyle = "#aaaaaa";
 	bubbles.forEach((bubble, i) => {
 		ctx.beginPath();
 		ctx.arc(bubble[0], bubble[1], bubble[2], 0, Math.PI * 2);
@@ -40,7 +76,14 @@ function anim() {
 					let speed = Math.random() * 5 + 2;
 
 					for (let j = 0; j < n; ++j) {
-						bubbles.push([bubble[0], bubble[1], Math.floor(bubble[2] / n), Math.cos(basis + (2 * j * Math.PI) / n) * speed, Math.sin(basis + (2 * j * Math.PI) / n) * speed, -1]);
+						bubbles.push([
+							bubble[0],
+							bubble[1],
+							Math.floor(bubble[2] / n),
+							Math.cos(basis + (2 * j * Math.PI) / n) * speed,
+							Math.sin(basis + (2 * j * Math.PI) / n) * speed,
+							-1,
+						]);
 					}
 
 					bubbles.splice(bubbles.indexOf(bubble), 1);
@@ -90,7 +133,12 @@ function anim() {
 			let closest = bubbles[0];
 			let index = -1;
 			bubbles.forEach((bub, i) => {
-				if (bub[5] == -1 && bub != bubble && Math.pow(bub[0] - bubble[0], 2) + Math.pow(bub[1] - bubble[1], 2) < Math.pow(closest[0] - bubble[0], 2) + Math.pow(closest[1] - bubble[1], 2)) {
+				if (
+					bub[5] == -1 &&
+					bub != bubble &&
+					Math.pow(bub[0] - bubble[0], 2) + Math.pow(bub[1] - bubble[1], 2) <
+						Math.pow(closest[0] - bubble[0], 2) + Math.pow(closest[1] - bubble[1], 2)
+				) {
 					closest = bub;
 					index = i;
 				}
@@ -159,7 +207,11 @@ window.onresize = () => {
 canvas.setAttribute("width", CWidth);
 canvas.setAttribute("height", CHeight);
 
-for (let i = 0; ++i < 50; gen());
+var emulatorType;
+if (screen.width < screen.height) {
+	emulatorType = "android";
+} else {
+	emulatorType = "windows";
+}
 
-setInterval(anim, 40);
-setInterval(gen, 200);
+bootUpAnimation();

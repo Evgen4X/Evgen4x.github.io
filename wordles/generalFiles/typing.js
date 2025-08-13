@@ -25,52 +25,67 @@ function typeLetter(text) {
 			word += document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`).innerHTML;
 		}
 		if (word.length != letters_number) {
-			msg_alert("Enter full word!", 3000);
+			msg_alert("Enter full word!", SHORT_MESSAGE_TIME);
 			return;
 		}
 		if (check_dict && !is_word(word)) {
-			msg_alert("Enter a valid word!", 3000);
+			msg_alert("Enter a valid word!", SHORT_MESSAGE_TIME);
 			return;
+		}
+		if (localStorage.getItem(HARD_MODE) == "on") {
+			let response = check_hard_mode(word, known_letters);
+			if (response) {
+				msg_alert(response, SHORT_MESSAGE_TIME);
+				return;
+			}
 		}
 		let check = check_word(word, answer),
 			i = 1;
+		known_letters["yellow"] = {};
 		for (let status of check) {
-			let letter = document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`);
-			let button = document.querySelector(`#keyboard button[letter="${letter.innerHTML}"`);
+			let letterDiv = document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`);
+			let button = document.querySelector(`#keyboard button[letter="${letterDiv.innerHTML}"`);
 			let prev_color = button.style.getPropertyValue("--color");
+			let letter = letterDiv.innerHTML;
 			if (status == 0) {
-				letter.style.setProperty("--color", "#545454");
+				letterDiv.style.setProperty("--color", "#545454");
 				if (prev_color != "#79b851" && prev_color != "#f3c237") {
 					button.style.setProperty("--color", "#545454");
 				}
 			} else if (status == 1) {
-				letter.style.setProperty("--color", "#f3c237");
+				letterDiv.style.setProperty("--color", "#f3c237");
 				if (prev_color != "#79b851") {
 					button.style.setProperty("--color", "#f3c237");
 				}
+				if (known_letters["yellow"][letter]) {
+					known_letters["yellow"][letter]++;
+				} else {
+					known_letters["yellow"][letter] = 1;
+				}
 			} else {
-				letter.style.setProperty("--color", "#79b851");
+				letterDiv.style.setProperty("--color", "#79b851");
 				button.style.setProperty("--color", "#79b851");
+				known_letters["green"][i - 1] = letter;
 			}
-			letter.style.animation = `to_color 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
+			letterDiv.style.animation = `to_color 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
 			button.style.animation = `to_color 0s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
 			i++;
 		}
+		let index = parseInt(row.getAttribute("index"));
+		row.setAttribute("status", "filled");
+		let next_row = document.querySelectorAll(`.brd_row[index="${index + 1}"]`)[0];
 		if (check.every((status) => status == 2)) {
 			setTimeout(() => {
 				show_game_over(true);
 			}, 2000);
 			return;
 		}
-		let index = parseInt(row.getAttribute("index"));
 		if (index == 6) {
 			setTimeout(() => {
 				show_game_over(false);
 			}, 2000);
 			return;
 		}
-		row.setAttribute("status", "filled");
-		let next_row = document.querySelectorAll(`.brd_row[index="${index + 1}"]`)[0];
 		next_row.setAttribute("status", "active");
 		set_first();
 	} else if (text == "⌫") {
