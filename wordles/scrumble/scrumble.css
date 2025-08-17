@@ -1,0 +1,49 @@
+#timer {
+	position: absolute;
+	top: 10vh;
+	right: 2vw;
+	font-size: 3rem;
+	word-break: break-all;
+}
+
+#timer #time-left {
+	color: red;
+	font-size: 3.5rem;
+}
+
+.custom {
+	height: 45%;
+}
+
+@keyframes rotate {
+	0% {
+		transform: rotateX(0deg);
+		background: var(--color);
+	}
+
+	49% {
+		transform: rotateX(90deg);
+		background: var(--color);
+	}
+
+	50% {
+		background: linear-gradient(
+			135deg,
+			rgba(121, 184, 81, 1) 0%,
+			rgba(121, 184, 81, 1) 49%,
+			rgba(243, 194, 55, 1) 50%,
+			rgba(243, 194, 55, 1) 100%
+		);
+	}
+
+	100% {
+		transform: rotateX(0deg);
+		background: linear-gradient(
+			135deg,
+			rgba(121, 184, 81, 1) 0%,
+			rgba(121, 184, 81, 1) 49%,
+			rgba(243, 194, 55, 1) 50%,
+			rgba(243, 194, 55, 1) 100%
+		);
+	}
+}

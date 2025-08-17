@@ -60,9 +60,9 @@ function check_word(word, answer) {
 
 	// Second pass: check for letters in the wrong position
 	for (let i = 0; i < word.length; i++) {
-		if (result[i] !== 2) {
+		if (result[i] != 2) {
 			const letterIndex = remainingLetters.indexOf(word[i]);
-			if (letterIndex !== -1) {
+			if (letterIndex != -1) {
 				result[i] = 1;
 				remainingLetters[letterIndex] = null; // Mark the letter as used
 			} else {
@@ -72,36 +72,4 @@ function check_word(word, answer) {
 	}
 
 	return result;
-}
-
-function set_first() {
-	document.querySelectorAll('.brd_row[status="active"] .letter[index="1"]')[0].setAttribute("status", "active");
-}
-
-function new_game() {
-	let url = new URL(window.location.href);
-	url.searchParams.delete("word");
-	window.location.href = url;
-}
-
-function get_link(minLength = 3, maxLength = 15) {
-	console.log(alphabet);
-	let text = document.getElementById("link_input").value.toUpperCase();
-	if (text.length < minLength || text.length > maxLength) {
-		msg_alert(`The word must be from ${minLength} to ${maxLength} ${LETTER_NAME}s long!<br>You'r word length: ${text.length}`, 3000);
-		return;
-	}
-	for (let i of text) {
-		if (!alphabet.includes(i)) {
-			msg_alert("Invalid characters found!", 3000);
-			return;
-		}
-	}
-	let url = new URL(window.location.href);
-	url.searchParams.set("word", encode(text));
-	url.searchParams.set("length", text.length);
-	let link = document.getElementById("link");
-	link.setAttribute("href", url);
-	link.innerHTML = "Link is here";
-	return;
 }

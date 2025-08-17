@@ -1,3 +1,7 @@
+* {
+	user-select: none;
+}
+
 body {
 	background-color: #444;
 	padding: 0;
@@ -43,6 +47,7 @@ header {
 	animation-duration: 500ms;
 	animation-timing-function: cubic-bezier(0, 1, 0.4, 1);
 	animation-fill-mode: both;
+	z-index: 999;
 }
 
 #alert p {
@@ -102,6 +107,10 @@ nav {
 	transition: transform 0.4s;
 	animation-duration: 0.8s;
 	animation-fill-mode: forwards;
+}
+
+.yellow-green-letter {
+	background: linear-gradient(135deg, rgba(121, 184, 81, 1) 0%, rgba(121, 184, 81, 1) 49%, rgba(243, 194, 55, 1) 50%, rgba(243, 194, 55, 1) 100%);
 }
 
 #keyboard {

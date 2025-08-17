@@ -25,7 +25,6 @@ function generate(cols, rows) {
 			kbd.appendChild(row);
 			row = document.createElement("div");
 			row.classList.add("kb_row");
-			console.log(kbd);
 		}
 	}
 
@@ -137,13 +136,43 @@ function close_all() {
 
 function show_how_to(name) {
 	let sht = sessionStorage.getItem("shownHowTo");
-	console.log(sht, name);
 	if (!sht || !sht.split(";").includes(name)) {
 		document.querySelector(".how_to").style.display = "flex";
 		if (name) {
 			sessionStorage.setItem("shownHowTo", sht + ";" + name);
 		}
 	}
+}
+
+function new_game() {
+	let url = new URL(window.location.href);
+	url.searchParams.delete("word");
+	window.location.href = url;
+}
+
+function get_link(minLength = 3, maxLength = 15) {
+	let text = document.getElementById("link_input").value.toUpperCase();
+	if (text.length < minLength || text.length > maxLength) {
+		msg_alert(`The word must be from ${minLength} to ${maxLength} ${LETTER_NAME}s long!<br>You'r word length: ${text.length}`, 3000);
+		return;
+	}
+	for (let i of text) {
+		if (!alphabet.includes(i)) {
+			msg_alert("Invalid characters found!", 3000);
+			return;
+		}
+	}
+	let url = new URL(window.location.href);
+	url.searchParams.set("word", encode(text));
+	url.searchParams.set("length", text.length);
+	let link = document.getElementById("link");
+	link.setAttribute("href", url);
+	link.innerHTML = "Link is here";
+	return;
+}
+
+function set_first() {
+	document.querySelector('.brd_row[status="active"] .letter[index="1"]').setAttribute("status", "active");
 }
 
 function show_add_report() {

@@ -35,14 +35,14 @@ function typeLetter(text) {
 		}
 
 		if (word.length != letters_number) {
-			msg_alert("Enter full word!", 3000);
+			msg_alert("Enter full word!", SHORT_MESSAGE_TIME);
 			return;
 		}
 		if (!is_word(word) && check_dict) {
-			msg_alert("Enter a valid word!", 3000);
+			msg_alert("Enter a valid word!", SHORT_MESSAGE_TIME);
 			return;
 		}
-		let check = check_word_vertical(word, answer, row.getAttribute("index"));
+		let check = check_word_vertical(word, row.getAttribute("index"));
 		let i = 1;
 		if (row.getAttribute("index") == letters_number + 1) {
 			check = check_word(word, answer);
@@ -51,7 +51,6 @@ function typeLetter(text) {
 			let letter = document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`);
 			let button = document.querySelector(`#keyboard button[letter="${letter.textContent}"`);
 			let prev_color = button.style.getPropertyValue("--color");
-			console.log(letter, status);
 			if (status == 0) {
 				letter.style.setProperty("--color", "#545454");
 				if (prev_color != "#79b851" && prev_color != "#f3c237") {
@@ -128,11 +127,11 @@ kb_buttons.forEach((button) => {
 });
 document.addEventListener("keyup", keyType);
 
-var answer;
-if (params.get("word") == null) {
-	answers = answers.filter((word) => word.length == letters_number);
-	answer = answers[Math.floor(Math.random() * answers.length)];
-} else {
-	answer = decode(params.get("word"));
-	msg_alert("That wordle may not use standart dictionary!", 7500);
-}
+// var answer;
+// if (params.get("word") == null) {
+// 	answers = answers.filter((word) => word.length == letters_number);
+// 	answer = answers[Math.floor(Math.random() * answers.length)];
+// } else {
+// 	answer = decode(params.get("word"));
+// 	msg_alert("That wordle may not use standart dictionary!", 7500);
+// }

@@ -19,7 +19,6 @@ function keyType(event) {
 function typeLetter(text) {
 	const row = document.querySelector('.brd_row[status="active"]');
 	const letter = document.querySelector('.letter[status="active"]');
-	console.log(text);
 	if (text == "ENTER") {
 		let word = "";
 		for (let i = 1; i < letters_number + 1; i++) {

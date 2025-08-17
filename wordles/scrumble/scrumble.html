@@ -2,11 +2,11 @@
 <html lang="en">
 	<head>
 		<link rel="stylesheet" href="../generalFiles/default.css" />
-		<link rel="stylesheet" href="word500.css" />
-		<link rel="icon" href="word500_icon.png" />
+		<link rel="stylesheet" href="scrumble.css" />
+		<link rel="icon" href="wordle_icon.png" />
 		<meta charset="UTF-8" />
+		<title>Scrumble!</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-		<title>Word 500!</title>
 	</head>
 
 	<body>
@@ -15,11 +15,14 @@
 			<div class="button_container" style="width: 10%">
 				<button onclick="show_game_over();">GIVE UP</button>
 			</div>
-			<a href="../main/index.html" class="title">WORD 500</a>
+			<a href="../main/index.html" class="title">SCRUMBLE</a>
 			<button class="settings-button" onclick="show_settings();"></button>
 		</header>
 		<div class="board mainboard"></div>
+		<span id="error"></span>
 		<div id="keyboard"></div>
+
+		<div id="timer">TIME LEFT: <span id="time-left"></span></div>
 
 		<div class="absolute go">
 			<!--Game over -->
@@ -55,11 +58,25 @@
 				<button onclick="show_add_report();">Add a word</button>
 			</div>
 			<div class="button_container">
-				<button onclick="show_custom();">Custom Word500</button>
-				<button onclick="clear_all();">Clear all</button>
+				<button onclick="show_custom();">Custom Scrumble</button>
+				<button id="hide_all" onclick="hide_all();">Hide all letters</button>
 			</div>
 			<div class="button_container">
 				<button onclick="close_all();">Back</button>
+			</div>
+		</div>
+
+		<div class="absolute custom">
+			<!--Custom word-->
+			<span class="title">Create custom Scrumble!</span>
+			<span class="cw_subtitle">The word must be from 3 to 15 letters long</span>
+			<input id="link_input" type="text" name="answer" placeholder="Word" />
+			<span class="cw_subtitle">Optional: enter the scrumbled version of your word</span>
+			<input type="text" id="link_scrumble" name="scrumble_answer" placeholder="Scrumbled word" />
+			<a id="link"></a>
+			<div class="button_container">
+				<button onclick="get_link();">Generate link</button>
+				<button onclick="close_all();">Cancel</button>
 			</div>
 		</div>
 
@@ -74,60 +91,31 @@
 			</div>
 		</div>
 
-		<div class="absolute custom">
-			<!--Custom word-->
-			<span class="title">Create custom Word500!</span>
-			<span class="cw_subtitle">The word must be 5 symbols long</span>
-			<input id="link_input" type="text" name="answer" placeholder="Word" />
-			<a id="link"></a>
-			<div class="button_container">
-				<button onclick="get_link();">Generate link</button>
-				<button onclick="close_all();">Cancel</button>
-			</div>
-		</div>
-
-		<div class="absolute how_to" style="width: 40%">
+		<div class="absolute how_to">
 			<span class="title">How to play?</span>
-			<p>Enter a word like in normal Wordle! Then you will see 3 numbers:</p>
+			<p>You are already given all the letters in the word</p>
 			<div class="board">
 				<div class="brd_row">
-					<div class="letter" style="background-color: #c21b1b">W</div>
-					<div class="letter" style="background-color: #c21b1b">O</div>
-					<div class="letter" style="background-color: #c21b1b">R</div>
-					<div class="letter" style="background-color: #c21b1b">D</div>
-					<div class="letter" style="background-color: #c21b1b">S</div>
-					<div class="letter green">0</div>
-					<div class="letter yellow">0</div>
-					<div class="letter red">5</div>
+					<div class="letter yellow-green-letter">U</div>
+					<div class="letter yellow-green-letter">N</div>
+					<div class="letter yellow-green-letter">F</div>
+					<div class="letter yellow-green-letter">U</div>
+					<div class="letter yellow-green-letter">Y</div>
 				</div>
-				<p><span style="color: #c21b1b">Red</span> shows how many letters are not in the word</p>
+				<p>Try to guess the correct word as fast as possible</p>
 				<div class="brd_row">
-					<div class="letter">P</div>
-					<div class="letter">L</div>
-					<div class="letter">A</div>
-					<div class="letter">Y</div>
-					<div class="letter">S</div>
-					<div class="letter green">0</div>
-					<div class="letter yellow">1</div>
-					<div class="letter red">4</div>
-				</div>
-				<p><span style="color: #f3c237">Yellow</span> shows how many letters are in the word, but in incorrect position</p>
-				<div class="brd_row">
-					<div class="letter">F</div>
-					<div class="letter">U</div>
-					<div class="letter">N</div>
-					<div class="letter">N</div>
-					<div class="letter">Y</div>
-					<div class="letter green">4</div>
-					<div class="letter yellow">0</div>
-					<div class="letter red">1</div>
+					<div class="letter yellow-green-letter">F</div>
+					<div class="letter yellow-green-letter">U</div>
+					<div class="letter yellow-green-letter">N</div>
+					<div class="letter yellow-green-letter">N</div>
+					<div class="letter yellow-green-letter">Y</div>
 				</div>
 			</div>
-			<p><span style="color: #79b851">Green</span> shows how many letters are in correct spots</p>
-			<p>Try to reach "5-0-0" and guess the answer as fast as possible!</p>
-			<p>You can click on the letters to change their color to help you visualise your thoughts</p>
+			<p>Hurry up! You've only got a little time!</p>
+			<p>Note: you can enter anything, word-checking is disabled</p>
+			<p>You can also click on a letter to hide/show it</p>
 			<div class="button_container">
-				<button onclick="close_all();">Close</button>
+				<button id="how_to-close-button" onclick="close_all();">Close</button>
 			</div>
 		</div>
 
@@ -137,11 +125,12 @@
 		</div>
 
 		<script src="../generalFiles/word_list.js"></script>
-		<script src="word500_setup.js"></script>
-		<script src="../generalFiles/check.js"></script>
+		<script src="../generalFiles/setup.js"></script>
+		<script src="../generalFiles/init.js"></script>
 		<script src="typing.js"></script>
+		<script src="scrumble.js"></script>
 		<script>
-			show_how_to("word500");
+			show_how_to("wordle");
 		</script>
 	</body>
 </html>

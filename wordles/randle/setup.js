@@ -39,7 +39,6 @@ function generate(cols, rows) {
 			kbd.appendChild(row);
 			row = document.createElement("div");
 			row.classList.add("kb_row");
-			console.log(kbd);
 		}
 	}
 
@@ -121,6 +120,15 @@ function decode(text) {
 	return ans;
 }
 
+function hide_all() {
+	let target = brd_letters[0].style.opacity == "1" ? "0" : "1";
+	brd_letters.forEach((letter) => {
+		letter.style.opacity = target;
+	});
+	document.getElementById("hide_all").innerHTML = ["Show all letters", "Hide all letters"][parseInt(target)];
+	close_all();
+}
+
 function get_link() {
 	let text = document.getElementById("link_input").value.toUpperCase();
 	if (text.length != 5) {
@@ -169,7 +177,6 @@ addReportInput.onchange = () => {
 
 function show_how_to(name) {
 	let sht = sessionStorage.getItem("shownHowTo");
-	console.log(sht, name);
 	if (!sht || !sht.split(";").includes(name)) {
 		document.querySelector(".how_to").style.display = "flex";
 		if (name) {

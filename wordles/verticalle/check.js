@@ -2,14 +2,14 @@ function is_word(word) {
 	return answers.includes(word);
 }
 
-function check_word_vertical(word, answer, position_) {
+function check_word_vertical(word, position_) {
 	const position = parseInt(position_) - 1;
 	const result = [];
 	const remainingLetters = answer.split("");
 
 	// First pass: check for letters in the correct position
 	for (let i = 0; i < word.length; i++) {
-		if (word[i] === answer[position]) {
+		if (word[i] == answer[position]) {
 			result[i] = 2;
 			remainingLetters[position] = null; // Mark the letter as used
 			break; // Do not mark more than one letter as green, as it is obvious
@@ -20,7 +20,7 @@ function check_word_vertical(word, answer, position_) {
 	for (let i = 0; i < word.length; i++) {
 		const letterIndex = remainingLetters.indexOf(word[i]);
 		if (result[i] != 2) {
-			if (letterIndex !== -1) {
+			if (letterIndex != -1) {
 				result[i] = 1;
 				remainingLetters[letterIndex] = null; // Mark the letter as used
 			} else {
@@ -29,12 +29,10 @@ function check_word_vertical(word, answer, position_) {
 		}
 	}
 
-	console.log(result);
-
 	return result;
 }
 
-function check_word(word, answer) {
+function check_word(word) {
 	const result = [];
 	const remainingLetters = answer.split("");
 

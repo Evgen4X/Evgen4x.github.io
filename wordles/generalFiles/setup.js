@@ -127,7 +127,6 @@ function encode(text) {
 }
 
 function decode(text) {
-	console.log("!");
 	let ans = "",
 		s1,
 		s2;
@@ -159,6 +158,40 @@ function show_custom() {
 
 function show_add_report() {
 	document.querySelector(".add-report").style.display = "flex";
+}
+
+function set_first() {
+	document.querySelector('.brd_row[status="active"] .letter[index="1"]').setAttribute("status", "active");
+}
+
+function new_game() {
+	let url = new URL(window.location.href);
+	url.searchParams.delete("word");
+	if (url.searchParams.get("scrumble")) {
+		url.searchParams.delete("scrumble");
+	}
+	window.location.href = url;
+}
+
+function get_link(minLength = 3, maxLength = 15) {
+	let text = document.getElementById("link_input").value.toUpperCase();
+	if (text.length < minLength || text.length > maxLength) {
+		msg_alert(`The word must be from ${minLength} to ${maxLength} ${LETTER_NAME}s long!<br>You'r word length: ${text.length}`, 3000);
+		return;
+	}
+	for (let i of text) {
+		if (!alphabet.includes(i)) {
+			msg_alert("Invalid characters found!", 3000);
+			return;
+		}
+	}
+	let url = new URL(window.location.href);
+	url.searchParams.set("word", encode(text));
+	url.searchParams.set("length", text.length);
+	let link = document.getElementById("link");
+	link.setAttribute("href", url);
+	link.innerHTML = "Link is here";
+	return;
 }
 
 const addReportInput = document.getElementById("add-report-input");
