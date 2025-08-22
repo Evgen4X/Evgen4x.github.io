@@ -84,6 +84,17 @@ function generateShortcut(name, href, src) {
     `;
 
 	el.onclick = () => {
+		if (el.getAttribute("lastClicked")) {
+			let n = new Date().getTime() - parseInt(el.getAttribute("lastClicked"));
+			if (n < 500) {
+				let href = el.getAttribute("href");
+				goto(href);
+			} else {
+				el.setAttribute("lastClicked", new Date().getTime().toString());
+			}
+		}
+		el.setAttribute("lastClicked", new Date().getTime().toString());
+
 		document.querySelectorAll(".shortcut").forEach((shortcut) => {
 			shortcut.classList.remove("focused");
 		});
@@ -91,11 +102,6 @@ function generateShortcut(name, href, src) {
 		setTimeout(() => {
 			el.classList.add("focused");
 		}, 5);
-	};
-
-	el.ondblclick = () => {
-		let href = el.getAttribute("href");
-		goto(href);
 	};
 
 	el.ondragend = (e) => {
