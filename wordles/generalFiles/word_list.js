@@ -4785,7 +4785,6 @@ var answers = [
 	"EAT",
 	"EATEN",
 	"EATING",
-	"EATON",
 	"EATS",
 	"ECCENTRIC",
 	"ECCLESIASTICAL",

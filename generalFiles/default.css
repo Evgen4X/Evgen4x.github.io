@@ -30,6 +30,7 @@ body {
 }
 
 * {
+	touch-action: manipulation;
 	user-select: none;
 	transition: background-color 500ms ease-in-out;
 	-webkit-text-size-adjust: none !important;
