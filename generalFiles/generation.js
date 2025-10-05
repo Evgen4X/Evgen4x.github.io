@@ -61,6 +61,10 @@ function generateContainer(name, href, text = "Go") {
 	return el;
 }
 
+function posToGrid(x, y) {
+	return [Math.ceil(x / COLUMN_WIDTH), Math.ceil(y / ROW_HEIGHT)];
+}
+
 function generateShortcut(name, href, src) {
 	if (!src) {
 		src = `${urlPrefix}src/images/unknown-thumbnail.png`;
@@ -107,8 +111,7 @@ function generateShortcut(name, href, src) {
 	el.ondragend = (e) => {
 		const x = e.pageX;
 		const y = e.pageY;
-		const row = Math.ceil(y / ROW_HEIGHT);
-		const col = Math.ceil(x / COLUMN_WIDTH);
+		const [col, row] = posToGrid(x, y);
 		document.querySelectorAll(".shortcut").forEach((shortcut) => {
 			if (shortcut.style.gridColumn == col && shortcut.style.gridRow == row) {
 				shortcut.style.gridRow = el.style.gridRow;
@@ -195,6 +198,29 @@ document.onkeydown = (e) => {
 				let href = shortcut.getAttribute("href");
 				goto(href);
 			}
+		});
+	}
+};
+
+sessionStorage.setItem("mouseDown", "false");
+
+document.onmousedown = (e) => {
+	localStorage.setItem("mouseDown", "true");
+	localStorage.setItem("startPos", `${e.pageX},${e.pageY}`);
+};
+
+document.onmouseup = () => {
+	localStorage.setItem("mouseDown", "false");
+	localStorage.removeItem("startPos");
+	localStorage.removeItem("endPos");
+};
+
+document.onmousemove = (e) => {
+	if (sessionStorage.getItem("mouseDown") == "true") {
+		localStorage.setItem("endPos", `${e.pageX},${e.pageY}`);
+
+		document.querySelectorAll(".thumbnail").forEach((el) => {
+			console.log(el.style.gridColumn, el.style.gridRow);
 		});
 	}
 };

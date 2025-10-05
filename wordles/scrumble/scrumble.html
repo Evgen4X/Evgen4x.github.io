@@ -3,6 +3,7 @@
 	<head>
 		<link rel="stylesheet" href="../generalFiles/default.css" />
 		<link rel="stylesheet" href="scrumble.css" />
+		<link rel="stylesheet" href="../../generalFiles/theme-switch.css" />
 		<link rel="icon" href="wordle_icon.png" />
 		<meta charset="UTF-8" />
 		<title>Scrumble!</title>
@@ -11,12 +12,13 @@
 
 	<body>
 		<header>
-			<button onclick="show_how_to();" style="background-color: #000; border: none; color: white">?</button>
+			<button onclick="show_how_to();" id="how-to-button">?</button>
 			<div class="button_container" style="width: 10%">
 				<button onclick="show_game_over();">GIVE UP</button>
 			</div>
 			<a href="../main/index.html" class="title">SCRUMBLE</a>
 			<button class="settings-button" onclick="show_settings();"></button>
+			<div id="theme-switch"></div>
 		</header>
 		<div class="board mainboard"></div>
 		<span id="error"></span>
@@ -56,6 +58,7 @@
 			</div>
 			<div class="button_container">
 				<button onclick="show_add_report();">Add a word</button>
+				<button id="hard-mode-button" onclick="toggle_hard_mode();"></button>
 			</div>
 			<div class="button_container">
 				<button onclick="show_custom();">Custom Scrumble</button>
@@ -112,6 +115,7 @@
 				</div>
 			</div>
 			<p>Hurry up! You've only got a little time!</p>
+			<p>Try easy mode: first and last letters are always in place!</p>
 			<p>Note: you can enter anything, word-checking is disabled</p>
 			<p>You can also click on a letter to hide/show it</p>
 			<div class="button_container">
@@ -124,11 +128,17 @@
 			<span id="alert-span"></span>
 		</div>
 
+		<script>
+			if (!localStorage.getItem("wordleHardMode")) {
+				localStorage.setItem("wordleHardMode", "on");
+			}
+		</script>
 		<script src="../generalFiles/word_list.js"></script>
 		<script src="../generalFiles/setup.js"></script>
 		<script src="../generalFiles/init.js"></script>
 		<script src="typing.js"></script>
 		<script src="scrumble.js"></script>
+		<script src="../../generalFiles/themeSwitch.js"></script>
 		<script>
 			show_how_to("wordle");
 		</script>

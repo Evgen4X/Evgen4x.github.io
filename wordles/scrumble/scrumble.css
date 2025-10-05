@@ -15,6 +15,18 @@
 	height: 45%;
 }
 
+#hard-mode-button[state="on"] {
+	background-color: #080;
+	box-shadow: 0 0 0.5em #0f0;
+	border-color: #060;
+}
+
+#hard-mode-button[state="off"] {
+	background-color: #09f;
+	box-shadow: 0 0 0.5em #0ff;
+	border-color: #07b;
+}
+
 @keyframes rotate {
 	0% {
 		transform: rotateX(0deg);

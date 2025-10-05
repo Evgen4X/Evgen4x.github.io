@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="icon" href="../icons/main-icon.jpg" />
+		<link rel="stylesheet" href="../index.css" />
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Geography</title>
+	</head>
+	<body>
+		<div id="windows">
+			<div class="windows-item" onclick="window.close();">
+				<img src="../src/icons/shut-down-icon.png" />
+				<span>Shut down</span>
+			</div>
+			<div class="windows-item" onclick="restart();">
+				<img src="../src/icons/restart-icon.png" />
+				<span>Restart</span>
+			</div>
+		</div>
+
+		<div id="bootup">
+			<div id="bootup-text">Evgen4X</div>
+		</div>
+
+		<canvas id="canvas"></canvas>
+
+		<main></main>
+
+		<footer>
+			<div id="right-bar"></div>
+			<div id="left-bar">
+				<div id="made-by">Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></div>
+				<div id="icon-cookie"></div>
+				<div id="icon-wifi"></div>
+				<div id="datetime"></div>
+			</div>
+		</footer>
+
+		<script>
+			function generation() {
+				main.style.display = "grid";
+				document.querySelector("footer").style.display = "flex";
+				main.appendChild(generateShortcut("Back", "../index.html"));
+				main.appendChild(generateShortcut("Flag guesser", "flagGuesser/flagGuesser.html", "../src/icons/polynomial-multiplication-icon.png"));
+			}
+			const urlPrefix = "../";
+		</script>
+		<script src="../generalFiles/generation.js"></script>
+		<script src="../generalFiles/animation.js"></script>
+	</body>
+</html>

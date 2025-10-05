@@ -34,11 +34,14 @@ function typeLetter(text) {
 		for (let i = 1; i < letters_number + 1; ++i) {
 			let letterDiv = document.querySelector(`.brd_row[status="active"] .letter[index="${i}"]`);
 			let button = document.querySelector(`#keyboard button[letter="${letterDiv.innerHTML}"`);
-			if (word != answer) {
-				letterDiv.style.animation = `rotate 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
-			} else {
+			if (
+				word == answer ||
+				(localStorage.getItem(HARD_MODE) == "off" && (i == 1 || i == letters_number) && letterDiv.innerHTML == answer[i - 1])
+			) {
 				letterDiv.style.setProperty("--color", "#79b851");
 				letterDiv.style.animation = `to_color 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
+			} else {
+				letterDiv.style.animation = `rotate 0.8s linear ${(i - 1) * 200 + "ms"} 1 normal forwards`;
 			}
 		}
 		let index = parseInt(row.getAttribute("index"));

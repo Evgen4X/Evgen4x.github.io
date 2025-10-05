@@ -35,7 +35,7 @@ function generate(cols, rows) {
 	brd_letters[0].setAttribute("status", "active");
 	brd_letters.forEach((letter) => {
 		letter.addEventListener("click", () => {
-			toggle(letter);
+			toggleLetter(letter);
 		});
 	});
 
@@ -52,7 +52,7 @@ function generate(cols, rows) {
 	document.querySelector(".title").innerHTML = `WORD ${cols}00`;
 }
 
-function toggle(sender, state = null) {
+function toggleLetter(sender, state = null) {
 	// const sender = event.target;
 	if ("ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(sender.innerHTML) == -1) {
 		return;
@@ -115,7 +115,7 @@ function msg_alert(msg, time) {
 
 function clear_all() {
 	brd_letters.forEach((letter) => {
-		toggle(letter, "green");
+		toggleLetter(letter, "green");
 	});
 	close_all();
 }

@@ -3,6 +3,8 @@
 	<head>
 		<link rel="stylesheet" href="../generalFiles/default.css" />
 		<link rel="icon" href="colorle_icon.png" />
+		<link rel="stylesheet" href="../../generalFiles/theme-switch.css" />
+		<link rel="stylesheet" href="../../generalFiles/theme-switch.css" />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 		<title>Colorle!</title>
@@ -10,12 +12,13 @@
 
 	<body>
 		<header>
-			<button onclick="show_how_to();" style="background-color: #000; border: none; color: white">?</button>
+			<button onclick="show_how_to();" id="how-to-button">?</button>
 			<div class="button_container" style="width: 10%">
 				<button onclick="show_game_over();">GIVE UP</button>
 			</div>
 			<a href="../main/index.html" class="title">COLORLE</a>
 			<button class="settings-button" onclick="show_settings();"></button>
+			<div id="theme-switch"></div>
 		</header>
 		<div class="board mainboard"></div>
 		<div id="keyboard"></div>
@@ -132,6 +135,7 @@
 		<script src="../generalFiles/check.js"></script>
 		<script src="../generalFiles/init.js"></script>
 		<script src="typing.js"></script>
+		<script src="../../generalFiles/themeSwitch.js"></script>
 		<script>
 			show_how_to("colorle");
 		</script>

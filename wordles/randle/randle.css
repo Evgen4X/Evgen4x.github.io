@@ -30,7 +30,7 @@
 	min-width: 20em;
 	max-width: 20em;
 	word-wrap: break-word;
-	color: #fff;
+	color: var(--txt);
 }
 
 @keyframes rotate {

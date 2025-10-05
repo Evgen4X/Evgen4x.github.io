@@ -100,10 +100,38 @@ let init_word;
 if (params.get("scrumble")) {
 	init_word = decode(params.get("scrumble"));
 } else {
-	init_word = answer.split("").sort((a, b) => Math.random() - 0.5);
-
-	while (init_word.join("") == answer) {
+	if (!localStorage.getItem(HARD_MODE) || localStorage.getItem(HARD_MODE) == "on" || letters_number < 4) {
 		init_word = answer.split("").sort((a, b) => Math.random() - 0.5);
+
+		while (init_word.join("") == answer) {
+			init_word = answer.split("").sort((a, b) => Math.random() - 0.5);
+		}
+	} else {
+		init_word = answer.split("");
+		if (letters_number == 4) {
+			init_word = [init_word[0], init_word[2], init_word[1], init_word[3]];
+		}
+		init_word = [init_word[0]]
+			.concat(init_word.slice(1, letters_number - 1).sort((a, b) => Math.random() - 0.5))
+			.concat([init_word[letters_number - 1]]);
+
+		while (init_word.join("") == answer) {
+			init_word = [init_word[0]]
+				.concat(init_word.slice(1, letters_number - 1).sort((a, b) => Math.random() - 0.5))
+				.concat([init_word[letters_number - 1]]);
+		}
+	}
+}
+
+function toggle_hard_mode() {
+	if (localStorage.getItem(HARD_MODE) == "off") {
+		localStorage.setItem(HARD_MODE, "on");
+		hardModeButton.setAttribute("state", "on");
+		hardModeButton.innerHTML = "Normal mode";
+	} else {
+		localStorage.setItem(HARD_MODE, "off");
+		hardModeButton.setAttribute("state", "off");
+		hardModeButton.innerHTML = "Easy mode";
 	}
 }
 
@@ -140,3 +168,6 @@ setTimeout(() => {
 		document.getElementById("how_to-close-button").addEventListener("click", start);
 	}
 }, 10);
+
+toggle_hard_mode();
+toggle_hard_mode(); // this is needed

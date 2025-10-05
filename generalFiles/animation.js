@@ -15,7 +15,7 @@ function bootUpAnimation() {
 			bootup.animate([{backgroundColor: "#000000"}, {backgroundColor: "#222222"}], {duration: 100, fill: "forwards"});
 			setTimeout(() => {
 				text.animate([{opacity: 0}, {opacity: 1}, {opacity: 1}, {opacity: 1}, {opacity: 1}, {opacity: 1}, {opacity: 0}], {
-					duration: 2500,
+					duration: 2000,
 					fill: "forwards",
 				});
 				setTimeout(() => {
@@ -28,15 +28,28 @@ function bootUpAnimation() {
 					setTimeout(() => {
 						bootup.style.display = "none";
 					}, 250);
-				}, 2750);
+				}, 2250);
 			}, 1500);
-		}, 1000);
+		}, 500);
 	}
 }
 
 function anim() {
 	ctx.fillStyle = "black";
 	ctx.fillRect(0, 0, CWidth, CHeight);
+	if (localStorage.getItem("endPos")) {
+		ctx.fillStyle = "#0066cc77";
+		ctx.strokeStyle = "#0078d4";
+		let [x0, y0] = localStorage.getItem("startPos").split(",");
+		let [x1, y1] = localStorage.getItem("endPos").split(",");
+		const w = Math.abs(x0 - x1);
+		const h = Math.abs(y0 - y1);
+		x0 = Math.min(x0, x1);
+		y0 = Math.min(y0, y1);
+		ctx.rect(x0, y0, w, h);
+		ctx.fill();
+		ctx.stroke();
+	}
 	ctx.strokeStyle = "#aaaaaa";
 	ctx.fillStyle = "#aaaaaa";
 	bubbles.forEach((bubble, i) => {
