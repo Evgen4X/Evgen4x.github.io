@@ -1,0 +1,31 @@
+canvas {
+	width: 90vw;
+	height: 70vh;
+}
+
+#instructionsDiv {
+	padding: 0.5em;
+	min-width: 25vw;
+	height: 2em;
+	border: 1px solid var(--itxt);
+	border-radius: 1em;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	font-size: x-large;
+}
+
+#instructionsDiv label {
+	font-size: x-large;
+}
+
+#instructionsDiv input {
+	font-size: x-large;
+	width: 2em;
+	height: 1.5em;
+	background-color: transparent;
+	border: none;
+	border-bottom: 0.1em solid blue;
+	text-align: right;
+	color: var(--txt);
+}

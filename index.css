@@ -10,6 +10,14 @@ body {
 	touch-action: manipulation;
 }
 
+div#selection-rect {
+	position: absolute;
+	display: none;
+	z-index: 999;
+	border: 1px solid rgb(50, 50, 255);
+	background-color: rgba(50, 50, 255, 0.2);
+}
+
 #bootup {
 	width: 100vw;
 	height: 100vh;

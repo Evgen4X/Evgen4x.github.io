@@ -40,3 +40,7 @@ button {
 	background-color: var(--ibg);
 	border-radius: 2.5rem;
 }
+
+sup{
+	height: 2em;
+}

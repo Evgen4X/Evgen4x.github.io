@@ -21,12 +21,20 @@ body {
 	flex-direction: column;
 }
 
+div#selection-rect {
+	position: absolute;
+	display: none;
+	z-index: 999;
+	border: 1px solid rgb(50, 50, 255);
+	background-color: rgba(50, 50, 255, 0.2);
+}
+
 div#back {
 	display: block;
 	margin: 1vh;
 	height: 6vh;
 	width: 6vh;
-	background-image: url(../src/icons/main-icon.jpg);
+	background-image: url(../src/icons/main-icon.png);
 	background-size: contain;
 	cursor: pointer;
 }
@@ -96,7 +104,9 @@ label {
 	border-radius: 1em;
 	box-shadow: 0 0 0.5em #ddd;
 	font-weight: bold;
-	transition: background-color 0.5s linear, box-shadow 0.5s ease-in-out;
+	transition:
+		background-color 0.5s linear,
+		box-shadow 0.5s ease-in-out;
 }
 
 #settings input {

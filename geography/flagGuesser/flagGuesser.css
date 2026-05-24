@@ -15,13 +15,16 @@ input {
 	color: var(--itxt);
 }
 
-button {
+#confirm-button {
 	width: 20%;
 	height: 5rem;
 	font-size: 3rem;
 	border-radius: 2.5rem;
 	background-color: var(--ibg);
 	color: var(--itxt);
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 #output {
@@ -39,4 +42,11 @@ button {
 	font-size: 3rem;
 	background-color: var(--ibg);
 	border-radius: 2.5rem;
+}
+
+#flag {
+	display: block;
+	width: 80vw;
+	height: 30vh;
+	background-repeat: no-repeat;
 }

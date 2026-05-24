@@ -11,6 +11,9 @@ function bootUpAnimation() {
 	} else {
 		sessionStorage.setItem("booted", "booted");
 		setTimeout(() => {
+			document.addEventListener("dblclick", () => {
+				window.location.reload();
+			});
 			text.style.fontSize = emulatorType == "android" ? "20vw" : "30vh";
 			bootup.animate([{backgroundColor: "#000000"}, {backgroundColor: "#222222"}], {duration: 100, fill: "forwards"});
 			setTimeout(() => {

@@ -73,7 +73,7 @@ function generateShortcut(name, href, src) {
 	el.style.gridColumn = column;
 	el.style.gridRow = row++;
 	if (row > ROWS) {
-		row = 0;
+		row = 1;
 		++column;
 	}
 	el.id = name;
@@ -87,43 +87,22 @@ function generateShortcut(name, href, src) {
         <div class="shortcut-name">${name}</div>
     `;
 
-	el.onclick = () => {
-		if (el.getAttribute("lastClicked")) {
-			let n = new Date().getTime() - parseInt(el.getAttribute("lastClicked"));
-			if (n < 500) {
-				let href = el.getAttribute("href");
-				goto(href);
-			} else {
-				el.setAttribute("lastClicked", new Date().getTime().toString());
-			}
-		}
-		el.setAttribute("lastClicked", new Date().getTime().toString());
-
-		document.querySelectorAll(".shortcut").forEach((shortcut) => {
-			shortcut.classList.remove("focused");
-		});
-
-		setTimeout(() => {
-			el.classList.add("focused");
-		}, 5);
-	};
-
-	el.ondragend = (e) => {
-		const x = e.pageX;
-		const y = e.pageY;
-		const [col, row] = posToGrid(x, y);
-		document.querySelectorAll(".shortcut").forEach((shortcut) => {
-			if (shortcut.style.gridColumn == col && shortcut.style.gridRow == row) {
-				shortcut.style.gridRow = el.style.gridRow;
-				shortcut.style.gridColumn = el.style.gridColumn;
-				console.log(shortcut);
-			} else {
-				console.log(shortcut.style.gridColumn, col);
-			}
-		});
-		el.style.gridRow = row;
-		el.style.gridColumn = col;
-	};
+	// el.ondragend = (e) => {
+	// 	const x = e.pageX;
+	// 	const y = e.pageY;
+	// 	const [col, row] = posToGrid(x, y);
+	// 	document.querySelectorAll(".shortcut").forEach((shortcut) => {
+	// 		if (shortcut.style.gridColumn == col && shortcut.style.gridRow == row) {
+	// 			shortcut.style.gridRow = el.style.gridRow;
+	// 			shortcut.style.gridColumn = el.style.gridColumn;
+	// 			console.log(shortcut);
+	// 		} else {
+	// 			console.log(shortcut.style.gridColumn, col);
+	// 		}
+	// 	});
+	// 	el.style.gridRow = row;
+	// 	el.style.gridColumn = col;
+	// };
 
 	return el;
 }
@@ -160,17 +139,17 @@ function restart() {
 	goto(null);
 }
 
-function hideAll() {
-	document.querySelectorAll(".shortcut").forEach((shortcut) => {
-		shortcut.classList.remove("focused");
-	});
-	document.querySelectorAll(".folder").forEach((folder) => {
-		folder.classList.remove("focused");
-	});
-	if (windows.style.display != "none") {
-		windows.style.display = "none";
-	}
-}
+// function hideAll() {
+// 	document.querySelectorAll(".shortcut").forEach((shortcut) => {
+// 		shortcut.classList.remove("focused");
+// 	});
+// 	document.querySelectorAll(".folder").forEach((folder) => {
+// 		folder.classList.remove("focused");
+// 	});
+// 	if (windows.style.display != "none") {
+// 		windows.style.display = "none";
+// 	}
+// }
 
 const main = document.querySelector("main");
 const footer = document.querySelector("footer");
@@ -178,6 +157,7 @@ const rightBar = document.getElementById("right-bar");
 const datetime = document.getElementById("datetime");
 const wifi = document.getElementById("icon-wifi");
 const cookie = document.getElementById("icon-cookie");
+const selectionRect = document.getElementById("selection-rect");
 var column = 1;
 var row = 1;
 var COLUMNS;
@@ -188,42 +168,42 @@ main.style.display = "grid";
 windowResized();
 main.style.display = "none";
 
-main.onclick = hideAll;
-footer.onclick = hideAll;
+// main.onclick = hideAll;
+// footer.onclick = hideAll;
 
-document.onkeydown = (e) => {
-	if (e.key.toLowerCase() == "enter") {
-		document.querySelectorAll(".shortcut").forEach((shortcut) => {
-			if (shortcut.classList.contains("focused")) {
-				let href = shortcut.getAttribute("href");
-				goto(href);
-			}
-		});
-	}
-};
+// document.onkeydown = (e) => {
+// 	if (e.key.toLowerCase() == "enter") {
+// 		document.querySelectorAll(".shortcut").forEach((shortcut) => {
+// 			if (shortcut.classList.contains("focused")) {
+// 				let href = shortcut.getAttribute("href");
+// 				goto(href);
+// 			}
+// 		});
+// 	}
+// };
 
-sessionStorage.setItem("mouseDown", "false");
+// sessionStorage.setItem("mouseDown", "false");
 
-document.onmousedown = (e) => {
-	localStorage.setItem("mouseDown", "true");
-	localStorage.setItem("startPos", `${e.pageX},${e.pageY}`);
-};
+// document.onmousedown = (e) => {
+// 	localStorage.setItem("mouseDown", "true");
+// 	localStorage.setItem("startPos", `${e.pageX},${e.pageY}`);
+// };
 
-document.onmouseup = () => {
-	localStorage.setItem("mouseDown", "false");
-	localStorage.removeItem("startPos");
-	localStorage.removeItem("endPos");
-};
+// document.onmouseup = () => {
+// 	localStorage.setItem("mouseDown", "false");
+// 	localStorage.removeItem("startPos");
+// 	localStorage.removeItem("endPos");
+// };
 
-document.onmousemove = (e) => {
-	if (sessionStorage.getItem("mouseDown") == "true") {
-		localStorage.setItem("endPos", `${e.pageX},${e.pageY}`);
+// document.onmousemove = (e) => {
+// 	if (sessionStorage.getItem("mouseDown") == "true") {
+// 		localStorage.setItem("endPos", `${e.pageX},${e.pageY}`);
 
-		document.querySelectorAll(".thumbnail").forEach((el) => {
-			console.log(el.style.gridColumn, el.style.gridRow);
-		});
-	}
-};
+// 		document.querySelectorAll(".thumbnail").forEach((el) => {
+// 			console.log(el.style.gridColumn, el.style.gridRow);
+// 		});
+// 	}
+// };
 
 generateRightbarIcon(
 	`url(${urlPrefix}src/icons/windows-icon.png)`,
@@ -236,7 +216,7 @@ generateRightbarIcon(
 			}, 5);
 		}
 	},
-	"windows"
+	"windows",
 );
 
 window.addEventListener("resize", windowResized);

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="icon" href="../icons/main-icon.jpg" />
+		<link rel="stylesheet" href="../generalFiles/default.css" />
+		<link rel="stylesheet" href="../generalFiles/theme-switch.css" />
+		<link rel="stylesheet" href="hanoi.css" />
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Tower of Hanoi</title>
+	</head>
+	<body>
+		<div id="settings">
+			<h3>Settings</h3>
+			<button onclick="toggleSettingsDisplay();">Close</button>
+		</div>
+		<header>
+			<div id="back" onclick="window.location.assign('../index.html');"></div>
+			<div id="title">Tower of Hanoi</div>
+			<div style="display: flex; justify-content: space-between; align-items: center; width: 14vh">
+				<div id="settings-button"></div>
+				<div id="theme-switch"></div>
+			</div>
+		</header>
+
+		<main>
+			<canvas></canvas>
+			<div id="instructionsDiv">
+				<label for="moveFrom">Move from</label>
+				<input type="number" id="moveFrom" />
+				<label for="moveTo">to</label>
+				<input type="number" id="moveTo" />
+			</div>
+		</main>
+
+		<footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
+
+		<script src="../generalFiles/themeSwitch.js"></script>
+		<script src="settings.js"></script>
+		<script src="drawing.js"></script>
+	</body>
+</html>

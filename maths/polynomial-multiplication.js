@@ -17,11 +17,23 @@ class Element {
 	order() {
 		let c = [];
 		for (let i = 0; i < this.names.length; c.push(i++));
-		c.sort((x, y) => this.powers[x] - this.powers[y]);
-		this.powers.sort((x, y) => x - y);
-		this.names.sort((x, y) => c[this.names.indexOf(x)] - c[this.names.indexOf(y)]);
-		c.sort((x, y) => this.powers[x] - this.powers[y] || this.names[x].localeCompare(this.names[y]));
-		this.names.sort((x, y) => c[this.names.indexOf(x)] - c[this.names.indexOf(y)]);
+		debugger;
+		// c.sort((x, y) => this.powers[x] - this.powers[y]);
+		// this.powers.sort((x, y) => x - y);
+		// this.names.sort((x, y) => c[this.names.indexOf(x)] - c[this.names.indexOf(y)]);
+		// c.sort((x, y) => this.powers[x] - this.powers[y] || this.names[x].localeCompare(this.names[y]));
+		// this.names.sort((x, y) => c[this.names.indexOf(x)] - c[this.names.indexOf(y)]);
+		c.sort((x, y) => {
+			console.log(this.names[x].localeCompare(this.names[y]));
+			return this.names[x].localeCompare(this.names[y]);
+			
+		});
+		const names = [].concat(this.names);
+		const powers = [].concat(this.powers);
+		for(let i = 0; i < names.length; ++i){
+			this.names[i] = names[c[i]];
+			this.powers[i] = powers[c[i]];
+		}
 	}
 
 	multiply(other) {
@@ -90,7 +102,7 @@ function getElements(polynomial) {
 				.replace(/\^&/g, "^-")
 				.replace(/~/, "-")
 				.replace(/[\(\)]/g, "");
-			debugger;
+
 			for (let i = 0; i < el.length; ++i) {
 				let char = el[i];
 				if (atPower || !"-+1234567890".includes(char)) {
@@ -142,6 +154,7 @@ function addTerms(polynomial) {
 	let res = [];
 	polynomial.forEach((el) => {
 		el.order();
+		console.warn(el);
 		let found = false;
 		res.forEach((rel) => {
 			if (!found) {
@@ -218,7 +231,7 @@ function multiply() {
 			if (el.powers[j] == 1) {
 				res += el.names[j];
 			} else if (el.powers[j] != 0) {
-				res += el.names[j] + "^" + (el.powers[j] < 0 || el.powers[j] > 9 ? "(" + el.powers[j] + ")" : +el.powers[j]);
+				res += el.names[j] + "<sup>" + (el.powers[j] < 0 || el.powers[j] > 9 ? "(" + el.powers[j] + ")" : +el.powers[j]) + "</sup>";
 			} else {
 				res += Math.abs(el.number) == 1 ? "1" : "";
 			}

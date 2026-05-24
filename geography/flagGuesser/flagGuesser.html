@@ -10,16 +10,33 @@
 		<title>Flag guesser</title>
 	</head>
 	<body>
+		<div id="settings">
+			<h3>Settings</h3>
+			<div></div>
+			<button onclick="toggleSettingsDisplay();">Close</button>
+		</div>
 		<header>
 			<div id="back" onclick="history.back();"></div>
 			<div id="title">Flag guesser</div>
-			<div id="theme-switch"></div>
+			<div style="display: flex; justify-content: space-between; align-items: center; width: 14vh">
+				<div id="settings-button"></div>
+				<div id="theme-switch"></div>
+			</div>
 		</header>
 
-		<main></main>
+		<div id="scoreboard">Score: 0/0&nbsp;&nbsp;&nbsp;(0%)</div>
+
+		<main>
+			<h1></h1>
+			<div id="flag"></div>
+			<div id="input-field"><input type="text" id="flag-input" /></div>
+			<div id="confirm-button" onclick="entered();">Enter</div>
+		</main>
 
 		<footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
 
 		<script src="../../generalFiles/themeSwitch.js"></script>
+		<script src="data.js"></script>
+		<script src="game.js"></script>
 	</body>
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<link rel="icon" href="../../icons/main-icon.jpg" />
@@ -10,11 +10,11 @@
 	</head>
 	<body>
 		<div id="windows">
-			<div class="windows-item" onclick="window.close();">
+			<div class="windows-item" onclick="window.close()">
 				<img src="../../src/icons/shut-down-icon.png" />
 				<span>Shut down</span>
 			</div>
-			<div class="windows-item" onclick="restart();">
+			<div class="windows-item" onclick="restart()">
 				<img src="../../src/icons/restart-icon.png" />
 				<span>Restart</span>
 			</div>
@@ -40,12 +40,14 @@
 
 		<script>
 			function easyGenerate(name) {
-				main.appendChild(generateShortcut(name[0].toUpperCase() + name.substring(1), `../${name}/${name}.html`, `${name}_screen.png`));
+				main.appendChild(
+					generateShortcut(name[0].toUpperCase() + name.substring(1), `../${name}/${name}.html`, `../${name}/${name}_icon.png`),
+				);
 			}
 			function generation() {
 				main.style.display = "grid";
 				document.querySelector("footer").style.display = "flex";
-				main.appendChild(generateShortcut("Back", "../../index.html"));
+				main.appendChild(generateShortcut("Back", "../../index.html", "../../src/icons/back-icon.png"));
 				easyGenerate("wordle");
 				easyGenerate("colorle");
 				easyGenerate("blindle");
