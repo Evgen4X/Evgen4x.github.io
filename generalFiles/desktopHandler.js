@@ -78,11 +78,16 @@ document.onmousemove = (e) => {
 	}
 };
 
-var timeLastClickedAny = 0;
-
 footer.onclick = deselectAll;
-main.onclick = () => {
-	if (Date.now() - timeLastClickedAny > 100) deselectAll();
+main.onclick = (e) => {
+	let flag = true;
+	shortcuts.forEach((s) => {
+		if (isPointInside(e.pageX, e.pageY, s.getBoundingClientRect())) {
+			flag = false;
+		}
+	});
+	console.log(flag);
+	if (flag) deselectAll();
 };
 
 function isPointInside(x, y, rect) {
@@ -147,17 +152,16 @@ function drag(e, shortcut) {
 	console.log(newCol, newRow, refCol, refRow);
 
 	selected.forEach((s) => {
-		console.log(refCol - s.style.gridColumn + newCol, refRow - s.style.gridRow + newRow);
 		moveShortcut(s, s.style.gridColumn - refCol + newCol, s.style.gridRow - refRow + newRow);
 	});
 }
 
 function clicked(shortcut) {
-	timeLastClickedAny = Date.now();
+	let wasSelected = shortcut.getAttribute("selected") == "1";
 	if (!shiftPressed) {
 		deselectAll();
 	}
-	if (shortcut.getAttribute("selected") == "1") {
+	if (wasSelected) {
 		let ms = Date.now() - parseInt(shortcut.getAttribute("timeLastClicked"));
 		if (ms < 500) {
 			goto(shortcut.getAttribute("href"));
