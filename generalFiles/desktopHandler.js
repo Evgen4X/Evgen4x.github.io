@@ -32,15 +32,15 @@ document.onkeyup = (e) => {
 };
 
 document.onmousedown = (e) => {
-	dragX = e.pageX;
-	dragY = e.pageY;
 	let flag = true;
 	shortcuts.forEach((s) => {
-		if (isPointInside(dragX, dragY, s.getBoundingClientRect())) {
+		if (isPointInside(e.pageX, e.pageY, s.getBoundingClientRect())) {
 			flag = false;
 		}
 	});
 	if (flag) {
+		dragX = e.pageX;
+		dragY = e.pageY;
 		mousePressed = true;
 	}
 };
@@ -63,12 +63,14 @@ document.onmousemove = (e) => {
 		selectionRect.style.width = right - left + "px";
 		shortcuts.forEach((s) => {
 			if (isShortcutInside(s, top, right, bottom, left)) {
-				s.setAttribute("selected", "1");
-				s.setAttribute("timeLastClicked", Date.now().toString());
-				selected.push(s);
-				setTimeout(() => {
-					s.classList.add("focused");
-				}, 5);
+				if (s.getAttribute("selected") == "0") {
+					s.setAttribute("selected", "1");
+					s.setAttribute("timeLastClicked", Date.now().toString());
+					selected.push(s);
+					setTimeout(() => {
+						s.classList.add("focused");
+					}, 5);
+				}
 			} else {
 				s.classList.remove("focused");
 				s.setAttribute("selected", 0);
@@ -86,7 +88,6 @@ main.onclick = (e) => {
 			flag = false;
 		}
 	});
-	console.log(flag);
 	if (flag) deselectAll();
 };
 
@@ -149,8 +150,7 @@ function drag(e, shortcut) {
 	const refCol = parseInt(shortcut.style.gridColumn);
 	const refRow = parseInt(shortcut.style.gridRow);
 	const [newCol, newRow] = posToGrid(e.pageX, e.pageY);
-	console.log(newCol, newRow, refCol, refRow);
-
+	console.log(selected);
 	selected.forEach((s) => {
 		moveShortcut(s, s.style.gridColumn - refCol + newCol, s.style.gridRow - refRow + newRow);
 	});
