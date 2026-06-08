@@ -1,190 +1,191 @@
 html,
 body {
-	margin: 0;
-	padding: 0;
-	width: 100vw;
-	height: 100vh;
-	overflow: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 * {
-	touch-action: manipulation;
-	user-select: none;
-	transition: background-color 500ms ease-in-out;
-	-webkit-text-size-adjust: none !important;
+  touch-action: manipulation;
+  user-select: none;
+  transition: background-color 500ms ease-in-out;
+  -webkit-text-size-adjust: none !important;
 }
 
 body {
-	display: flex;
-	justify-content: baseline;
-	align-items: center;
-	flex-direction: column;
+  display: flex;
+  justify-content: baseline;
+  align-items: center;
+  flex-direction: column;
 }
 
 div#selection-rect {
-	position: absolute;
-	display: none;
-	z-index: 999;
-	border: 1px solid rgb(50, 50, 255);
-	background-color: rgba(50, 50, 255, 0.2);
+  position: absolute;
+  display: block;
+  opacity: 0;
+  z-index: 999;
+  border: 1px solid rgb(50, 50, 255);
+  background-color: rgba(50, 50, 255, 0.2);
 }
 
 div#back {
-	display: block;
-	margin: 1vh;
-	height: 6vh;
-	width: 6vh;
-	background-image: url(../src/icons/main-icon.png);
-	background-size: contain;
-	cursor: pointer;
+  display: block;
+  margin: 1vh;
+  height: 6vh;
+  width: 6vh;
+  background-image: url(../src/icons/main-icon.png);
+  background-size: contain;
+  cursor: pointer;
 }
 
 header {
-	width: 100vw;
-	height: 8vh;
-	font-size: 5vh;
-	font-weight: bolder;
-	text-transform: uppercase;
-	display: flex;
-	justify-content: space-between;
-	align-items: baseline;
+  width: 100vw;
+  height: 8vh;
+  font-size: 5vh;
+  font-weight: bolder;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
 header div#title {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	transform: translateY(-2vh);
-	height: 6vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transform: translateY(-2vh);
+  height: 6vh;
 }
 
 #settings-button {
-	width: 6vh;
-	height: 6vh;
-	background-image: url(../src/icons/settings-icon.png);
-	background-color: transparent;
-	border: none;
-	background-size: 6vh 6vh;
-	background-repeat: no-repeat;
-	background-position: right;
-	cursor: pointer;
+  width: 6vh;
+  height: 6vh;
+  background-image: url(../src/icons/settings-icon.png);
+  background-color: transparent;
+  border: none;
+  background-size: 6vh 6vh;
+  background-repeat: no-repeat;
+  background-position: right;
+  cursor: pointer;
 }
 
 #settings {
-	padding: 1em;
-	background-color: rgba(100, 100, 100, 0.8);
-	border: 0.4em solid #000;
-	border-radius: 2em;
-	box-shadow: 0 0 2em #000;
-	display: none;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 60%;
-	height: 80%;
-	color: white;
+  padding: 1em;
+  background-color: rgba(100, 100, 100, 0.8);
+  border: 0.4em solid #000;
+  border-radius: 2em;
+  box-shadow: 0 0 2em #000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 80%;
+  color: white;
 }
 
 label {
-	font-size: large;
+  font-size: large;
 }
 
 #settings button,
 #settings input {
-	margin: 0.5em;
-	height: 2em;
-	width: 10em;
-	background-color: #878787;
-	opacity: 1;
-	border-radius: 1em;
-	box-shadow: 0 0 0.5em #ddd;
-	font-weight: bold;
-	transition:
-		background-color 0.5s linear,
-		box-shadow 0.5s ease-in-out;
+  margin: 0.5em;
+  height: 2em;
+  width: 10em;
+  background-color: #878787;
+  opacity: 1;
+  border-radius: 1em;
+  box-shadow: 0 0 0.5em #ddd;
+  font-weight: bold;
+  transition:
+    background-color 0.5s linear,
+    box-shadow 0.5s ease-in-out;
 }
 
 #settings input {
-	font-size: larger;
-	height: 1.25em;
+  font-size: larger;
+  height: 1.25em;
 }
 
 #settings input[type="checkbox"] {
-	width: 1.25em !important;
+  width: 1.25em !important;
 }
 
 #settings button:hover {
-	background-color: #555;
-	box-shadow: 0 0 0.8em #fff;
+  background-color: #555;
+  box-shadow: 0 0 0.8em #fff;
 }
 
 #settings button:active {
-	background-color: #333;
-	box-shadow: 0 0 0.5em #fff;
-	color: #aaa;
+  background-color: #333;
+  box-shadow: 0 0 0.5em #fff;
+  color: #aaa;
 }
 
 main {
-	width: 100vw;
-	flex-grow: 1;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+  width: 100vw;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 footer {
-	width: 100vw;
-	height: 5vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: x-large;
-	letter-spacing: 0.15em;
-	text-shadow: 0 0 1.25em white;
+  width: 100vw;
+  height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: x-large;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 1.25em white;
 }
 
 footer a {
-	color: blue;
-	letter-spacing: 0.25em;
-	margin: 0.5em;
-	text-decoration: none;
-	text-shadow: 0 0 0.75em white;
+  color: blue;
+  letter-spacing: 0.25em;
+  margin: 0.5em;
+  text-decoration: none;
+  text-shadow: 0 0 0.75em white;
 }
 
 #question-mark {
-	width: 6vh;
-	height: 6vh;
-	background-image: linear-gradient(#0091ff, #0069ff, #0047ff);
-	border-radius: 3vh;
-	font-size: 4.5vh;
-	font-weight: bolder;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	cursor: pointer;
-	margin: 0;
+  width: 6vh;
+  height: 6vh;
+  background-image: linear-gradient(#0091ff, #0069ff, #0047ff);
+  border-radius: 3vh;
+  font-size: 4.5vh;
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 0;
 }
 
 @media screen and (max-width: 900px) {
-	header {
-		font-size: large;
-	}
+  header {
+    font-size: large;
+  }
 
-	label {
-		font-size: medium;
-	}
+  label {
+    font-size: medium;
+  }
 
-	#settings input {
-		font-size: medium;
-	}
+  #settings input {
+    font-size: medium;
+  }
 
-	footer {
-		font-size: large;
-	}
+  footer {
+    font-size: large;
+  }
 }
