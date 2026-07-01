@@ -1,95 +1,96 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-	<head>
-		<link rel="stylesheet" href="../src/fonts/fonts.css" />
-		<link rel="stylesheet" href="../generalFiles/default.css" />
-		<link rel="stylesheet" href="little_css.css" />
-		<link rel="stylesheet" href="../generalFiles/theme-switch.css" />
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="author" content="Evgen4X" />
-		<meta name="description" content="My own page!" />
-		<meta name="keywords" content="Evgen4X" />
-		<title>Pong</title>
-	</head>
-	<body>
-		<div id="win-block">
-			<p>YOU WIN</p>
-		</div>
-		<div id="score">
-			<span id="p1-score">0</span>
-			<span id="p2-score">0</span>
-		</div>
+  <head>
+    <link rel="stylesheet" href="../src/fonts/fonts.css" />
+    <link rel="stylesheet" href="../generalFiles/default.css" />
+    <link rel="stylesheet" href="little_css.css" />
+    <link rel="stylesheet" href="../generalFiles/theme-switch.css" />
+    <link rel="icon" href="../src/icons/meta-icon.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Evgen4X" />
+    <meta name="description" content="My own page!" />
+    <meta name="keywords" content="Evgen4X" />
+    <title>Pong</title>
+  </head>
+  <body>
+    <div id="win-block">
+      <p>YOU WIN</p>
+    </div>
+    <div id="score">
+      <span id="p1-score">0</span>
+      <span id="p2-score">0</span>
+    </div>
 
-		<div id="settings">
-			<h3>Settings</h3>
-			<div id="first-div">
-				<div class="mode-toggle" mode="pvp">PvP</div>
-				<div class="mode-toggle" mode="pvc1">PvC: easy</div>
-				<div class="mode-toggle" mode="pvc2">PvC: medium</div>
-				<div class="mode-toggle" mode="pvc3">PvC: hard</div>
-				<div class="mode-toggle" mode="pvc4">PvC: insane</div>
-			</div>
-			<div style="width: 90%; display: flex; justify-content: space-evenly; align-items: center">
-				<div class="powerup-toggle" powerup="ball_redirection" state="on"></div>
-				<div class="powerup-toggle" powerup="bigger_platform" state="on"></div>
-				<div class="powerup-toggle" powerup="extra_ball" state="on"></div>
-				<div class="powerup-toggle" powerup="faster_movement_speed" state="on"></div>
-				<div class="powerup-toggle" powerup="slower_movement_speed" state="on"></div>
-				<div class="powerup-toggle" powerup="smaller_ball" state="on"></div>
-				<div class="powerup-toggle" powerup="smaller_platform" state="on"></div>
-				<div class="powerup-toggle" powerup="speed_refresh" state="on"></div>
-			</div>
-			<div>
-				<label for="playerSpeed">Player movement speed</label>
-				<input type="number" id="playerSpeed" val="4" />
-			</div>
-			<div>
-				<label for="ballAccelerationRate">Ball acceleration <b>rate</b></label>
-				<input type="number" id="ballAccelerationRate" val="1" />
-			</div>
-			<div>
-				<label for="ballAccelerationChance">Ball acceleration <b>chance</b></label>
-				<input type="number" id="ballAccelerationChance" val="33" />
-			</div>
-			<div>
-				<label for="ballInitialSpeed">Initial ball speed</label>
-				<input type="number" id="ballInitialSpeed" val="33" />
-			</div>
-			<div>
-				<label for="ballSize">Ball size</label>
-				<input type="number" id="ballSize" val="10" />
-			</div>
-			<div>
-				<label for="maximumPowerupsAtATime">Maximum powerups at a time</label>
-				<input type="number" id="maximumPowerupsAtATime" val="2" />
-			</div>
-			<div>
-				<label for="powerupSpawnRate">Powerup spawn rate</label>
-				<input type="number" id="powerupSpawnRate" val="5" />
-			</div>
-			<div>
-				<button onclick="saveSettings();">Save</button>
-				<button onclick="setToDefault();">Set to default</button>
-			</div>
-			<button onclick="settings.style.display = 'none';">Close</button>
-		</div>
-		<header>
-			<div id="back" onclick="window.location.assign('../index.html');"></div>
-			<div id="title">Pong</div>
-			<div style="display: flex; justify-content: space-between; align-items: center; width: 14vh">
-				<div id="settings-button"></div>
-				<div id="theme-switch"></div>
-			</div>
-		</header>
-		<main>
-			<canvas></canvas>
-		</main>
-		<footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
+    <div id="settings">
+      <h3>Settings</h3>
+      <div id="first-div">
+        <div class="mode-toggle" mode="pvp">PvP</div>
+        <div class="mode-toggle" mode="pvc1">PvC: easy</div>
+        <div class="mode-toggle" mode="pvc2">PvC: medium</div>
+        <div class="mode-toggle" mode="pvc3">PvC: hard</div>
+        <div class="mode-toggle" mode="pvc4">PvC: insane</div>
+      </div>
+      <div style="width: 90%; display: flex; justify-content: space-evenly; align-items: center">
+        <div class="powerup-toggle" powerup="ball_redirection" state="on"></div>
+        <div class="powerup-toggle" powerup="bigger_platform" state="on"></div>
+        <div class="powerup-toggle" powerup="extra_ball" state="on"></div>
+        <div class="powerup-toggle" powerup="faster_movement_speed" state="on"></div>
+        <div class="powerup-toggle" powerup="slower_movement_speed" state="on"></div>
+        <div class="powerup-toggle" powerup="smaller_ball" state="on"></div>
+        <div class="powerup-toggle" powerup="smaller_platform" state="on"></div>
+        <div class="powerup-toggle" powerup="speed_refresh" state="on"></div>
+      </div>
+      <div>
+        <label for="playerSpeed">Player movement speed</label>
+        <input type="number" id="playerSpeed" val="4" />
+      </div>
+      <div>
+        <label for="ballAccelerationRate">Ball acceleration <b>rate</b></label>
+        <input type="number" id="ballAccelerationRate" val="1" />
+      </div>
+      <div>
+        <label for="ballAccelerationChance">Ball acceleration <b>chance</b></label>
+        <input type="number" id="ballAccelerationChance" val="33" />
+      </div>
+      <div>
+        <label for="ballInitialSpeed">Initial ball speed</label>
+        <input type="number" id="ballInitialSpeed" val="33" />
+      </div>
+      <div>
+        <label for="ballSize">Ball size</label>
+        <input type="number" id="ballSize" val="10" />
+      </div>
+      <div>
+        <label for="maximumPowerupsAtATime">Maximum powerups at a time</label>
+        <input type="number" id="maximumPowerupsAtATime" val="2" />
+      </div>
+      <div>
+        <label for="powerupSpawnRate">Powerup spawn rate</label>
+        <input type="number" id="powerupSpawnRate" val="5" />
+      </div>
+      <div>
+        <button onclick="saveSettings()">Save</button>
+        <button onclick="setToDefault()">Set to default</button>
+      </div>
+      <button onclick="settings.style.display = 'none'">Close</button>
+    </div>
+    <header>
+      <div id="back" onclick="window.location.assign('../index.html')"></div>
+      <div id="title">Pong</div>
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 14vh">
+        <div id="settings-button"></div>
+        <div id="theme-switch"></div>
+      </div>
+    </header>
+    <main>
+      <canvas></canvas>
+    </main>
+    <footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
 
-		<script src="classes.js"></script>
-		<script src="../generalFiles/themeSwitch.js"></script>
-		<script src="pong.js"></script>
-		<script src="init.js"></script>
-	</body>
+    <script src="classes.js"></script>
+    <script src="../generalFiles/themeSwitch.js"></script>
+    <script src="pong.js"></script>
+    <script src="init.js"></script>
+  </body>
 </html>

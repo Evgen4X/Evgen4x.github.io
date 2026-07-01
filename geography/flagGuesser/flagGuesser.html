@@ -1,42 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-	<head>
-		<link rel="icon" href="../../icons/main-icon.jpg" />
-		<link rel="stylesheet" href="../../generalFiles/default.css" />
-		<link rel="stylesheet" href="../../generalFiles/theme-switch.css" />
-		<link rel="stylesheet" href="flagGuesser.css" />
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Flag guesser</title>
-	</head>
-	<body>
-		<div id="settings">
-			<h3>Settings</h3>
-			<div></div>
-			<button onclick="toggleSettingsDisplay();">Close</button>
-		</div>
-		<header>
-			<div id="back" onclick="history.back();"></div>
-			<div id="title">Flag guesser</div>
-			<div style="display: flex; justify-content: space-between; align-items: center; width: 14vh">
-				<div id="settings-button"></div>
-				<div id="theme-switch"></div>
-			</div>
-		</header>
+  <head>
+    <link rel="icon" href="../../src/icons/meta-icon.png" />
+    <link rel="stylesheet" href="../../generalFiles/default.css" />
+    <link rel="stylesheet" href="../../generalFiles/theme-switch.css" />
+    <link rel="stylesheet" href="flagGuesser.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flag guesser</title>
+  </head>
+  <body>
+    <div id="settings">
+      <h3>Settings</h3>
+      <div></div>
+      <button onclick="toggleSettingsDisplay()">Close</button>
+    </div>
+    <header>
+      <div id="back" onclick="history.back()"></div>
+      <div id="title">Flag guesser</div>
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 14vh">
+        <div id="settings-button"></div>
+        <div id="theme-switch"></div>
+      </div>
+    </header>
 
-		<div id="scoreboard">Score: 0/0&nbsp;&nbsp;&nbsp;(0%)</div>
+    <div id="scoreboard">Score: 0/0&nbsp;&nbsp;&nbsp;(0%)</div>
 
-		<main>
-			<h1></h1>
-			<div id="flag"></div>
-			<div id="input-field"><input type="text" id="flag-input" /></div>
-			<div id="confirm-button" onclick="entered();">Enter</div>
-		</main>
+    <main>
+      <h1></h1>
+      <div id="flag"></div>
+      <div id="input-field"><input type="text" id="flag-input" /></div>
+      <div id="confirm-button" onclick="entered()">Enter</div>
+    </main>
 
-		<footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
+    <footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
 
-		<script src="../../generalFiles/themeSwitch.js"></script>
-		<script src="data.js"></script>
-		<script src="game.js"></script>
-	</body>
+    <script src="../../generalFiles/themeSwitch.js"></script>
+    <script src="data.js"></script>
+    <script src="game.js"></script>
+  </body>
 </html>

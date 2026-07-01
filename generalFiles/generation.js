@@ -25,32 +25,32 @@ mainDiv.appendChild(generateContainer("FNaS", "FNaS/index.html", "Play"));
 /* RIP all the links which were hidden 'temporarely' */
 
 function windowResized() {
-	const width = main.getBoundingClientRect().width;
-	COLUMNS = width > 1000 ? 8 : 4;
-	ROW_HEIGHT = main.getBoundingClientRect().height / ROWS;
-	COLUMN_WIDTH = width / COLUMNS;
+  const width = main.getBoundingClientRect().width;
+  COLUMNS = width > 1000 ? 8 : 4;
+  ROW_HEIGHT = main.getBoundingClientRect().height / ROWS;
+  COLUMN_WIDTH = width / COLUMNS;
 }
 
 function goto(href) {
-	let splits = window.location.href.split("/");
-	if (href) {
-		if (splits.includes("index.html")) {
-			splits[splits.indexOf("index.html")] = href;
-		} else {
-			splits.push(href);
-		}
-	} else {
-		splits = splits.slice(0, splits.indexOf("Evgen4x.github.io") + 1);
-		splits.push("index.html");
-	}
-	window.location.href = splits.join("/");
+  let splits = window.location.href.split("/");
+  if (href) {
+    if (splits.includes("index.html")) {
+      splits[splits.indexOf("index.html")] = href;
+    } else {
+      splits.push(href);
+    }
+  } else {
+    splits = splits.slice(0, splits.indexOf("Evgen4x.github.io") + 1);
+    splits.push("index.html");
+  }
+  window.location.href = splits.join("/");
 }
 
 function generateContainer(name, href, text = "Go") {
-	let el = document.createElement("div");
-	el.id = name;
-	el.classList.add("container");
-	el.innerHTML = `
+  let el = document.createElement("div");
+  el.id = name;
+  el.classList.add("container");
+  el.innerHTML = `
         <a class="element" id="${name.toLowerCase().replace(/ /g, "-")}" href="${href}">
             <h3>${name}</h3>
             <div class="screenshot"></div>
@@ -58,85 +58,85 @@ function generateContainer(name, href, text = "Go") {
         </a>
     `;
 
-	return el;
+  return el;
 }
 
 function posToGrid(x, y) {
-	return [Math.ceil(x / COLUMN_WIDTH), Math.ceil(y / ROW_HEIGHT)];
+  return [Math.ceil(x / COLUMN_WIDTH), Math.ceil(y / ROW_HEIGHT)];
 }
 
 function generateShortcut(name, href, src) {
-	if (!src) {
-		src = `${urlPrefix}src/images/unknown-thumbnail.png`;
-	}
-	let el = document.createElement("div");
-	el.style.gridColumn = column;
-	el.style.gridRow = row++;
-	if (row > ROWS) {
-		row = 1;
-		++column;
-	}
-	el.id = name;
-	el.classList.add("shortcut");
-	el.setAttribute("href", href);
-	el.draggable = true;
-	el.innerHTML = `
+  if (!src) {
+    src = `${urlPrefix}src/images/unknown-thumbnail.png`;
+  }
+  let el = document.createElement("div");
+  el.style.gridColumn = column;
+  el.style.gridRow = row++;
+  if (row > ROWS) {
+    row = 1;
+    ++column;
+  }
+  el.id = name;
+  el.classList.add("shortcut");
+  el.setAttribute("href", href);
+  el.draggable = true;
+  el.innerHTML = `
         <div class="thumbnail">
             <img src="${src}">
         </div>
         <div class="shortcut-name">${name}</div>
     `;
 
-	// el.ondragend = (e) => {
-	// 	const x = e.pageX;
-	// 	const y = e.pageY;
-	// 	const [col, row] = posToGrid(x, y);
-	// 	document.querySelectorAll(".shortcut").forEach((shortcut) => {
-	// 		if (shortcut.style.gridColumn == col && shortcut.style.gridRow == row) {
-	// 			shortcut.style.gridRow = el.style.gridRow;
-	// 			shortcut.style.gridColumn = el.style.gridColumn;
-	// 			console.log(shortcut);
-	// 		} else {
-	// 			console.log(shortcut.style.gridColumn, col);
-	// 		}
-	// 	});
-	// 	el.style.gridRow = row;
-	// 	el.style.gridColumn = col;
-	// };
+  // el.ondragend = (e) => {
+  // 	const x = e.pageX;
+  // 	const y = e.pageY;
+  // 	const [col, row] = posToGrid(x, y);
+  // 	document.querySelectorAll(".shortcut").forEach((shortcut) => {
+  // 		if (shortcut.style.gridColumn == col && shortcut.style.gridRow == row) {
+  // 			shortcut.style.gridRow = el.style.gridRow;
+  // 			shortcut.style.gridColumn = el.style.gridColumn;
+  // 			console.log(shortcut);
+  // 		} else {
+  // 			console.log(shortcut.style.gridColumn, col);
+  // 		}
+  // 	});
+  // 	el.style.gridRow = row;
+  // 	el.style.gridColumn = col;
+  // };
 
-	return el;
+  return el;
 }
 
-function generateRightbarIcon(src, func, name) {
-	let icon = document.createElement("div");
-	icon.classList.add("right-bar-icon");
-	icon.onclick = func;
-	if (name) {
-		icon.id = `${name}-icon`;
-	}
-	icon.style.backgroundImage = src;
-	rightBar.appendChild(icon);
+function generateRightbarIcon(src, onClick, id) {
+  let icon = document.createElement("div");
+  icon.classList.add("left-bar-icon");
+  icon.onclick = onClick;
+  if (id) {
+    icon.id = `${id}-icon`;
+  }
+  icon.style.backgroundImage = src;
+  rightBar.appendChild(icon);
 }
 
 function datetimeupdate() {
-	let date = new Date();
-	datetime.innerHTML = `${date.toTimeString().split(" ")[0]}<br>
+  let date = new Date();
+  datetime.innerHTML = `${date.toTimeString().split(" ")[0]}<br>
     ${date.toLocaleDateString()}`;
-	if (navigator.onLine) {
-		wifi.style.backgroundImage = `url(${urlPrefix}src/images/wifi.png)`;
-	} else {
-		wifi.style.backgroundImage = `url(${urlPrefix}src/images/no-wifi.png)`;
-	}
-	if (navigator.cookieEnabled) {
-		cookie.style.backgroundImage = `url(${urlPrefix}src/images/cookie.png)`;
-	} else {
-		cookie.style.backgroundImage = `url(${urlPrefix}src/images/no-cookie.png)`;
-	}
+  if (navigator.onLine) {
+    wifi.style.backgroundImage = `url(${urlPrefix}src/images/wifi.png)`;
+  } else {
+    wifi.style.backgroundImage = `url(${urlPrefix}src/images/no-wifi.png)`;
+  }
+  if (navigator.cookieEnabled) {
+    cookie.style.backgroundImage = `url(${urlPrefix}src/images/cookie.png)`;
+  } else {
+    cookie.style.backgroundImage = `url(${urlPrefix}src/images/no-cookie.png)`;
+  }
 }
 
 function restart() {
-	sessionStorage.clear();
-	goto(null);
+  sessionStorage.clear();
+  goto(null);
 }
 
 // function hideAll() {
@@ -153,7 +153,7 @@ function restart() {
 
 const main = document.querySelector("main");
 const footer = document.querySelector("footer");
-const rightBar = document.getElementById("right-bar");
+const rightBar = document.getElementById("left-bar");
 const datetime = document.getElementById("datetime");
 const wifi = document.getElementById("icon-wifi");
 const cookie = document.getElementById("icon-cookie");
@@ -206,19 +206,20 @@ main.style.display = "none";
 // };
 
 generateRightbarIcon(
-	`url(${urlPrefix}src/icons/windows-icon.png)`,
-	() => {
-		if (windows.style.display == "flex") {
-			windows.style.display = "none";
-		} else {
-			setTimeout(() => {
-				windows.style.display = "flex";
-			}, 5);
-		}
-	},
-	"windows",
+  `url(${urlPrefix}src/icons/meta-icon.png)`,
+  () => {
+    if (windows.style.display == "flex") {
+      windows.style.display = "none";
+    } else {
+      setTimeout(() => {
+        windows.style.display = "flex";
+      }, 5);
+    }
+  },
+  "windows",
 );
 
 window.addEventListener("resize", windowResized);
 
+datetimeupdate();
 setInterval(datetimeupdate, 1000);

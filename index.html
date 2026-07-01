@@ -1,63 +1,63 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<link rel="icon" href="src/icons/main-icon.png" />
-		<link rel="stylesheet" href="src/fonts/fonts.css" />
-		<link rel="stylesheet" href="index.css" />
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-		<meta name="author" content="Evgen4X" />
-		<meta name="description" content="My own page!" />
-		<meta name="keywords" content="Evgen4X" />
-		<title>Evgen4X</title>
-	</head>
-	<body>
-		<div id="selection-rect"></div>
+  <head>
+    <link rel="icon" href="src/icons/meta-icon.png" />
+    <link rel="stylesheet" href="src/fonts/fonts.css" />
+    <link rel="stylesheet" href="index.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="author" content="Evgen4X" />
+    <meta name="description" content="My own page!" />
+    <meta name="keywords" content="Evgen4X" />
+    <title>Evgen4X</title>
+  </head>
+  <body>
+    <div id="selection-rect"></div>
 
-		<div id="windows">
-			<div class="windows-item" onclick="window.close()">
-				<img src="src/icons/shut-down-icon.png" />
-				<span>Shut down</span>
-			</div>
-			<div class="windows-item" onclick="restart()">
-				<img src="src/icons/restart-icon.png" />
-				<span>Restart</span>
-			</div>
-		</div>
+    <div id="windows">
+      <div class="windows-item" onclick="window.close()">
+        <img src="src/icons/shut-down-icon.png" />
+        <span>Shut down</span>
+      </div>
+      <div class="windows-item" onclick="restart()">
+        <img src="src/icons/restart-icon.png" />
+        <span>Restart</span>
+      </div>
+    </div>
 
-		<div id="bootup">
-			<div id="bootup-text">Evgen4X</div>
-		</div>
+    <div id="bootup">
+      <div id="bootup-text">Evgen4X</div>
+    </div>
 
-		<canvas id="canvas"></canvas>
-		<main></main>
-		<footer>
-			<div id="right-bar"></div>
-			<div id="left-bar">
-				<div id="made-by">Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></div>
-				<div id="icon-cookie"></div>
-				<div id="icon-wifi"></div>
-				<div id="datetime"></div>
-			</div>
-		</footer>
+    <canvas id="canvas"></canvas>
+    <main></main>
+    <footer>
+      <div id="left-bar"></div>
+      <div id="right-bar">
+        <div id="made-by">Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></div>
+        <div id="icon-cookie"></div>
+        <div id="icon-wifi"></div>
+        <div id="datetime"></div>
+      </div>
+    </footer>
 
-		<script>
-			function generation() {
-				main.style.display = "grid";
-				document.querySelector("footer").style.display = "flex";
-				main.appendChild(generateShortcut("Wordle", "wordles/main/index.html", "wordles/wordle/wordle_icon.png"));
-				main.appendChild(generateShortcut("Maths", "maths/index.html", "src/icons/maths-icon3.png"));
-				main.appendChild(generateShortcut("Geography", "geography/index.html", "src/icons/geography-icon.png"));
-				main.appendChild(generateShortcut("Enigma Machine", "enigma/index.html", "src/icons/enigma-icon2.png"));
-				main.appendChild(generateShortcut("TicTacToe", "tictactoe/index.html", "src/icons/tictactoe-icon.png"));
-				main.appendChild(generateShortcut("Pong", "pong/index.html", "src/icons/pong-icon.png"));
-				main.appendChild(generateShortcut("FNaS", "FNaS/index.html", "src/icons/fnas1-icon.png"));
-				// main.appendChild(generateShortcut("Tower of Hanoi", "towerOfHanoi/index.html", "src/icons/fnas1-icon.png"));
-			}
-			const urlPrefix = "";
-		</script>
-		<script src="generalFiles/generation.js"></script>
-		<script src="generalFiles/animation.js"></script>
-		<script src="generalFiles/desktopHandler.js"></script>
-	</body>
+    <script>
+      function generation() {
+        main.style.display = "grid";
+        document.querySelector("footer").style.display = "flex";
+        main.appendChild(generateShortcut("Wordle", "wordles/main/index.html", "wordles/wordle/wordle_icon.png"));
+        main.appendChild(generateShortcut("Maths", "maths/index.html", "src/icons/maths-icon3.png"));
+        main.appendChild(generateShortcut("Geography", "geography/index.html", "src/icons/geography-icon.png"));
+        main.appendChild(generateShortcut("Enigma Machine", "enigma/index.html", "src/icons/enigma-icon2.png"));
+        main.appendChild(generateShortcut("TicTacToe", "tictactoe/index.html", "src/icons/tictactoe-icon.png"));
+        main.appendChild(generateShortcut("Pong", "pong/index.html", "src/icons/pong-icon.png"));
+        main.appendChild(generateShortcut("FNaS", "FNaS/index.html", "src/icons/fnas1-icon.png"));
+        // main.appendChild(generateShortcut("Tower of Hanoi", "towerOfHanoi/index.html", "src/icons/fnas1-icon.png"));
+      }
+      const urlPrefix = "";
+    </script>
+    <script src="generalFiles/generation.js"></script>
+    <script src="generalFiles/animation.js"></script>
+    <script src="generalFiles/desktopHandler.js"></script>
+  </body>
 </html>

@@ -1,52 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-	<head>
-		<link rel="stylesheet" href="styles.css" />
-		<link rel="stylesheet" href="../src/fonts/fonts.css" />
-		<link rel="stylesheet" href="../generalFiles/default.css" />
-		<link rel="stylesheet" href="../generalFiles/theme-switch.css" />
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="author" content="Evgen4X" />
-		<meta name="description" content="My own page!" />
-		<meta name="keywords" content="Evgen4X" />
-		<title>TicTacToeX</title>
-	</head>
-	<body>
-		<div class="win-block" player="1">YOU WIN!</div>
-		<div class="win-block" player="2">YOU WIN!</div>
-		<div id="settings">
-			<h3>Settings</h3>
-			<div id="first-div">
-				<div class="mode-toggle" mode="pvp">PvP</div>
-				<div class="mode-toggle" mode="pvc1">PvC: easy</div>
-				<div class="mode-toggle" mode="pvc2">PvC: medium</div>
-				<div class="mode-toggle" mode="pvc3">PvC: hard</div>
-			</div>
-			<div><label for="allow-override">Allow override</label><input type="checkbox" id="allow-override" /></div>
-			<div>
-				<button onclick="saveSettings();">Save</button>
-				<button onclick="setToDefault();">Set to default</button>
-			</div>
-			<button onclick="settings.style.display = 'none';">Close</button>
-		</div>
-		<header>
-			<div id="back" onclick="window.location.assign('../index.html');"></div>
-			<div id="title">TicTacToeX</div>
-			<div style="display: flex; justify-content: space-between; align-items: center; width: 14vh">
-				<div id="settings-button"></div>
-				<div id="theme-switch"></div>
-			</div>
-		</header>
-		<main>
-			<canvas></canvas>
-			<button id="again">Play again</button>
-		</main>
-		<footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../src/fonts/fonts.css" />
+    <link rel="stylesheet" href="../generalFiles/default.css" />
+    <link rel="stylesheet" href="../generalFiles/theme-switch.css" />
+    <link rel="icon" href="../src/icons/meta-icon.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Evgen4X" />
+    <meta name="description" content="My own page!" />
+    <meta name="keywords" content="Evgen4X" />
+    <title>TicTacToeX</title>
+  </head>
+  <body>
+    <div class="win-block" player="1">YOU WIN!</div>
+    <div class="win-block" player="2">YOU WIN!</div>
+    <div id="settings">
+      <h3>Settings</h3>
+      <div id="first-div">
+        <div class="mode-toggle" mode="pvp">PvP</div>
+        <div class="mode-toggle" mode="pvc1">PvC: easy</div>
+        <div class="mode-toggle" mode="pvc2">PvC: medium</div>
+        <div class="mode-toggle" mode="pvc3">PvC: hard</div>
+      </div>
+      <div><label for="allow-override">Allow override</label><input type="checkbox" id="allow-override" /></div>
+      <div>
+        <button onclick="saveSettings()">Save</button>
+        <button onclick="setToDefault()">Set to default</button>
+      </div>
+      <button onclick="settings.style.display = 'none'">Close</button>
+    </div>
+    <header>
+      <div id="back" onclick="window.location.assign('../index.html')"></div>
+      <div id="title">TicTacToeX</div>
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 14vh">
+        <div id="settings-button"></div>
+        <div id="theme-switch"></div>
+      </div>
+    </header>
+    <main>
+      <canvas></canvas>
+      <button id="again">Play again</button>
+    </main>
+    <footer>Made by <a href="https://github.com/Evgen4X" target="_blank">Evgen4X</a></footer>
 
-		<script src="../generalFiles/themeSwitch.js"></script>
-		<script src="data.js"></script>
-		<script src="init.js"></script>
-		<script src="main.js"></script>
-	</body>
+    <script src="../generalFiles/themeSwitch.js"></script>
+    <script src="data.js"></script>
+    <script src="init.js"></script>
+    <script src="main.js"></script>
+  </body>
 </html>
